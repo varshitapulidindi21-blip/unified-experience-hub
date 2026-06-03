@@ -213,31 +213,31 @@
   .travel-hero {
     background:
       radial-gradient(900px 420px at 8% 10%,
-        oklch(0.47 0.168 296 / 0.74), transparent 58%),
-      radial-gradient(780px 360px at 54% 16%,
-        oklch(0.39 0.120 283 / 0.56), transparent 64%),
-      radial-gradient(780px 430px at 96% 82%,
-        oklch(0.55 0.132 154 / 0.40), transparent 70%),
-      linear-gradient(126deg,
-        oklch(0.30 0.136 294) 0%,
-        oklch(0.31 0.126 288) 38%,
-        oklch(0.32 0.096 276) 70%,
-        oklch(0.38 0.100 150) 100%);
+        oklch(0.42 0.180 300 / 0.80), transparent 60%),
+      radial-gradient(780px 360px at 60% 20%,
+        oklch(0.36 0.150 295 / 0.60), transparent 64%),
+      radial-gradient(780px 430px at 98% 80%,
+        oklch(0.55 0.150 150 / 0.45), transparent 70%),
+      linear-gradient(118deg,
+        oklch(0.28 0.150 298) 0%,
+        oklch(0.32 0.160 295) 40%,
+        oklch(0.34 0.140 200) 72%,
+        oklch(0.42 0.140 150) 100%);
   }
 
   .dark .travel-hero {
     background:
       radial-gradient(880px 420px at 10% 6%,
-        oklch(0.33 0.132 296 / 0.52), transparent 62%),
-      radial-gradient(760px 360px at 56% 18%,
-        oklch(0.27 0.088 282 / 0.48), transparent 67%),
-      radial-gradient(760px 430px at 94% 88%,
-        oklch(0.34 0.090 156 / 0.34), transparent 70%),
-      linear-gradient(126deg,
-        oklch(0.15 0.064 294) 0%,
-        oklch(0.16 0.058 288) 40%,
-        oklch(0.17 0.048 276) 72%,
-        oklch(0.19 0.052 168) 100%);
+        oklch(0.30 0.140 300 / 0.60), transparent 62%),
+      radial-gradient(760px 360px at 60% 20%,
+        oklch(0.24 0.110 295 / 0.55), transparent 67%),
+      radial-gradient(760px 430px at 96% 88%,
+        oklch(0.34 0.110 150 / 0.40), transparent 70%),
+      linear-gradient(118deg,
+        oklch(0.14 0.070 298) 0%,
+        oklch(0.16 0.075 295) 40%,
+        oklch(0.18 0.060 200) 72%,
+        oklch(0.20 0.070 150) 100%);
   }
 
   .travel-hero-atmosphere {
