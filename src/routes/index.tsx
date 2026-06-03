@@ -1,195 +1,158 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  LayoutGrid,
-  ListChecks,
-  Activity,
-  FolderKanban,
-  BookOpen,
-  Handshake,
-  Zap,
-  Award,
-  ShieldCheck,
-  Scale,
-  ClipboardCheck,
-  AlertTriangle,
-  FileBarChart,
-  Sparkles,
-  Bot,
-  Settings,
-  Moon,
-  Sun,
-  ChevronDown,
+  CheckSquare, Settings2, FilePlus, FileText, HeartPulse, Plane, Receipt, Sparkles,
+  Sheet, Users, FileSignature, Shield, Megaphone, Brain, Cog, Handshake,
+  Briefcase, DraftingCompass, Atom, Calculator, ClipboardList, TrendingUp,
+  Scale, Cpu, BadgeCheck, HardHat, Truck, BarChart3, Building2, Headphones, GraduationCap,
 } from "lucide-react";
-import { useState, type ComponentType } from "react";
-import energyImg from "@/assets/energy.jpg";
+import { SharePointBrandIcon, SapBrandIcon } from "@/components/brand-icons";
+import { TopBar } from "@/components/TopBar";
+import { GreetingHero } from "@/components/GreetingHero";
+import { AnnouncementsBar } from "@/components/AnnouncementsBar";
+import { SectionHeading } from "@/components/SectionHeading";
+import { ModuleTile } from "@/components/ModuleTile";
+import { SparkleFab } from "@/components/SparkleFab";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Resolven — Enterprise Operations Platform" },
-      { name: "description", content: "Resolven unifies monitoring, governance, compliance and AI insights for renewable energy operations." },
+      { title: "Home — Resolven Hub" },
+      { name: "description", content: "Your Resolven workspace: modules, announcements, and AI." },
     ],
   }),
-  component: Home,
+  component: HomePage,
 });
 
-type Tone = "purple" | "green" | "lavender" | "lightGreen" | "gray";
+const selfService = [
+  { icon: CheckSquare, title: "My Tasks", subtitle: "Every pending action across modules", tone: "purple" as const },
+  { icon: Settings2, title: "IT Support", subtitle: "Raise a ticket · Service Desk", tone: "green" as const },
+  { icon: FilePlus, title: "Raise IT Ticket", subtitle: "Report issue, request service or view history", tone: "lavender" as const },
+  { icon: FileText, title: "Policies", subtitle: "Browse all published policies across departments", tone: "green-light" as const },
+  { icon: HeartPulse, title: "Medical & Benefits", subtitle: "Insurance, wellness, reimbursement claims", tone: "grey" as const },
+  { icon: Plane, title: "Travel Request", subtitle: "Raise domestic + international travel", tone: "purple" as const, to: "/travel-request" },
 
-const toneStyles: Record<Tone, string> = {
-  purple: "bg-[var(--brand-purple)] text-white",
-  green: "bg-[var(--brand-green)] text-white",
-  lavender: "bg-[var(--brand-purple-soft)] text-[var(--brand-purple)]",
-  lightGreen: "bg-[var(--brand-green-soft)] text-[oklch(0.32_0.12_150)]",
-  gray: "bg-[var(--brand-gray-soft)] text-[var(--brand-gray)]",
-};
-
-type Module = { title: string; desc: string; icon: ComponentType<{ className?: string }>; tone: Tone };
-
-const modules: Module[] = [
-  { title: "Dashboard", desc: "Portfolio health and executive KPIs", icon: LayoutGrid, tone: "purple" },
-  { title: "My Tasks", desc: "Approvals and pending actions", icon: ListChecks, tone: "lavender" },
-  { title: "Central Monitoring", desc: "Live alarms and plant performance", icon: Activity, tone: "green" },
-  { title: "Project Management", desc: "Tracking, milestones and execution", icon: FolderKanban, tone: "purple" },
-  { title: "Knowledge Vault", desc: "Documents and searchable knowledge", icon: BookOpen, tone: "lavender" },
-  { title: "HOTO", desc: "Handover, takeover and maintenance operations", icon: Handshake, tone: "gray" },
-  { title: "Digital Function", desc: "ITSM, IT assets, IT budget and planner", icon: Zap, tone: "green" },
-  { title: "Quality Management", desc: "Supplier quality and governance workflows", icon: Award, tone: "lightGreen" },
-  { title: "HSE", desc: "Incidents, audits and safe-hours management", icon: ShieldCheck, tone: "purple" },
-  { title: "Contracts & Obligations", desc: "Contract intake, legal review and obligation tracking", icon: Scale, tone: "purple" },
-  { title: "Compliances", desc: "Regulatory timelines and controls", icon: ClipboardCheck, tone: "lightGreen" },
-  { title: "Risk & Governance", desc: "Enterprise risk and mitigation controls", icon: AlertTriangle, tone: "gray" },
-  { title: "Reports", desc: "Scheduled and ad-hoc reporting", icon: FileBarChart, tone: "lavender" },
-  { title: "Resolven AI", desc: "Contextual insights and copilot actions", icon: Sparkles, tone: "green" },
-  { title: "AI Studio", desc: "Build and deploy custom agents", icon: Bot, tone: "purple" },
-  { title: "Admin Setting", desc: "Access to admin settings", icon: Settings, tone: "lavender" },
+  { icon: Receipt, title: "Expense Claims", subtitle: "Submit + track reimbursement claims", tone: "green" as const, to: "/expense-claims" },
+  { icon: Sparkles, title: "Idea", subtitle: "Share ideas, track reviews + outcomes", tone: "lavender" as const },
 ];
 
-function Home() {
-  const [dark, setDark] = useState(false);
+const business = [
+  { icon: SharePointBrandIcon, title: "Zelestra SharePoint", subtitle: "Intranet docs, team sites, shared drives", tone: "green" as const, pinned: true, brand: true },
+  { icon: SapBrandIcon, title: "Zelestra SAP", subtitle: "Enterprise resource planning (Hana cloud)", tone: "purple" as const, pinned: true, brand: true },
+  { icon: Sheet, title: "Smartsheets", subtitle: "Project plans, trackers, team workspaces", tone: "lavender" as const },
+  { icon: Users, title: "Taxcon HRMS", subtitle: "Payroll, attendance, HR letters (India)", tone: "green-light" as const, pinned: true },
+  { icon: FileSignature, title: "DocuSign", subtitle: "e-Signature for contracts + approvals", tone: "purple" as const },
+  { icon: Cog, title: "HOTO", subtitle: "Handover, takeover and maintenance operations", tone: "grey" as const },
+  { icon: Shield, title: "Permit System", subtitle: "Permit to Work — S1, S2, S3 workflow", tone: "green" as const },
+  { icon: Megaphone, title: "Announcements", subtitle: "Corporate updates and visibility windows", tone: "lavender" as const },
+  { icon: Brain, title: "Resolven AI", subtitle: "Contextual insights and copilot actions", tone: "green" as const, pinned: true },
+  { icon: Handshake, title: "Admin Hub", subtitle: "Global masters, RBAC, module config", tone: "purple" as const },
+];
 
+const departments = [
+  { icon: Users, label: "Human Resources", tone: "purple" as const },
+  { icon: Calculator, label: "Finance", tone: "green" as const },
+  { icon: DraftingCompass, label: "Engineering", tone: "lavender" as const },
+  { icon: ClipboardList, label: "Procurement", tone: "green-light" as const },
+  { icon: TrendingUp, label: "Marketing", tone: "grey" as const },
+  { icon: Scale, label: "Legal", tone: "green" as const },
+  { icon: Cpu, label: "IT", tone: "purple" as const },
+  { icon: BadgeCheck, label: "Quality", tone: "green-light" as const },
+  { icon: HardHat, label: "HSE", tone: "lavender" as const },
+  { icon: Truck, label: "Supply Chain", tone: "purple" as const },
+  { icon: Atom, label: "R&D", tone: "grey" as const },
+  { icon: Briefcase, label: "Operations", tone: "green" as const },
+  { icon: BarChart3, label: "Strategy", tone: "green-light" as const },
+  { icon: Building2, label: "Business Dev", tone: "lavender" as const },
+  { icon: Headphones, label: "Customer Care", tone: "green" as const },
+  { icon: GraduationCap, label: "Learning", tone: "purple" as const },
+];
+
+const toneBg: Record<string, string> = {
+  purple: "tile-purple",
+  green: "tile-green",
+  lavender: "tile-lavender",
+  "green-light": "tile-green-light",
+  grey: "tile-grey",
+};
+
+function HomePage() {
   return (
-    <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen bg-background text-foreground">
-        {/* Top bar */}
-        <header className="bg-card border-b border-border">
-          <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4">
-            <Logo />
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setDark((d) => !d)}
-                className="rounded-md p-2 text-muted-foreground hover:bg-muted transition"
-                aria-label="Toggle theme"
-              >
-                {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </button>
-              <div className="flex items-center gap-1 rounded-md border border-border bg-[var(--brand-purple-soft)] px-2 py-1">
-                <span className="grid h-8 w-8 place-items-center rounded bg-[var(--brand-purple)] font-semibold text-white">SS</span>
-                <ChevronDown className="h-4 w-4 text-[var(--brand-purple)]" />
+    <div className="min-h-screen">
+      <TopBar />
+      <main className="mx-auto w-full max-w-[1400px] space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-8 md:space-y-10 md:py-10">
+        <GreetingHero name="Samarth Sachdeva" />
+        <AnnouncementsBar />
+
+        <section className="space-y-4 sm:space-y-5">
+          <div className="flex items-end justify-between gap-4 px-1">
+            <div>
+              <div className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+                Workspace
+              </div>
+              <h2 className="mt-1 text-lg sm:text-xl md:text-2xl">
+                <span className="text-primary dark:text-white">All</span>{" "}
+                <span className="text-accent">Modules</span>
+              </h2>
+            </div>
+            <Link
+              to="/modules"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-card/80 px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-accent shadow-soft backdrop-blur transition-all duration-300 hover:border-accent/40 hover:shadow-elev"
+            >
+              View all
+              <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5">↗</span>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 sm:gap-8 lg:grid-cols-2">
+            <div className="surface animate-rise rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8">
+              <SectionHeading eyebrow="PERSONAL" primary="Employee" accent="Self-Service" />
+              <div className="grid grid-cols-1 gap-3 sm:gap-3.5 sm:grid-cols-2">
+                {selfService.map((m) => (
+                  <ModuleTile key={m.title} {...m} />
+                ))}
+              </div>
+            </div>
+
+            <div className="surface animate-rise rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8">
+              <SectionHeading eyebrow="WORKSPACES" primary="Business" accent="Modules" />
+              <div className="grid grid-cols-1 gap-3 sm:gap-3.5 sm:grid-cols-2">
+                {business.slice(0, 8).map((m) => (
+                  <ModuleTile key={m.title} {...m} />
+                ))}
               </div>
             </div>
           </div>
-        </header>
+        </section>
 
-        <main className="mx-auto max-w-[1400px] px-6 py-8">
-          {/* Welcome */}
-          <section className="relative overflow-hidden rounded-2xl">
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto] lg:items-start">
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
-                  <span className="text-[var(--brand-purple)]">Good Morning,</span>{" "}
-                  <span className="text-[var(--brand-green)]">Samarth Sachdeva</span>
-                </h1>
-                <p className="mt-3 font-semibold text-[var(--brand-purple)]">Welcome back</p>
-                <p className="text-sm text-muted-foreground">Last login 4/6/2026, 9:53:46 AM</p>
+        <section className="surface animate-rise rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8">
+          <SectionHeading
+            eyebrow="SHAREPOINT"
+            primary="Department"
+            accent="Folders"
+            right={<span className="text-xs font-light text-muted-foreground">16 departments</span>}
+          />
+          <div className="grid grid-cols-3 gap-2.5 sm:gap-3 sm:grid-cols-4 lg:grid-cols-8">
+            {departments.map((d) => (
+              <div
+                key={d.label}
+                className="dept-card module-card group flex flex-col items-center gap-2 sm:gap-2.5 rounded-xl sm:rounded-2xl p-3 sm:p-3.5"
+              >
+                <div className={`tile ${toneBg[d.tone]} h-9 w-9 sm:h-10 sm:w-10 rounded-lg sm:rounded-xl`}>
+                  <d.icon className="h-4 w-4 sm:h-[1.05rem] sm:w-[1.05rem]" strokeWidth={1.75} />
+                </div>
+                <div className="text-center text-[10.5px] sm:text-[11.5px] font-medium leading-tight">
+                  {d.label}
+                </div>
               </div>
-              <div className="flex gap-3">
-                {[0, 1].map((i) => (
-                  <div
-                    key={i}
-                    className="h-32 w-28 overflow-hidden rounded-xl shadow-sm md:h-36 md:w-36"
-                    style={{ clipPath: "polygon(12% 0, 100% 0, 88% 100%, 0 100%)" }}
-                  >
-                    <img
-                      src={energyImg}
-                      alt="Renewable energy"
-                      width={1024}
-                      height={1024}
-                      className="h-full w-full object-cover"
-                      style={{ objectPosition: i === 0 ? "left center" : "right center" }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
+            ))}
+          </div>
+        </section>
 
-          {/* Announcements */}
-          <section className="mt-8">
-            <h2 className="text-xs font-bold tracking-[0.18em] text-[var(--brand-purple)]">ANNOUNCEMENTS</h2>
-            <div className="mt-3 flex items-center overflow-hidden rounded-md">
-              <div className="flex flex-1 items-center gap-3 bg-[var(--brand-green)] px-4 py-3 text-sm text-white">
-                <span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-green-soft)] ring-2 ring-white/60" />
-                <p>
-                  <span className="font-semibold">Corporate announcement:</span>{" "}
-                  Planned release window on Friday 10 PM IST.
-                </p>
-              </div>
-              <div className="flex h-12 items-stretch gap-1.5 bg-[var(--brand-green)] px-3">
-                {[0, 1, 2, 3].map((i) => (
-                  <span
-                    key={i}
-                    className="w-3 bg-[var(--brand-green-soft)]/70"
-                    style={{ clipPath: "polygon(30% 0, 100% 0, 70% 100%, 0 100%)" }}
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Modules */}
-          <section className="mt-10">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xs font-bold tracking-[0.18em] text-[var(--brand-purple)]">BUSINESS MODULES</h2>
-              <button className="text-xs font-bold tracking-[0.18em] text-[var(--brand-green)] hover:underline">
-                VIEW ALL
-              </button>
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {modules.map((m) => {
-                const Icon = m.icon;
-                return (
-                  <button
-                    key={m.title}
-                    className="group flex flex-col items-start rounded-xl bg-card p-4 text-left shadow-sm ring-1 ring-border/60 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-[var(--brand-purple)]/30"
-                  >
-                    <span className={`grid h-11 w-11 place-items-center rounded-xl ${toneStyles[m.tone]} shadow-sm`}>
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <h3 className="mt-4 text-sm font-semibold text-foreground">{m.title}</h3>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{m.desc}</p>
-                  </button>
-                );
-              })}
-            </div>
-          </section>
-        </main>
-      </div>
-    </div>
-  );
-}
-
-function Logo() {
-  return (
-    <div className="flex items-center gap-2">
-      <span className="text-2xl font-extrabold tracking-tight text-[var(--brand-purple)]">
-        RES
-        <span className="relative inline-block">
-          <span className="relative z-10">O</span>
-          <span className="absolute inset-0 -m-0.5 rounded-full bg-gradient-to-br from-[var(--brand-green)] to-[var(--brand-purple)] opacity-90" />
-        </span>
-        LVEN
-      </span>
+        <footer className="py-6 sm:py-8 text-center text-[10px] sm:text-[11px] font-light tracking-wide text-muted-foreground">
+          © 2026 Resolve In Action · Built with the Resolven Design System
+        </footer>
+      </main>
+      <SparkleFab />
     </div>
   );
 }
