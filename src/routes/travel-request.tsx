@@ -83,12 +83,10 @@ function HeroThemeToggle() {
 
 function BrandedHero() {
   return (
-    <section
-      className="travel-hero relative overflow-hidden rounded-2xl border border-border/60 shadow-soft sm:rounded-[1.4rem]"
-    >
+    <header className="travel-hero relative w-full overflow-hidden border-b border-white/10 shadow-soft">
       <div className="travel-hero-atmosphere pointer-events-none absolute inset-0 mix-blend-screen" />
-      <div className="relative flex min-h-[72px] items-center justify-between gap-4 px-5 py-4 sm:min-h-[84px] sm:px-8">
-        <h1 className="font-display italic font-bold tracking-tight text-white text-[1.5rem] sm:text-[1.8rem] md:text-[2rem] leading-none">
+      <div className="relative mx-auto flex h-14 w-full max-w-[1400px] items-center justify-between gap-4 px-4 sm:h-16 sm:px-6">
+        <h1 className="font-display italic font-bold tracking-tight text-white text-[1.15rem] sm:text-[1.35rem] md:text-[1.5rem] leading-none">
           Travel Request
         </h1>
         <div className="flex items-center gap-1 sm:gap-2">
@@ -102,7 +100,7 @@ function BrandedHero() {
           </Link>
         </div>
       </div>
-    </section>
+    </header>
   );
 }
 
