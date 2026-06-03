@@ -38,8 +38,8 @@ function ExpenseClaimsPage() {
 
   return (
     <div className="min-h-screen">
+      <BrandedHero />
       <main className="mx-auto w-full max-w-[1400px] space-y-5 px-4 py-5 sm:space-y-7 sm:px-6 sm:py-8">
-        <BrandedHero />
         <TabBar tab={tab} onChange={setTab} />
 
         <div className="animate-rise">
@@ -60,27 +60,48 @@ function ExpenseClaimsPage() {
 
 /* ---------- Shared chrome ---------- */
 
+function HeroThemeToggle() {
+  const [dark, setDark] = useState(false);
+  useEffect(() => {
+    setDark(document.documentElement.classList.contains("dark"));
+  }, []);
+  const toggle = () => {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    try { localStorage.setItem("resolven-theme", next ? "dark" : "light"); } catch {}
+  };
+  return (
+    <button
+      onClick={toggle}
+      aria-label="Toggle theme"
+      className="inline-flex h-9 w-9 items-center justify-center text-white/85 transition-all duration-200 hover:text-white hover:-translate-y-0.5"
+    >
+      {dark ? <Sun className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.9} /> : <Moon className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.9} />}
+    </button>
+  );
+}
+
 function BrandedHero() {
   return (
-    <section className="travel-hero relative overflow-hidden rounded-2xl border border-border/60 shadow-soft sm:rounded-[1.4rem]">
+    <header className="travel-hero relative w-full overflow-hidden border-b border-white/10 shadow-soft">
       <div className="travel-hero-atmosphere pointer-events-none absolute inset-0 mix-blend-screen" />
-      <div className="relative flex min-h-[88px] items-center px-5 py-5 sm:min-h-[100px] sm:px-8">
-        <Link
-          to="/"
-          aria-label="Back to home"
-          className="group inline-flex min-w-0 max-w-2xl items-center gap-2.5 sm:gap-3"
-        >
-          <ArrowLeft
-            className="shrink-0 text-[#3DB769] transition-all duration-200 group-hover:-translate-x-0.5 group-hover:opacity-80"
-            style={{ width: "1.15rem", height: "1.15rem" }}
-            strokeWidth={2.4}
-          />
-          <h1 className="text-2xl text-white sm:text-[1.75rem] md:text-[2rem]">
-            Expense Claims
-          </h1>
-        </Link>
+      <div className="relative mx-auto flex h-14 w-full max-w-[1400px] items-center justify-between gap-4 px-4 sm:h-16 sm:px-6">
+        <h1 className="font-display italic font-bold tracking-tight text-white text-[1.15rem] sm:text-[1.35rem] md:text-[1.5rem] leading-none">
+          Expense Claims
+        </h1>
+        <div className="flex items-center gap-1 sm:gap-2">
+          <HeroThemeToggle />
+          <Link
+            to="/"
+            aria-label="Home"
+            className="inline-flex h-9 w-9 items-center justify-center text-white/85 transition-all duration-200 hover:text-white hover:-translate-y-0.5"
+          >
+            <Home className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.9} />
+          </Link>
+        </div>
       </div>
-    </section>
+    </header>
   );
 }
 
