@@ -37,8 +37,8 @@ function TravelRequestPage() {
 
   return (
     <div className="min-h-screen">
+      <BrandedHero />
       <main className="mx-auto w-full max-w-[1400px] space-y-5 px-4 py-5 sm:space-y-7 sm:px-6 sm:py-8">
-        <BrandedHero />
         <TabBar tab={tab} onChange={setTab} />
 
         <div className="animate-rise">
