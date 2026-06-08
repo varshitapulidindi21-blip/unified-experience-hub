@@ -117,6 +117,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthGuard>
         <Outlet />
+        <BottomNav />
       </AuthGuard>
     </QueryClientProvider>
   );
