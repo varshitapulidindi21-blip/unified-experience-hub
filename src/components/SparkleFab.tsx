@@ -33,16 +33,7 @@ export function SparkleFab() {
   const isMobile = useIsMobile();
 
   if (isMobile) {
-    return (
-      <Link
-        to="/resolven-ai"
-        aria-label="Open Resolven AI"
-        style={{ bottom: "calc(env(safe-area-inset-bottom) + 5.5rem)" }}
-        className="group fixed right-5 z-40 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#C8B6D8] shadow-glow ring-1 ring-black/5 transition-all duration-500 active:scale-95 dark:bg-[oklch(0.203_0.05_290)]"
-      >
-        <img src={aiLogo} alt="" className="relative h-7 w-7 object-contain" />
-      </Link>
-    );
+    return null;
   }
 
   return (
