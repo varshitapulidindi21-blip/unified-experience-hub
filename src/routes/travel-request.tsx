@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { SparkleFab } from "@/components/SparkleFab";
 import { DualHeading } from "@/components/DualHeading";
+import { MobileAppHeader } from "@/components/MobileAppHeader";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/travel-request")({
@@ -38,8 +39,9 @@ function TravelRequestPage() {
 
   return (
     <div className="min-h-screen">
-      <BrandedHero />
-      <main className="mx-auto w-full max-w-[1400px] space-y-5 px-4 py-5 sm:space-y-7 sm:px-6 sm:py-8">
+      <div className="hidden md:block"><BrandedHero /></div>
+      <main className="mx-auto w-full max-w-[1400px] space-y-4 px-4 py-4 sm:space-y-7 sm:px-6 sm:py-8">
+        <MobileAppHeader pageLabel="Travel" searchPlaceholder="Search requests, policies…" />
         <TabBar tab={tab} onChange={setTab} />
 
         <div className="animate-rise">
@@ -107,7 +109,7 @@ function BrandedHero() {
 
 function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) => void }) {
   return (
-    <div className="surface rounded-2xl p-1.5 sm:p-2 overflow-x-auto scrollbar-hide">
+    <div className="mobile-tab-rail surface rounded-2xl p-1.5 sm:p-2 overflow-x-auto scrollbar-hide">
       <div className="flex min-w-max gap-1 lg:grid lg:min-w-0 lg:grid-cols-7">
         {TABS.map(({ key, label, icon: Icon }) => {
           const active = tab === key;
@@ -137,7 +139,7 @@ function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) => void 
 
 function Card({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("surface rounded-2xl p-5 sm:p-6", className)}>{children}</div>
+    <div className={cn("app-card surface rounded-2xl p-5 sm:p-6", className)}>{children}</div>
   );
 }
 
