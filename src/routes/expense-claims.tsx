@@ -401,7 +401,7 @@ function NewClaimTab({ onCancel }: { onCancel: () => void }) {
             {items.map((it, i) => (
               <div key={it.id} className="relative rounded-2xl border border-border/70 bg-card/60 p-4 sm:p-5 shadow-soft backdrop-blur">
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-primary ring-1 ring-primary/15">
                     <Receipt className="h-3.5 w-3.5" /> Item {i + 1}
                   </span>
                   {items.length > 1 && (
@@ -480,7 +480,7 @@ function NewClaimTab({ onCancel }: { onCancel: () => void }) {
       )}
 
       {/* Sticky action bar */}
-      <div className="sticky bottom-3 sm:bottom-4 z-20 mt-4">
+      <div className="sticky-cta sticky bottom-3 sm:bottom-4 z-20 mt-4">
         <div className="surface flex items-center justify-between gap-2 rounded-2xl px-3 py-2.5 sm:px-4">
           <button onClick={onCancel} className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-[12.5px] font-medium text-muted-foreground transition hover:bg-secondary/60 hover:text-foreground">
             <X className="h-4 w-4" /> Cancel

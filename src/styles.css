@@ -540,7 +540,7 @@
     .mobile-module-rail {
       display: grid;
       grid-auto-flow: column;
-      grid-template-rows: repeat(2, 5.95rem);
+      grid-template-rows: repeat(2, calc((100vw - 3.4rem) / 3));
       grid-auto-columns: calc((100vw - 3.4rem) / 3);
       gap: 0.7rem;
       margin-inline: -1rem;
