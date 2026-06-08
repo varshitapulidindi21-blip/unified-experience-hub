@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { AuthGuard } from "@/components/AuthGuard";
+import { BottomNav } from "@/components/BottomNav";
 
 function NotFoundComponent() {
   return (
@@ -116,6 +117,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthGuard>
         <Outlet />
+        <BottomNav />
       </AuthGuard>
     </QueryClientProvider>
   );
