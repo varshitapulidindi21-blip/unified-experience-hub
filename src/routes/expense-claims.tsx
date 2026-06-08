@@ -459,7 +459,7 @@ function NewClaimTab({ onCancel }: { onCancel: () => void }) {
 
       {section === "summary" && (
         <Card>
-          <DualHeading text="Review submit" />
+          <DualHeading text="Review & submit" />
           <p className="mt-1 text-[12px] font-light text-muted-foreground">Verify your claim details below. You can return to any section to edit before submitting.</p>
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {[

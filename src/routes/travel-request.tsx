@@ -8,6 +8,7 @@ import {
   Home, Moon, Sun, BadgeCheck,
 } from "lucide-react";
 import { SparkleFab } from "@/components/SparkleFab";
+import { DualHeading } from "@/components/DualHeading";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/travel-request")({
@@ -213,7 +214,7 @@ function DashboardTab({ onNew }: { onNew: () => void }) {
       <Card>
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h3 className="text-base sm:text-lg text-foreground">Recent requests</h3>
+            <DualHeading text="Recent requests" />
             <p className="mt-0.5 text-[11.5px] font-light text-muted-foreground">Your latest activity at a glance.</p>
           </div>
           <button onClick={onNew} className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-[11.5px] font-medium uppercase tracking-[0.14em] text-primary-foreground shadow-soft transition hover:shadow-elev">
@@ -351,7 +352,7 @@ function NewRequestTab({ onCancel }: { onCancel: () => void }) {
           <Card>
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h3 className="text-base sm:text-lg text-foreground">Travel legs</h3>
+                <DualHeading text="Travel legs" />
                 <p className="mt-0.5 text-[11.5px] font-light text-muted-foreground">Multi-city trips: add a leg per hop. Returns can be entered as the last leg or via Return date.</p>
               </div>
               <button onClick={addLeg} className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-[11.5px] font-medium uppercase tracking-[0.14em] text-white shadow-soft transition hover:bg-primary/90 hover:shadow-elev">
@@ -455,7 +456,7 @@ function NewRequestTab({ onCancel }: { onCancel: () => void }) {
 
       {section === "summary" && (
         <Card>
-          <h3 className="text-base sm:text-lg text-foreground">Review & submit</h3>
+          <DualHeading text="Review & submit" />
           <p className="mt-1 text-[12px] font-light text-muted-foreground">Verify your details below. You can return to any section to edit before submitting.</p>
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {[
@@ -555,7 +556,7 @@ function ApprovalRulesTab() {
   return (
     <div className="space-y-5">
       <Card>
-        <h3 className="text-base sm:text-lg text-foreground">Add rule</h3>
+        <DualHeading text="Add rule" />
         <p className="mt-0.5 text-[11.5px] font-light text-muted-foreground">Define an approval level with optional travel/urgency/cost gates.</p>
         <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           <Field label="Name"><input className={inputClass} placeholder="Rule name" /></Field>
@@ -696,7 +697,7 @@ function TravelEntitlementTab() {
       <Card>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h3 className="text-base sm:text-lg text-foreground">Travel Entitlement Matrix</h3>
+            <DualHeading text="Travel Entitlement Matrix" />
             <p className="mt-1 text-[12px] font-light text-muted-foreground">
               Approved travel, accommodation, and per-diem ceilings by grade. Used to validate every travel request automatically.
             </p>
