@@ -580,14 +580,8 @@
 
     .mobile-folder-rail {
       display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: 7.1rem;
+      grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
       gap: 0.7rem;
-      margin-inline: -1rem;
-      overflow-x: auto;
-      padding: 0 1rem 0.25rem;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
     }
     .mobile-folder-tile {
       min-height: 4.15rem !important;
