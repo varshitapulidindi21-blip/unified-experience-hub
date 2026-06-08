@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { SparkleFab } from "@/components/SparkleFab";
 import { DualHeading } from "@/components/DualHeading";
+import { MobileAppHeader } from "@/components/MobileAppHeader";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/expense-claims")({
@@ -39,8 +40,9 @@ function ExpenseClaimsPage() {
 
   return (
     <div className="min-h-screen">
-      <BrandedHero />
-      <main className="mx-auto w-full max-w-[1400px] space-y-5 px-4 py-5 sm:space-y-7 sm:px-6 sm:py-8">
+      <div className="hidden md:block"><BrandedHero /></div>
+      <main className="mx-auto w-full max-w-[1400px] space-y-4 px-4 py-4 sm:space-y-7 sm:px-6 sm:py-8">
+        <MobileAppHeader pageLabel="Claims" searchPlaceholder="Search claims, queues…" />
         <TabBar tab={tab} onChange={setTab} />
 
         <div className="animate-rise">
@@ -108,7 +110,7 @@ function BrandedHero() {
 
 function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) => void }) {
   return (
-    <div className="surface rounded-2xl p-1.5 sm:p-2 overflow-x-auto scrollbar-hide">
+    <div className="mobile-tab-rail surface rounded-2xl p-1.5 sm:p-2 overflow-x-auto scrollbar-hide">
       <div className="flex min-w-max gap-1 lg:grid lg:min-w-0 lg:grid-cols-8">
         {TABS.map(({ key, label, icon: Icon }) => {
           const active = tab === key;
@@ -137,7 +139,7 @@ function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) => void 
 /* ---------- Reusable bits ---------- */
 
 function Card({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={cn("surface rounded-2xl p-5 sm:p-6", className)}>{children}</div>;
+  return <div className={cn("app-card surface rounded-2xl p-5 sm:p-6", className)}>{children}</div>;
 }
 
 function StatusPill({ status }: { status: "approved" | "pending" | "rejected" | "draft" | "paid" }) {
@@ -399,7 +401,7 @@ function NewClaimTab({ onCancel }: { onCancel: () => void }) {
             {items.map((it, i) => (
               <div key={it.id} className="relative rounded-2xl border border-border/70 bg-card/60 p-4 sm:p-5 shadow-soft backdrop-blur">
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-primary ring-1 ring-primary/15">
                     <Receipt className="h-3.5 w-3.5" /> Item {i + 1}
                   </span>
                   {items.length > 1 && (
@@ -478,7 +480,7 @@ function NewClaimTab({ onCancel }: { onCancel: () => void }) {
       )}
 
       {/* Sticky action bar */}
-      <div className="sticky bottom-3 sm:bottom-4 z-20 mt-4">
+      <div className="sticky-cta sticky bottom-3 sm:bottom-4 z-20 mt-4">
         <div className="surface flex items-center justify-between gap-2 rounded-2xl px-3 py-2.5 sm:px-4">
           <button onClick={onCancel} className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-[12.5px] font-medium text-muted-foreground transition hover:bg-secondary/60 hover:text-foreground">
             <X className="h-4 w-4" /> Cancel

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { type ComponentType, type SVGProps, useState } from "react";
 import { ArrowLeft,
   CheckSquare, Settings2, FilePlus, FileText, HeartPulse, Plane, Receipt, Sparkles,
   Sheet, Users, FileSignature, Cog, Shield, Megaphone, Brain, Handshake,
@@ -7,6 +8,7 @@ import { SharePointBrandIcon, SapBrandIcon } from "@/components/brand-icons";
 import { TopBar } from "@/components/TopBar";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ModuleTile } from "@/components/ModuleTile";
+import { MobileAppHeader } from "@/components/MobileAppHeader";
 
 export const Route = createFileRoute("/modules")({
   head: () => ({
@@ -44,11 +46,41 @@ const workspaces = [
 ];
 
 function ModulesPage() {
+  const [workspace, setWorkspace] = useState<"ess" | "bm">("ess");
+  const active = workspace === "ess" ? personal : workspaces;
+
   return (
     <div className="min-h-screen">
-      <TopBar />
-      <main className="mx-auto w-full max-w-[1400px] space-y-6 sm:space-y-10 px-4 sm:px-6 py-6 sm:py-10">
-        <div className="flex items-start justify-between gap-4 sm:gap-6">
+      <div className="hidden md:block"><TopBar /></div>
+      <main className="mx-auto w-full max-w-[1400px] space-y-4 px-4 py-4 sm:space-y-10 sm:px-6 sm:py-10">
+        <MobileAppHeader pageLabel="Modules" />
+
+        <section className="mobile-native-section md:hidden">
+          <div className="mobile-segmented" role="tablist" aria-label="Workspace">
+            {[["ess", "ESS"], ["bm", "BM"]].map(([key, label]) => (
+              <button
+                key={key}
+                role="tab"
+                aria-selected={workspace === key}
+                onClick={() => setWorkspace(key as "ess" | "bm")}
+                className={workspace === key ? "is-active" : ""}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {workspace === "ess" ? (
+            <div className="mobile-module-grid mt-3">
+              {active.map((m) => <MobileModuleTile key={m.title} {...m} />)}
+            </div>
+          ) : (
+            <div className="mobile-module-rail mt-3">
+              {active.map((m) => <MobileModuleTile key={m.title} {...m} />)}
+            </div>
+          )}
+        </section>
+
+        <div className="hidden items-start justify-between gap-4 sm:gap-6 md:flex">
           <div className="flex items-center gap-3 sm:gap-4">
             <Link
               to="/"
@@ -66,7 +98,7 @@ function ModulesPage() {
           </p>
         </div>
 
-        <section className="surface animate-rise rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-8">
+        <section className="hidden surface animate-rise rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:block md:p-8">
           <SectionHeading
             eyebrow="PERSONAL"
             primary="Employee"
@@ -78,7 +110,7 @@ function ModulesPage() {
           </div>
         </section>
 
-        <section className="surface animate-rise rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:p-8">
+        <section className="hidden surface animate-rise rounded-2xl sm:rounded-3xl p-4 sm:p-7 md:block md:p-8">
           <SectionHeading
             eyebrow="WORKSPACES"
             primary="Business"
@@ -92,4 +124,38 @@ function ModulesPage() {
       </main>
     </div>
   );
+}
+
+const toneBg = {
+  purple: "tile-purple",
+  green: "tile-green",
+  lavender: "tile-lavender",
+  "green-light": "tile-green-light",
+  grey: "tile-grey",
+};
+
+function MobileModuleTile({
+  icon: Icon,
+  title,
+  tone = "purple",
+  brand,
+  to,
+}: {
+  icon: ComponentType<SVGProps<SVGSVGElement> & { strokeWidth?: number | string }>;
+  title: string;
+  tone?: keyof typeof toneBg;
+  brand?: boolean;
+  to?: string;
+}) {
+  const content = (
+    <>
+      <span className={brand ? "mobile-brand-icon" : `mobile-app-icon ${toneBg[tone]}`}>
+        <Icon className="h-5 w-5" strokeWidth={1.8} />
+      </span>
+      <span className="line-clamp-2 text-center text-[0.72rem] font-medium leading-tight text-foreground">
+        {title.replace(" Request", "").replace(" Claims", "")}
+      </span>
+    </>
+  );
+  return to ? <Link to={to} className="mobile-module-tile">{content}</Link> : <button className="mobile-module-tile">{content}</button>;
 }

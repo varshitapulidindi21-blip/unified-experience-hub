@@ -5,6 +5,7 @@ import {
   Search, MoreHorizontal, Edit3, Trash2, Pin, Share2, Menu, X, Clock,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { MobileAppHeader } from "@/components/MobileAppHeader";
 import aiLogo from "@/assets/resolven-ai-logo.png";
 
 export const Route = createFileRoute("/resolven-ai")({
@@ -72,7 +73,9 @@ function AIPage() {
         }}
       />
 
-      <header className="sticky top-0 z-30 w-full border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/45">
+      <MobileAppHeader pageLabel="AI" searchPlaceholder="Search chats and tools…" />
+
+      <header className="sticky top-0 z-30 hidden w-full border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/45 md:block">
         <div className="mx-auto flex h-14 sm:h-16 w-full max-w-[1400px] items-center px-2 sm:px-4">
           {/* Sidebar toggle: collapsed → logo with hover→hamburger swap; expanded → logo left + hamburger right */}
           {sidebarExpanded ? (
@@ -166,9 +169,9 @@ function AIPage() {
         )}
 
         {/* Main chat area */}
-        <section className="relative flex min-h-[calc(100vh-3.5rem)] sm:min-h-[calc(100vh-4rem)] flex-1 flex-col">
+        <section className="relative flex min-h-[calc(100vh-11rem)] flex-1 flex-col sm:min-h-[calc(100vh-4rem)]">
           {/* Greeting */}
-          <div className="flex flex-1 items-center justify-center px-5 sm:px-10 md:px-16 pt-8 sm:pt-10 pb-32 sm:pb-10">
+          <div className="flex flex-1 items-center justify-center px-5 pt-3 pb-44 sm:px-10 sm:pt-10 sm:pb-10 md:px-16">
             <div className="relative flex w-full max-w-2xl flex-col items-center text-center">
               <div className="relative flex items-center justify-center">
                 {/* Soft aura */}
@@ -183,18 +186,18 @@ function AIPage() {
                 <img
                   src={aiLogo}
                   alt="Resolven AI"
-                  className="ai-logo-intro relative h-24 w-24 sm:h-32 sm:w-32 object-contain drop-shadow-[0_10px_30px_rgba(80,40,160,0.35)]"
+                  className="ai-logo-intro relative h-20 w-20 object-contain drop-shadow-[0_10px_30px_rgba(80,40,160,0.35)] sm:h-32 sm:w-32"
                 />
               </div>
               <h1
-                className="mt-6 sm:mt-8 text-[2rem] sm:text-[2.6rem] md:text-[3rem] tracking-tight leading-[1.05]"
+                className="mt-5 text-[1.55rem] tracking-tight leading-[1.05] sm:mt-8 sm:text-[2.6rem] md:text-[3rem]"
                 style={{ fontFamily: "Montserrat, system-ui, sans-serif", fontWeight: 700, fontStyle: "italic" }}
               >
                 <span className="text-primary dark:text-white">Hi,</span>{" "}
                 <span className="text-accent">Samarth</span>
               </h1>
               <p
-                className="mt-4 text-base sm:text-lg font-light text-muted-foreground"
+                className="mt-3 text-[0.95rem] font-light text-muted-foreground sm:mt-4 sm:text-lg"
                 style={{ fontFamily: "Montserrat, system-ui, sans-serif" }}
               >
                 How can I help you today?
@@ -227,7 +230,7 @@ function AIPage() {
           </div>
 
           {/* Mobile input bar — sticky at bottom */}
-          <div className="sm:hidden fixed inset-x-0 bottom-0 z-20 border-t border-border/50 bg-background/85 backdrop-blur-xl px-3 pt-2.5 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
+          <div className="sm:hidden fixed inset-x-0 z-20 border-t border-border/40 bg-background/85 px-3 pt-2.5 backdrop-blur-xl" style={{ bottom: "calc(env(safe-area-inset-bottom) + 5.25rem)", paddingBottom: "0.7rem" }}>
             <div className="flex items-center gap-1.5 rounded-full border border-border/60 bg-background/90 px-2 py-1.5 shadow-elev focus-within:border-primary/40">
               <button
                 aria-label="Attach files"
