@@ -5,12 +5,19 @@ import { Home, LayoutGrid, Sparkles, User } from "lucide-react";
  * Native-app style bottom navigation for mobile only.
  * Hidden on md+ where the desktop TopBar takes over.
  */
-const ITEMS = [
+type NavItem = {
+  to: "/" | "/modules" | "/resolven-ai" | "/expense-claims";
+  label: string;
+  icon: typeof Home;
+  accent?: boolean;
+};
+
+const ITEMS: NavItem[] = [
   { to: "/", label: "Home", icon: Home },
   { to: "/modules", label: "Modules", icon: LayoutGrid },
   { to: "/resolven-ai", label: "AI", icon: Sparkles, accent: true },
   { to: "/expense-claims", label: "Claims", icon: User },
-] as const;
+];
 
 export function BottomNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
