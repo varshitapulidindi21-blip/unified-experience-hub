@@ -230,7 +230,7 @@ function AIPage() {
           </div>
 
           {/* Mobile input bar — sticky at bottom */}
-          <div className="sm:hidden fixed inset-x-0 z-20 border-t border-border/40 bg-background/85 px-3 pt-2.5 backdrop-blur-xl" style={{ bottom: "calc(env(safe-area-inset-bottom) + 5.25rem)", paddingBottom: "0.7rem" }}>
+          <div className="sm:hidden fixed inset-x-0 z-20 border-t border-border/40 bg-background/85 px-3 pt-2.5 backdrop-blur-xl" style={{ bottom: 0, paddingBottom: "calc(env(safe-area-inset-bottom) + 0.7rem)" }}>
             <div className="flex items-center gap-1.5 rounded-full border border-border/60 bg-background/90 px-2 py-1.5 shadow-elev focus-within:border-primary/40">
               <button
                 aria-label="Attach files"
