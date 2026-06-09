@@ -871,12 +871,16 @@
     }
     .mobile-nav-grid {
       position: relative; z-index: 2;
-      display: grid; grid-template-columns: repeat(5, 1fr);
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+      column-gap: 4.4rem; /* reserves a clear center slot for the floating AI button */
       height: 100%; align-items: end; padding-bottom: 0.4rem;
     }
     .mobile-nav-fab-link {
-      /* tailwind classes already set flex column + padding; keep label
-         on the same baseline as the other nav labels. */
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      z-index: 3;
     }
     .mobile-nav-fab {
       position: relative;
