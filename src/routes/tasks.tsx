@@ -34,11 +34,11 @@ type Task = {
 };
 
 const TASKS: Task[] = [
-  { title: "Approve Wind Farm 12 maintenance PO", tags: [{ label: "Operations", tone: "purple" }, { label: "High", tone: "red" }], due: "Today", section: "approvals", cat: "hoto" },
-  { title: "Sign off Q2 ESG disclosure", tags: [{ label: "Sustainability", tone: "purple" }, { label: "High", tone: "red" }], due: "Tomorrow", progress: 55, section: "approvals", cat: "legal" },
-  { title: "Review 3 travel requests from team", tags: [{ label: "HR", tone: "purple" }, { label: "Med", tone: "amber" }], due: "Wed", section: "approvals", cat: "expense" },
-  { title: "Draft Solar Farm 7 expansion brief", tags: [{ label: "Engineering", tone: "purple" }, { label: "Med", tone: "amber" }], due: "Fri", progress: 35, section: "in_progress", cat: "hoto" },
-  { title: "HSE quarterly audit closeout — Site 12", tags: [{ label: "HSE", tone: "green" }, { label: "Low", tone: "green" }], due: "Next week", progress: 70, section: "in_progress", cat: "hse" },
+  { title: "Approve Wind Farm 12 Maintenance PO", tags: [{ label: "Operations", tone: "purple" }, { label: "High", tone: "red" }], due: "Today", section: "approvals", cat: "hoto" },
+  { title: "Sign Off Q2 ESG Disclosure", tags: [{ label: "Sustainability", tone: "purple" }, { label: "High", tone: "red" }], due: "Tomorrow", progress: 55, section: "approvals", cat: "legal" },
+  { title: "Review 3 Travel Requests From Team", tags: [{ label: "HR", tone: "purple" }, { label: "Med", tone: "amber" }], due: "Wed", section: "approvals", cat: "expense" },
+  { title: "Draft Solar Farm 7 Expansion Brief", tags: [{ label: "Engineering", tone: "purple" }, { label: "Med", tone: "amber" }], due: "Fri", progress: 35, section: "in_progress", cat: "hoto" },
+  { title: "HSE Quarterly Audit Closeout — Site 12", tags: [{ label: "HSE", tone: "green" }, { label: "Low", tone: "green" }], due: "Next week", progress: 70, section: "in_progress", cat: "hse" },
 ];
 
 const DONE_THIS_WEEK = 5;
@@ -68,11 +68,14 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
           <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/70" />
         </div>
         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
-          {t.tags.map((tag) => (
-            <span key={tag.label} className={`task-tag tag-${tag.tone}`}>
-              {tag.label.toUpperCase()}
-            </span>
-          ))}
+          {t.tags.map((tag) => {
+            const label = tag.label.charAt(0).toUpperCase() + tag.label.slice(1).toLowerCase();
+            return (
+              <span key={tag.label} className={`task-tag tag-${tag.tone}`}>
+                {label}
+              </span>
+            );
+          })}
           <span className="inline-flex items-center gap-1 text-[0.62rem] text-muted-foreground">
             <Clock className="h-2.5 w-2.5" strokeWidth={1.8} />
             {t.due}
@@ -90,12 +93,13 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
 
 
 function SectionLabel({ label, count }: { label: string; count: number }) {
+  const formatted = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase();
   return (
     <div className="mt-5 mb-2 flex items-center justify-between px-1">
-      <h2 className="text-[0.72rem] font-bold tracking-[0.22em] text-muted-foreground/80 uppercase">
-        {label}
+      <h2 className="text-[0.95rem] font-normal text-foreground/80" style={{ fontFamily: "var(--font-sans)" }}>
+        {formatted}
       </h2>
-      <span className="text-[0.85rem] font-medium text-muted-foreground/70">{count}</span>
+      <span className="text-[0.85rem] font-normal text-muted-foreground/70">{count}</span>
     </div>
   );
 }
