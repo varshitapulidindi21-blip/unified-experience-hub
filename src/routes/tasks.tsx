@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Clock, ChevronRight } from "lucide-react";
+import { Clock, ChevronRight, Check } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
 import { MobileAppHeader } from "@/components/MobileAppHeader";
 
@@ -44,13 +44,27 @@ const TASKS: Task[] = [
 const DONE_THIS_WEEK = 5;
 const TOTAL_THIS_WEEK = 12;
 
-function TaskCard({ t }: { t: Task }) {
+function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () => void }) {
   return (
     <article className="task-card-v2">
-      <button className="task-checkbox" aria-label="Mark complete" />
+      <button
+        type="button"
+        onClick={onToggle}
+        className="task-checkbox"
+        data-checked={done}
+        aria-label={done ? "Mark incomplete" : "Mark complete"}
+        aria-pressed={done}
+      >
+        {done && <Check strokeWidth={3} />}
+      </button>
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="task-card-v2__title">{t.title}</h3>
+          <h3
+            className="task-card-v2__title"
+            style={done ? { textDecoration: "line-through", opacity: 0.55 } : undefined}
+          >
+            {t.title}
+          </h3>
           <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/70" />
         </div>
         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
@@ -73,6 +87,7 @@ function TaskCard({ t }: { t: Task }) {
     </article>
   );
 }
+
 
 function SectionLabel({ label, count }: { label: string; count: number }) {
   return (
