@@ -5,6 +5,7 @@ import {
   Sheet, Users, FileSignature, Shield, Megaphone, Brain, Cog, Handshake,
   Briefcase, DraftingCompass, Atom, Calculator, ClipboardList, TrendingUp,
   Scale, Cpu, BadgeCheck, HardHat, Truck, BarChart3, Building2, Headphones, GraduationCap,
+  Search as SearchIcon,
 } from "lucide-react";
 import { SharePointBrandIcon, SapBrandIcon } from "@/components/brand-icons";
 import { TopBar } from "@/components/TopBar";
