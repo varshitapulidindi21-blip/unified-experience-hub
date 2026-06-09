@@ -876,27 +876,28 @@
     }
     .mobile-nav-fab-link {
       display: flex; flex-direction: column; align-items: center;
-      transform: translateY(-2.1rem);
+      transform: translateY(-1.55rem);
     }
     .mobile-nav-fab {
+      position: relative;
       display: inline-flex; align-items: center; justify-content: center;
-      width: 3.15rem; height: 3.15rem; border-radius: 9999px;
+      width: 2.55rem; height: 2.55rem; border-radius: 9999px;
       background: linear-gradient(140deg,
-        color-mix(in oklab, var(--brand-lavender) 88%, white),
-        var(--brand-lavender) 55%,
-        color-mix(in oklab, var(--brand-lavender) 80%, var(--brand-purple) 20%));
+        color-mix(in oklab, var(--brand-lavender) 92%, white),
+        var(--brand-lavender) 60%,
+        color-mix(in oklab, var(--brand-lavender) 78%, var(--brand-purple) 22%));
       box-shadow:
-        0 0 0 2px color-mix(in oklab, var(--brand-purple-deep) 75%, transparent),
-        0 0 0 5px var(--color-background),
-        0 10px 22px -8px color-mix(in oklab, var(--brand-purple-deep) 55%, transparent),
-        inset 0 1px 0 oklch(1 0 0 / 0.4);
+        0 0 14px 2px color-mix(in oklab, var(--brand-purple-deep) 38%, transparent),
+        0 0 28px 6px color-mix(in oklab, var(--brand-purple-deep) 22%, transparent),
+        0 8px 16px -8px color-mix(in oklab, var(--brand-purple-deep) 45%, transparent),
+        inset 0 1px 0 oklch(1 0 0 / 0.45);
       animation: mobile-nav-fab-pulse 2.6s ease-in-out infinite;
     }
     .mobile-nav-fab.is-active { animation-duration: 1.8s; }
     .mobile-nav-fab:active { transform: scale(0.94); }
     @keyframes mobile-nav-fab-pulse {
       0%, 100% { transform: scale(1); }
-      50%      { transform: scale(1.06); }
+      50%      { transform: scale(1.05); }
     }
 
     /* legacy shadow override hidden now */
