@@ -192,9 +192,9 @@ function AIPage() {
         )}
 
         {/* Main chat area */}
-        <section className="relative flex min-h-[calc(100vh-11rem)] flex-1 flex-col sm:min-h-[calc(100vh-4rem)]">
+        <section className="relative flex min-h-[calc(100svh-8.5rem)] flex-1 flex-col sm:min-h-[calc(100vh-4rem)]">
           {/* Greeting */}
-          <div className="flex flex-1 items-center justify-center px-5 pt-3 pb-44 sm:px-10 sm:pt-10 sm:pb-10 md:px-16">
+          <div className="flex flex-1 items-center justify-center px-5 pb-32 pt-0 sm:px-10 sm:pt-10 sm:pb-10 md:px-16">
             <div className="relative flex w-full max-w-2xl flex-col items-center text-center">
               <div className="relative flex items-center justify-center">
                 {/* Soft aura */}
