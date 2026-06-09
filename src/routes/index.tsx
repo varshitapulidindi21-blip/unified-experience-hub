@@ -91,8 +91,8 @@ function HomePage() {
         <section className="mobile-native-section md:hidden">
           <div className="mobile-segmented" role="tablist" aria-label="Workspace">
             {[
-              ["ess", "ESS"],
-              ["bm", "BM"],
+              ["ess", "Employee Self-Service"],
+              ["bm", "Business Modules"],
             ].map(([key, label]) => {
               const active = workspace === key;
               return (
