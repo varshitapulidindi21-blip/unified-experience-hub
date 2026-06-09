@@ -16,7 +16,7 @@ const LEFT: NavItem[] = [
   { to: "/tasks", label: "Tasks", icon: CheckSquare },
 ];
 const RIGHT: NavItem[] = [
-  { to: "/dashboard", label: "Stats", icon: BarChart3 },
+  { to: "/dashboard", label: "Dashboard", icon: BarChart3 },
   { to: "/profile", label: "Profile", icon: User },
 ];
 
@@ -64,7 +64,7 @@ export function BottomNav() {
         {/* Curved SVG notch background */}
         <svg
           className="mobile-nav-svg"
-          viewBox="0 0 360 68"
+          viewBox="0 0 360 80"
           preserveAspectRatio="none"
           aria-hidden
         >
@@ -76,7 +76,7 @@ export function BottomNav() {
           <path
             className="mobile-nav-path"
             filter="url(#navShadow)"
-            d="M16 6 H146 C154 6 158 10 160 16 C164 30 172 38 180 38 C188 38 196 30 200 16 C202 10 206 6 214 6 H344 C352 6 358 12 358 20 V58 C358 64 354 68 348 68 H12 C6 68 2 64 2 58 V20 C2 12 8 6 16 6 Z"
+            d="M16 18 H138 C148 18 152 22 154 28 C158 50 168 60 180 60 C192 60 202 50 206 28 C208 22 212 18 222 18 H344 C352 18 358 24 358 32 V70 C358 76 354 80 348 80 H12 C6 80 2 76 2 70 V32 C2 24 8 18 16 18 Z"
           />
         </svg>
 
