@@ -171,7 +171,11 @@ function AIPage() {
               onClick={() => setMobileSidebarOpen(false)}
             />
             <aside className="fixed inset-y-0 left-0 z-50 flex w-[82%] max-w-[320px] flex-col border-r border-border/60 bg-background/95 backdrop-blur-xl shadow-elev md:hidden animate-in slide-in-from-left duration-300">
-              <div className="flex h-14 items-center justify-end px-3 border-b border-border/40">
+              <div className="flex items-center justify-between px-4 pb-3 border-b border-border/40" style={{ paddingTop: "calc(env(safe-area-inset-top) + 0.85rem)" }}>
+                <div className="flex items-center gap-2.5">
+                  <img src={aiLogo} alt="Resolven AI" className="h-7 w-7 object-contain" />
+                  <span className="text-[0.95rem] font-semibold tracking-tight text-foreground">Resolven AI</span>
+                </div>
                 <button
                   onClick={() => setMobileSidebarOpen(false)}
                   aria-label="Close menu"
@@ -180,15 +184,17 @@ function AIPage() {
                   <X className="h-4 w-4" />
                 </button>
               </div>
-              <ExpandedList openMenu={openMenu} setOpenMenu={setOpenMenu} />
+              <div className="px-1.5 pt-2 flex-1 overflow-y-auto">
+                <ExpandedList openMenu={openMenu} setOpenMenu={setOpenMenu} />
+              </div>
             </aside>
           </>
         )}
 
         {/* Main chat area */}
-        <section className="relative flex min-h-[calc(100vh-11rem)] flex-1 flex-col sm:min-h-[calc(100vh-4rem)]">
+        <section className="relative flex min-h-[calc(100svh-8.5rem)] flex-1 flex-col sm:min-h-[calc(100vh-4rem)]">
           {/* Greeting */}
-          <div className="flex flex-1 items-center justify-center px-5 pt-3 pb-44 sm:px-10 sm:pt-10 sm:pb-10 md:px-16">
+          <div className="flex flex-1 items-center justify-center px-5 pb-32 pt-0 sm:px-10 sm:pt-10 sm:pb-10 md:px-16">
             <div className="relative flex w-full max-w-2xl flex-col items-center text-center">
               <div className="relative flex items-center justify-center">
                 {/* Soft aura */}
