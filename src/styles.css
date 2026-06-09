@@ -1102,33 +1102,39 @@
       box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.55), 0 10px 24px -22px oklch(0.30 0.10 295 / 0.25);
     }
     .task-card-v2__title {
-      font-size: 0.92rem; font-weight: 700;
-      line-height: 1.3; letter-spacing: -0.01em;
+      font-size: 0.92rem; font-weight: 600;
+      line-height: 1.3; letter-spacing: -0.005em;
       color: var(--color-foreground);
+      font-family: var(--font-sans);
     }
     .tasks-tabs {
       display: flex;
-      gap: 0.55rem;
+      gap: 0.25rem;
       overflow-x: auto;
-      padding: 0.25rem 0.1rem;
+      padding: 0.4rem 0 0;
       scrollbar-width: none;
     }
     .tasks-tabs::-webkit-scrollbar { display: none; }
     .tasks-tab {
       flex-shrink: 0;
-      padding: 0.5rem 0.95rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: color-mix(in oklab, var(--color-foreground) 55%, transparent);
-      background: color-mix(in oklab, var(--color-border) 35%, transparent);
+      padding: 0.55rem 1.1rem 0.7rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      color: color-mix(in oklab, var(--brand-purple) 75%, var(--color-foreground) 25%);
+      background: color-mix(in oklab, var(--brand-lavender) 30%, var(--color-card));
       border: 0;
-      border-radius: 9999px;
+      border-top-left-radius: 1.1rem;
+      border-top-right-radius: 1.1rem;
+      border-bottom-left-radius: 0.35rem;
+      border-bottom-right-radius: 0.35rem;
       white-space: nowrap;
-      transition: background 0.15s, color 0.15s;
+      transition: background 0.15s, color 0.15s, font-weight 0.15s;
     }
     .tasks-tab.is-active {
-      color: white;
-      background: var(--brand-purple);
+      color: var(--brand-purple-deep, var(--brand-purple));
+      font-weight: 700;
+      background: color-mix(in oklab, var(--brand-lavender) 75%, var(--color-card));
     }
     .task-checkbox {
       flex-shrink: 0;
@@ -1151,10 +1157,11 @@
     .task-checkbox svg { width: 0.8rem; height: 0.8rem; }
 
     .task-tag {
-      font-size: 0.6rem;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      padding: 0.22rem 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      letter-spacing: 0.01em;
+      padding: 0.22rem 0.55rem;
       border-radius: 9999px;
       line-height: 1;
     }
