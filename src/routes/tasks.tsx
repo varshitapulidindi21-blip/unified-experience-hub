@@ -34,11 +34,11 @@ type Task = {
 };
 
 const TASKS: Task[] = [
-  { title: "Approve Wind Farm 12 maintenance PO", tags: [{ label: "Operations", tone: "purple" }, { label: "High", tone: "red" }], due: "Today", section: "approvals", cat: "hoto" },
-  { title: "Sign off Q2 ESG disclosure", tags: [{ label: "Sustainability", tone: "purple" }, { label: "High", tone: "red" }], due: "Tomorrow", progress: 55, section: "approvals", cat: "legal" },
-  { title: "Review 3 travel requests from team", tags: [{ label: "HR", tone: "purple" }, { label: "Med", tone: "amber" }], due: "Wed", section: "approvals", cat: "expense" },
-  { title: "Draft Solar Farm 7 expansion brief", tags: [{ label: "Engineering", tone: "purple" }, { label: "Med", tone: "amber" }], due: "Fri", progress: 35, section: "in_progress", cat: "hoto" },
-  { title: "HSE quarterly audit closeout — Site 12", tags: [{ label: "HSE", tone: "green" }, { label: "Low", tone: "green" }], due: "Next week", progress: 70, section: "in_progress", cat: "hse" },
+  { title: "Approve Wind Farm 12 Maintenance PO", tags: [{ label: "Operations", tone: "purple" }, { label: "High", tone: "red" }], due: "Today", section: "approvals", cat: "hoto" },
+  { title: "Sign Off Q2 ESG Disclosure", tags: [{ label: "Sustainability", tone: "purple" }, { label: "High", tone: "red" }], due: "Tomorrow", progress: 55, section: "approvals", cat: "legal" },
+  { title: "Review 3 Travel Requests From Team", tags: [{ label: "HR", tone: "purple" }, { label: "Med", tone: "amber" }], due: "Wed", section: "approvals", cat: "expense" },
+  { title: "Draft Solar Farm 7 Expansion Brief", tags: [{ label: "Engineering", tone: "purple" }, { label: "Med", tone: "amber" }], due: "Fri", progress: 35, section: "in_progress", cat: "hoto" },
+  { title: "HSE Quarterly Audit Closeout — Site 12", tags: [{ label: "HSE", tone: "green" }, { label: "Low", tone: "green" }], due: "Next week", progress: 70, section: "in_progress", cat: "hse" },
 ];
 
 const DONE_THIS_WEEK = 5;
