@@ -871,10 +871,10 @@
     }
     .mobile-nav-grid {
       position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
-      column-gap: 4.4rem; /* reserves a clear center slot for the floating AI button */
+      display: grid; grid-template-columns: repeat(5, 1fr);
       height: 100%; align-items: end; padding-bottom: 0.4rem;
     }
+    .mobile-nav-spacer { /* keeps the 3rd column reserved for the floating FAB */ }
     .mobile-nav-fab-link {
       position: absolute;
       left: 50%;
@@ -888,7 +888,7 @@
       width: 2.55rem; height: 2.55rem; border-radius: 9999px;
       /* lift only the circle so it sits in the notch while the
          "AI" label stays aligned with Home/Tasks/Dashboard/Profile */
-      margin-top: -1.95rem;
+      margin-top: -2.35rem;
       margin-bottom: 0.15rem;
       background: linear-gradient(140deg,
         color-mix(in oklab, var(--brand-lavender) 92%, white),
