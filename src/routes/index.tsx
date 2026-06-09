@@ -91,8 +91,8 @@ function HomePage() {
         <section className="mobile-native-section md:hidden">
           <div className="mobile-segmented" role="tablist" aria-label="Workspace">
             {[
-              ["ess", "ESS"],
-              ["bm", "BM"],
+              ["ess", "Employee Self-Service"],
+              ["bm", "Business Modules"],
             ].map(([key, label]) => {
               const active = workspace === key;
               return (
@@ -245,7 +245,7 @@ function MobileFolderTile({
       <span className={`mobile-folder-icon ${toneBg[tone]}`}>
         <Icon className="h-4 w-4" strokeWidth={1.75} />
       </span>
-      <span className="line-clamp-2 text-left text-[0.72rem] font-medium leading-tight text-foreground">{label}</span>
+      <span className="line-clamp-2 text-left text-[0.78rem] font-medium leading-tight text-foreground">{label}</span>
     </button>
   );
 }

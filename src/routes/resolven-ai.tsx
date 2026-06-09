@@ -5,7 +5,7 @@ import {
   Search, MoreHorizontal, Edit3, Trash2, Pin, Share2, Menu, X, Clock,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { MobileAppHeader } from "@/components/MobileAppHeader";
+
 import aiLogo from "@/assets/resolven-ai-logo.png";
 
 export const Route = createFileRoute("/resolven-ai")({
@@ -73,7 +73,24 @@ function AIPage() {
         }}
       />
 
-      <MobileAppHeader pageLabel="AI" searchPlaceholder="Search chats and tools…" />
+      {/* Mobile AI top row */}
+      <header className="md:hidden sticky top-0 z-30 flex items-center justify-between px-3 backdrop-blur-xl bg-background/65 border-b border-border/40" style={{ paddingTop: "calc(env(safe-area-inset-top) + 0.45rem)", paddingBottom: "0.45rem" }}>
+        <button
+          onClick={() => setMobileSidebarOpen(true)}
+          aria-label="Open conversations"
+          className="flex h-9 w-9 items-center justify-center rounded-xl"
+        >
+          <img src={aiLogo} alt="Resolven AI" className="h-6 w-6 object-contain" />
+        </button>
+        <span className="text-[0.78rem] font-semibold tracking-tight text-foreground">Resolven AI</span>
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          <Link to="/" aria-label="Home" className="flex h-9 w-9 items-center justify-center rounded-xl text-foreground/80 hover:bg-secondary/70">
+            <Home className="h-[1.05rem] w-[1.05rem]" />
+          </Link>
+        </div>
+      </header>
+
 
       <header className="sticky top-0 z-30 hidden w-full border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/45 md:block">
         <div className="mx-auto flex h-14 sm:h-16 w-full max-w-[1400px] items-center px-2 sm:px-4">
@@ -230,7 +247,7 @@ function AIPage() {
           </div>
 
           {/* Mobile input bar — sticky at bottom */}
-          <div className="sm:hidden fixed inset-x-0 z-20 border-t border-border/40 bg-background/85 px-3 pt-2.5 backdrop-blur-xl" style={{ bottom: "calc(env(safe-area-inset-bottom) + 5.25rem)", paddingBottom: "0.7rem" }}>
+          <div className="sm:hidden fixed inset-x-0 z-20 border-t border-border/40 bg-background/85 px-3 pt-2.5 backdrop-blur-xl" style={{ bottom: 0, paddingBottom: "calc(env(safe-area-inset-bottom) + 0.7rem)" }}>
             <div className="flex items-center gap-1.5 rounded-full border border-border/60 bg-background/90 px-2 py-1.5 shadow-elev focus-within:border-primary/40">
               <button
                 aria-label="Attach files"

@@ -114,7 +114,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const showMobileNav = pathname !== "/login";
+  const showMobileNav = pathname !== "/login" && pathname !== "/resolven-ai";
 
   return (
     <QueryClientProvider client={queryClient}>
