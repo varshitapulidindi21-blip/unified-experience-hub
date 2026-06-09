@@ -85,6 +85,16 @@ function HomePage() {
       <div className="hidden md:block"><TopBar /></div>
       <main className="mx-auto w-full max-w-[1400px] space-y-4 px-4 py-4 sm:space-y-8 sm:px-6 sm:py-8 md:space-y-10 md:py-10">
         <MobileAppHeader />
+
+        <div className="md:hidden -mt-1.5 px-0.5">
+          <label className="mobile-home-search">
+            <SearchIcon className="h-[1.05rem] w-[1.05rem] text-muted-foreground" strokeWidth={1.7} />
+            <input type="search" placeholder="Search modules, people, files…" />
+          </label>
+        </div>
+
+        <div className="md:hidden mobile-soft-divider !mt-3" aria-hidden />
+
         <div className="hidden md:block"><GreetingHero name="Samarth Sachdeva" /></div>
         <AnnouncementsBar />
 
