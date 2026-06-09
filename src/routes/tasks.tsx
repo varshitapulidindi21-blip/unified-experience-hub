@@ -68,11 +68,14 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
           <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/70" />
         </div>
         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
-          {t.tags.map((tag) => (
-            <span key={tag.label} className={`task-tag tag-${tag.tone}`}>
-              {tag.label.toUpperCase()}
-            </span>
-          ))}
+          {t.tags.map((tag) => {
+            const label = tag.label.charAt(0).toUpperCase() + tag.label.slice(1).toLowerCase();
+            return (
+              <span key={tag.label} className={`task-tag tag-${tag.tone}`}>
+                {label}
+              </span>
+            );
+          })}
           <span className="inline-flex items-center gap-1 text-[0.62rem] text-muted-foreground">
             <Clock className="h-2.5 w-2.5" strokeWidth={1.8} />
             {t.due}
