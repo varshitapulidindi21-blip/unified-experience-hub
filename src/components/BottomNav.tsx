@@ -76,7 +76,7 @@ export function BottomNav() {
           <path
             className="mobile-nav-path"
             filter="url(#navShadow)"
-            d="M16 18 H138 C148 18 152 22 154 28 C158 50 168 60 180 60 C192 60 202 50 206 28 C208 22 212 18 222 18 H344 C352 18 358 24 358 32 V70 C358 76 354 80 348 80 H12 C6 80 2 76 2 70 V32 C2 24 8 18 16 18 Z"
+            d="M16 18 H154 A26 26 0 0 0 206 18 H344 C352 18 358 24 358 32 V70 C358 76 354 80 348 80 H12 C6 80 2 76 2 70 V32 C2 24 8 18 16 18 Z"
           />
         </svg>
 
@@ -85,10 +85,7 @@ export function BottomNav() {
           <li className="flex justify-center">
             <Link to="/resolven-ai" aria-label="Resolven AI" className="mobile-nav-fab-link">
               <span className={["mobile-nav-fab", aiActive ? "is-active" : ""].join(" ")}>
-                <img src={aiLogo} alt="" className="h-[1.4rem] w-[1.4rem] object-contain" />
-              </span>
-              <span className="mt-0.5 text-[10px] font-medium tracking-wide text-muted-foreground">
-                AI
+                <img src={aiLogo} alt="" className="h-[1.15rem] w-[1.15rem] object-contain" />
               </span>
             </Link>
           </li>
