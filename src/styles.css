@@ -853,7 +853,7 @@
     .mobile-bottom-nav > * { pointer-events: auto; }
     .mobile-nav-wrap {
       position: relative;
-      height: 4.6rem;
+      height: 5rem;
     }
     .mobile-nav-svg {
       position: absolute; inset: 0;
@@ -872,24 +872,32 @@
     .mobile-nav-grid {
       position: relative; z-index: 2;
       display: grid; grid-template-columns: repeat(5, 1fr);
-      height: 100%; align-items: end; padding-bottom: 0.35rem;
+      height: 100%; align-items: end; padding-bottom: 0.4rem;
     }
     .mobile-nav-fab-link {
       display: flex; flex-direction: column; align-items: center;
-      transform: translateY(-1.35rem);
+      transform: translateY(-2.1rem);
     }
     .mobile-nav-fab {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 3.1rem; height: 3.1rem; border-radius: 9999px;
-      background: linear-gradient(140deg, var(--brand-purple-deep), var(--brand-purple) 60%, color-mix(in oklab, var(--brand-green) 55%, var(--brand-purple)));
+      width: 3.15rem; height: 3.15rem; border-radius: 9999px;
+      background: linear-gradient(140deg,
+        color-mix(in oklab, var(--brand-lavender) 88%, white),
+        var(--brand-lavender) 55%,
+        color-mix(in oklab, var(--brand-lavender) 80%, var(--brand-purple) 20%));
       box-shadow:
-        0 14px 28px -10px color-mix(in oklab, var(--brand-purple-deep) 75%, transparent),
-        0 0 0 4px var(--color-background),
-        inset 0 1px 0 oklch(1 0 0 / 0.25);
-      transition: transform 200ms ease;
+        0 0 0 2px color-mix(in oklab, var(--brand-purple-deep) 75%, transparent),
+        0 0 0 5px var(--color-background),
+        0 10px 22px -8px color-mix(in oklab, var(--brand-purple-deep) 55%, transparent),
+        inset 0 1px 0 oklch(1 0 0 / 0.4);
+      animation: mobile-nav-fab-pulse 2.6s ease-in-out infinite;
     }
-    .mobile-nav-fab.is-active { transform: scale(1.03); }
-    .mobile-nav-fab:active { transform: scale(0.96); }
+    .mobile-nav-fab.is-active { animation-duration: 1.8s; }
+    .mobile-nav-fab:active { transform: scale(0.94); }
+    @keyframes mobile-nav-fab-pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.06); }
+    }
 
     /* legacy shadow override hidden now */
     .mobile-bottom-nav .shadow-elev { box-shadow: none; }
