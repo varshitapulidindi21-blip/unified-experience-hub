@@ -87,20 +87,38 @@ function HomePage() {
       <main className="mx-auto w-full max-w-[1400px] space-y-4 px-4 py-4 sm:space-y-8 sm:px-6 sm:py-8 md:space-y-10 md:py-10">
         <MobileAppHeader />
 
-        <div className="md:hidden -mt-1.5 px-0.5">
-          <label className="mobile-home-search">
-            <SearchIcon className="h-[1.05rem] w-[1.05rem] text-muted-foreground" strokeWidth={1.7} />
-            <input type="search" placeholder="Search modules, people, files…" />
-          </label>
-        </div>
-
-        <div className="md:hidden mobile-soft-divider !mt-3" aria-hidden />
+        {/* Operational insights banner (mobile) */}
+        <Link to="/modules" className="md:hidden mobile-insights-banner -mt-1 block">
+          <div className="mobile-insights-banner__inner">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="mobile-insights-eyebrow">
+                  <Zap className="h-3 w-3" strokeWidth={2.2} /> Today · Live Insight
+                </div>
+                <h2 className="mt-1.5 text-[1.1rem] not-italic font-semibold leading-tight tracking-tight text-white">
+                  Solar yield trending +12% today
+                </h2>
+                <p className="mt-1 text-[0.78rem] leading-snug text-white/75">
+                  3 sites exceeding forecast · 2 maintenance windows planned
+                </p>
+              </div>
+              <span className="mobile-insights-arrow">
+                <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+              </span>
+            </div>
+            <div className="mobile-insights-stats">
+              <div><span>3.4 GWh</span><label>Today</label></div>
+              <div><span>412 t</span><label>CO₂ saved</label></div>
+              <div><span>98%</span><label>Uptime</label></div>
+            </div>
+          </div>
+        </Link>
 
         <div className="hidden md:block"><GreetingHero name="Samarth Sachdeva" /></div>
         <AnnouncementsBar />
 
         <section className="mobile-native-section md:hidden">
-          <div className="mobile-segmented" role="tablist" aria-label="Workspace">
+          <div className="mobile-chips" role="tablist" aria-label="Workspace">
             {[
               ["ess", "Employee Self-Service"],
               ["bm", "Business Modules"],
@@ -113,7 +131,7 @@ function HomePage() {
                   role="tab"
                   aria-selected={active}
                   onClick={() => setWorkspace(key as "ess" | "bm")}
-                  className={active ? "is-active" : ""}
+                  className={["mobile-chip", active ? "is-active" : ""].join(" ")}
                 >
                   {label}
                 </button>
@@ -132,14 +150,22 @@ function HomePage() {
           )}
         </section>
 
+        {/* My Department — single folder for the logged-in employee */}
         <section className="mobile-native-section md:hidden">
-          <div className="mb-2 px-1 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            Department folders
+          <div className="mb-2 flex items-end justify-between px-1">
+            <div>
+              <div className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                My department
+              </div>
+              <h2 className="mt-0.5 text-[1rem] not-italic font-semibold tracking-tight text-foreground">
+                Your workspace folder
+              </h2>
+            </div>
+            <button className="text-[0.72rem] font-semibold text-primary">Open</button>
           </div>
-          <div className="mobile-folder-rail">
-            {departments.map((d) => <MobileFolderTile key={d.label} {...d} />)}
-          </div>
+          <MyDepartmentCard department={departments[0]} />
         </section>
+
 
         <section className="hidden space-y-4 sm:space-y-5 md:block">
           <div className="flex items-end justify-between gap-4 px-1">
