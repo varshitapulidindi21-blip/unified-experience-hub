@@ -884,7 +884,7 @@
       width: 2.55rem; height: 2.55rem; border-radius: 9999px;
       /* lift only the circle so it sits in the notch while the
          "AI" label stays aligned with Home/Tasks/Dashboard/Profile */
-      margin-top: -2.4rem;
+      margin-top: -1.95rem;
       margin-bottom: 0.15rem;
       background: linear-gradient(140deg,
         color-mix(in oklab, var(--brand-lavender) 92%, white),
