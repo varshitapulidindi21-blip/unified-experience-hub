@@ -73,7 +73,7 @@ function AIPage() {
         }}
       />
 
-      <MobileAppHeader pageLabel="AI" searchPlaceholder="Search chats and tools…" />
+
 
       <header className="sticky top-0 z-30 hidden w-full border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/45 md:block">
         <div className="mx-auto flex h-14 sm:h-16 w-full max-w-[1400px] items-center px-2 sm:px-4">
