@@ -102,6 +102,9 @@ function SectionLabel({ label, count }: { label: string; count: number }) {
 
 function TasksPage() {
   const [tab, setTab] = useState<TabKey>("all");
+  const [doneMap, setDoneMap] = useState<Record<string, boolean>>({});
+  const toggle = (id: string) =>
+    setDoneMap((m) => ({ ...m, [id]: !m[id] }));
   const pct = (DONE_THIS_WEEK / TOTAL_THIS_WEEK) * 100;
   const r = 22;
   const c = 2 * Math.PI * r;
@@ -109,12 +112,19 @@ function TasksPage() {
   const filtered = tab === "all" ? TASKS : TASKS.filter((t) => t.cat === tab);
   const approvals = filtered.filter((t) => t.section === "approvals");
   const inProgress = filtered.filter((t) => t.section === "in_progress");
+  const activeCount = TASKS.length - Object.values(doneMap).filter(Boolean).length;
+  const dueThisWeek = TASKS.filter((t) => ["Today", "Tomorrow", "Wed", "Fri"].includes(t.due)).length;
 
   return (
     <div className="min-h-screen">
       <div className="hidden md:block"><TopBar /></div>
       <main className="mx-auto w-full max-w-[1400px] space-y-3 px-4 pt-2 pb-28 sm:space-y-6 sm:px-6 sm:py-8">
-        <MobileAppHeader pageLabel="My Tasks" hideNotifications />
+        <MobileAppHeader
+          pageLabel="My tasks"
+          pageSubtitle={`${activeCount} active · ${dueThisWeek} due this week`}
+          hideNotifications
+        />
+
 
         {/* Underline tabs */}
         <nav className="md:hidden tasks-tabs" role="tablist" aria-label="Task category">
