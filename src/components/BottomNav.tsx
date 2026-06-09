@@ -6,33 +6,30 @@ import aiLogo from "@/assets/resolven-ai-logo.png";
  * Native-app style bottom navigation with center floating AI button + curved notch.
  */
 type NavItem = {
-  to: "/" | "/modules" | "/resolven-ai";
+  to: "/" | "/tasks" | "/dashboard" | "/profile" | "/resolven-ai";
   label: string;
   icon: typeof Home;
-  hash?: string;
 };
 
 const LEFT: NavItem[] = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/modules", hash: "tasks", label: "Tasks", icon: CheckSquare },
+  { to: "/tasks", label: "Tasks", icon: CheckSquare },
 ];
 const RIGHT: NavItem[] = [
-  { to: "/modules", label: "Stats", icon: BarChart3 },
-  { to: "/modules", hash: "profile", label: "Profile", icon: User },
+  { to: "/dashboard", label: "Stats", icon: BarChart3 },
+  { to: "/profile", label: "Profile", icon: User },
 ];
 
 export function BottomNav() {
   const location = useRouterState({ select: (s) => s.location });
   const pathname = location.pathname;
-  const currentHash = location.hash;
 
-  const renderItem = ({ to, hash, label, icon: Icon }: NavItem) => {
-    const active = pathname === to && (hash ? currentHash === hash : currentHash === "");
+  const renderItem = ({ to, label, icon: Icon }: NavItem) => {
+    const active = pathname === to;
     return (
       <li key={`${to}-${label}`} className="flex justify-center">
         <Link
           to={to}
-          hash={hash}
           className="group flex flex-col items-center justify-center gap-0.5 py-1.5 px-2"
         >
           <Icon
