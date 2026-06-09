@@ -875,8 +875,12 @@
       height: 100%; align-items: end; padding-bottom: 0.4rem;
     }
     .mobile-nav-fab-link {
-      display: flex; flex-direction: column; align-items: center;
-      transform: translateY(-1.55rem);
+      display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+      transform: translateY(-1.15rem);
+    }
+    .mobile-nav-fab-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.02em;
+      color: var(--color-muted-foreground);
     }
     .mobile-nav-fab {
       position: relative;
