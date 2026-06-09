@@ -73,6 +73,23 @@ function AIPage() {
         }}
       />
 
+      {/* Mobile AI top row */}
+      <header className="md:hidden sticky top-0 z-30 flex items-center justify-between px-3 backdrop-blur-xl bg-background/65 border-b border-border/40" style={{ paddingTop: "calc(env(safe-area-inset-top) + 0.45rem)", paddingBottom: "0.45rem" }}>
+        <button
+          onClick={() => setMobileSidebarOpen(true)}
+          aria-label="Open conversations"
+          className="flex h-9 w-9 items-center justify-center rounded-xl"
+        >
+          <img src={aiLogo} alt="Resolven AI" className="h-6 w-6 object-contain" />
+        </button>
+        <span className="text-[0.78rem] font-semibold tracking-tight text-foreground">Resolven AI</span>
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          <Link to="/" aria-label="Home" className="flex h-9 w-9 items-center justify-center rounded-xl text-foreground/80 hover:bg-secondary/70">
+            <Home className="h-[1.05rem] w-[1.05rem]" />
+          </Link>
+        </div>
+      </header>
 
 
       <header className="sticky top-0 z-30 hidden w-full border-b border-border/50 bg-background/60 backdrop-blur-xl supports-[backdrop-filter]:bg-background/45 md:block">
