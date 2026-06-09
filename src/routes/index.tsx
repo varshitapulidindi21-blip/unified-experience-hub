@@ -268,21 +268,22 @@ function MobileModuleTile({
   return to ? <Link to={to} className={className}>{content}</Link> : <button className={className}>{content}</button>;
 }
 
-function MobileFolderTile({
-  icon: Icon,
-  label,
-  tone,
+function MyDepartmentCard({
+  department,
 }: {
-  icon: ComponentType<SVGProps<SVGSVGElement> & { strokeWidth?: number | string }>;
-  label: string;
-  tone: keyof typeof toneBg;
+  department: { icon: ComponentType<SVGProps<SVGSVGElement> & { strokeWidth?: number | string }>; label: string; tone: keyof typeof toneBg };
 }) {
+  const { icon: Icon, label, tone } = department;
   return (
-    <button className="mobile-folder-tile">
-      <span className={`mobile-folder-icon ${toneBg[tone]}`}>
-        <Icon className="h-4 w-4" strokeWidth={1.75} />
+    <button className="mobile-mydept-card">
+      <span className={`mobile-mydept-icon ${toneBg[tone]}`}>
+        <Icon className="h-[1.4rem] w-[1.4rem]" strokeWidth={1.7} />
       </span>
-      <span className="line-clamp-2 text-left text-[0.78rem] font-medium leading-tight text-foreground">{label}</span>
+      <div className="flex-1 text-left">
+        <div className="text-[0.92rem] font-semibold leading-tight text-foreground">{label}</div>
+        <div className="mt-0.5 text-[0.72rem] text-muted-foreground">12 files · 4 shared · updated today</div>
+      </div>
+      <span className="mobile-mydept-chev" aria-hidden>›</span>
     </button>
   );
 }
