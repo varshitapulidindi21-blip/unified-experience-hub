@@ -245,7 +245,7 @@ function MobileFolderTile({
       <span className={`mobile-folder-icon ${toneBg[tone]}`}>
         <Icon className="h-4 w-4" strokeWidth={1.75} />
       </span>
-      <span className="line-clamp-2 text-left text-[0.72rem] font-medium leading-tight text-foreground">{label}</span>
+      <span className="line-clamp-2 text-left text-[0.78rem] font-medium leading-tight text-foreground">{label}</span>
     </button>
   );
 }
