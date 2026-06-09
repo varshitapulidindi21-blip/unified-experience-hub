@@ -875,17 +875,17 @@
       height: 100%; align-items: end; padding-bottom: 0.4rem;
     }
     .mobile-nav-fab-link {
-      display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
-      transform: translateY(-1.15rem);
-    }
-    .mobile-nav-fab-label {
-      font-size: 10px; font-weight: 500; letter-spacing: 0.02em;
-      color: var(--color-muted-foreground);
+      /* tailwind classes already set flex column + padding; keep label
+         on the same baseline as the other nav labels. */
     }
     .mobile-nav-fab {
       position: relative;
       display: inline-flex; align-items: center; justify-content: center;
       width: 2.55rem; height: 2.55rem; border-radius: 9999px;
+      /* lift only the circle so it sits in the notch while the
+         "AI" label stays aligned with Home/Tasks/Dashboard/Profile */
+      margin-top: -1.7rem;
+      margin-bottom: 0.15rem;
       background: linear-gradient(140deg,
         color-mix(in oklab, var(--brand-lavender) 92%, white),
         var(--brand-lavender) 60%,
