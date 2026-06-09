@@ -16,7 +16,7 @@ const LEFT: NavItem[] = [
   { to: "/tasks", label: "Tasks", icon: CheckSquare },
 ];
 const RIGHT: NavItem[] = [
-  { to: "/dashboard", label: "Stats", icon: BarChart3 },
+  { to: "/dashboard", label: "Dashboard", icon: BarChart3 },
   { to: "/profile", label: "Profile", icon: User },
 ];
 
