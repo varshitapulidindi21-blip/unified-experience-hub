@@ -191,7 +191,7 @@ function TasksPage() {
           <section className="md:hidden">
             <SectionLabel label="APPROVALS" count={approvals.length} />
             <div className="space-y-2">
-              {approvals.map((t) => <TaskCard key={t.title} t={t} />)}
+              {approvals.map((t) => <TaskCard key={t.title} t={t} done={!!doneMap[t.title]} onToggle={() => toggle(t.title)} />)}
             </div>
           </section>
         )}
@@ -200,7 +200,7 @@ function TasksPage() {
           <section className="md:hidden">
             <SectionLabel label="IN PROGRESS" count={inProgress.length} />
             <div className="space-y-2">
-              {inProgress.map((t) => <TaskCard key={t.title} t={t} />)}
+              {inProgress.map((t) => <TaskCard key={t.title} t={t} done={!!doneMap[t.title]} onToggle={() => toggle(t.title)} />)}
             </div>
           </section>
         )}
