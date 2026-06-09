@@ -76,7 +76,7 @@ export function BottomNav() {
           <path
             className="mobile-nav-path"
             filter="url(#navShadow)"
-            d="M16 18 H154 A26 26 0 0 0 206 18 H344 C352 18 358 24 358 32 V70 C358 76 354 80 348 80 H12 C6 80 2 76 2 70 V32 C2 24 8 18 16 18 Z"
+            d="M16 18 H150 A36 36 0 0 0 210 18 H344 C352 18 358 24 358 32 V70 C358 76 354 80 348 80 H12 C6 80 2 76 2 70 V32 C2 24 8 18 16 18 Z"
           />
         </svg>
 
@@ -87,6 +87,7 @@ export function BottomNav() {
               <span className={["mobile-nav-fab", aiActive ? "is-active" : ""].join(" ")}>
                 <img src={aiLogo} alt="" className="h-[1.15rem] w-[1.15rem] object-contain" />
               </span>
+              <span className="mobile-nav-fab-label">AI</span>
             </Link>
           </li>
           {RIGHT.map(renderItem)}
