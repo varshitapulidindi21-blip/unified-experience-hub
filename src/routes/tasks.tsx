@@ -91,11 +91,11 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
 
 function SectionLabel({ label, count }: { label: string; count: number }) {
   return (
-    <div className="mt-4 mb-1.5 flex items-center justify-between px-1">
-      <h2 className="text-[0.62rem] font-extrabold tracking-[0.18em] text-muted-foreground">
+    <div className="mt-5 mb-2 flex items-center justify-between px-1">
+      <h2 className="text-[0.72rem] font-bold tracking-[0.22em] text-muted-foreground/80 uppercase">
         {label}
       </h2>
-      <span className="text-[0.68rem] font-semibold text-muted-foreground">{count}</span>
+      <span className="text-[0.85rem] font-medium text-muted-foreground/70">{count}</span>
     </div>
   );
 }
