@@ -5,7 +5,7 @@ import {
   Sheet, Users, FileSignature, Shield, Megaphone, Brain, Cog, Handshake,
   Briefcase, DraftingCompass, Atom, Calculator, ClipboardList, TrendingUp,
   Scale, Cpu, BadgeCheck, HardHat, Truck, BarChart3, Building2, Headphones, GraduationCap,
-  Search as SearchIcon,
+  Zap, ArrowUpRight,
 } from "lucide-react";
 import { SharePointBrandIcon, SapBrandIcon } from "@/components/brand-icons";
 import { TopBar } from "@/components/TopBar";
@@ -87,20 +87,38 @@ function HomePage() {
       <main className="mx-auto w-full max-w-[1400px] space-y-4 px-4 py-4 sm:space-y-8 sm:px-6 sm:py-8 md:space-y-10 md:py-10">
         <MobileAppHeader />
 
-        <div className="md:hidden -mt-1.5 px-0.5">
-          <label className="mobile-home-search">
-            <SearchIcon className="h-[1.05rem] w-[1.05rem] text-muted-foreground" strokeWidth={1.7} />
-            <input type="search" placeholder="Search modules, people, files…" />
-          </label>
-        </div>
-
-        <div className="md:hidden mobile-soft-divider !mt-3" aria-hidden />
+        {/* Operational insights banner (mobile) */}
+        <Link to="/modules" className="md:hidden mobile-insights-banner -mt-1 block">
+          <div className="mobile-insights-banner__inner">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="mobile-insights-eyebrow">
+                  <Zap className="h-3 w-3" strokeWidth={2.2} /> Today · Live Insight
+                </div>
+                <h2 className="mt-1.5 text-[1.1rem] not-italic font-semibold leading-tight tracking-tight text-white">
+                  Solar yield trending +12% today
+                </h2>
+                <p className="mt-1 text-[0.78rem] leading-snug text-white/75">
+                  3 sites exceeding forecast · 2 maintenance windows planned
+                </p>
+              </div>
+              <span className="mobile-insights-arrow">
+                <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+              </span>
+            </div>
+            <div className="mobile-insights-stats">
+              <div><span>3.4 GWh</span><label>Today</label></div>
+              <div><span>412 t</span><label>CO₂ saved</label></div>
+              <div><span>98%</span><label>Uptime</label></div>
+            </div>
+          </div>
+        </Link>
 
         <div className="hidden md:block"><GreetingHero name="Samarth Sachdeva" /></div>
         <AnnouncementsBar />
 
         <section className="mobile-native-section md:hidden">
-          <div className="mobile-segmented" role="tablist" aria-label="Workspace">
+          <div className="mobile-chips" role="tablist" aria-label="Workspace">
             {[
               ["ess", "Employee Self-Service"],
               ["bm", "Business Modules"],
@@ -113,7 +131,7 @@ function HomePage() {
                   role="tab"
                   aria-selected={active}
                   onClick={() => setWorkspace(key as "ess" | "bm")}
-                  className={active ? "is-active" : ""}
+                  className={["mobile-chip", active ? "is-active" : ""].join(" ")}
                 >
                   {label}
                 </button>
@@ -132,14 +150,22 @@ function HomePage() {
           )}
         </section>
 
+        {/* My Department — single folder for the logged-in employee */}
         <section className="mobile-native-section md:hidden">
-          <div className="mb-2 px-1 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            Department folders
+          <div className="mb-2 flex items-end justify-between px-1">
+            <div>
+              <div className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                My department
+              </div>
+              <h2 className="mt-0.5 text-[1rem] not-italic font-semibold tracking-tight text-foreground">
+                Your workspace folder
+              </h2>
+            </div>
+            <button className="text-[0.72rem] font-semibold text-primary">Open</button>
           </div>
-          <div className="mobile-folder-rail">
-            {departments.map((d) => <MobileFolderTile key={d.label} {...d} />)}
-          </div>
+          <MyDepartmentCard department={departments[0]} />
         </section>
+
 
         <section className="hidden space-y-4 sm:space-y-5 md:block">
           <div className="flex items-end justify-between gap-4 px-1">
@@ -242,21 +268,22 @@ function MobileModuleTile({
   return to ? <Link to={to} className={className}>{content}</Link> : <button className={className}>{content}</button>;
 }
 
-function MobileFolderTile({
-  icon: Icon,
-  label,
-  tone,
+function MyDepartmentCard({
+  department,
 }: {
-  icon: ComponentType<SVGProps<SVGSVGElement> & { strokeWidth?: number | string }>;
-  label: string;
-  tone: keyof typeof toneBg;
+  department: { icon: ComponentType<SVGProps<SVGSVGElement> & { strokeWidth?: number | string }>; label: string; tone: keyof typeof toneBg };
 }) {
+  const { icon: Icon, label, tone } = department;
   return (
-    <button className="mobile-folder-tile">
-      <span className={`mobile-folder-icon ${toneBg[tone]}`}>
-        <Icon className="h-4 w-4" strokeWidth={1.75} />
+    <button className="mobile-mydept-card">
+      <span className={`mobile-mydept-icon ${toneBg[tone]}`}>
+        <Icon className="h-[1.4rem] w-[1.4rem]" strokeWidth={1.7} />
       </span>
-      <span className="line-clamp-2 text-left text-[0.78rem] font-medium leading-tight text-foreground">{label}</span>
+      <div className="flex-1 text-left">
+        <div className="text-[0.92rem] font-semibold leading-tight text-foreground">{label}</div>
+        <div className="mt-0.5 text-[0.72rem] text-muted-foreground">12 files · 4 shared · updated today</div>
+      </div>
+      <span className="mobile-mydept-chev" aria-hidden>›</span>
     </button>
   );
 }

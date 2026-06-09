@@ -1,4 +1,4 @@
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Bell } from "lucide-react";
 
 type Variant = "home" | "page";
 
@@ -17,17 +17,20 @@ export function MobileAppHeader({
   if (v === "home") {
     return (
       <header className="mobile-app-header mobile-app-header--home md:hidden">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="mobile-app-kicker">Good Morning</p>
-            <h1 className="mt-1 truncate text-[1.5rem] font-semibold not-italic leading-tight tracking-tight text-foreground">
-              {name}
-            </h1>
-          </div>
-          <div className="flex shrink-0 items-center gap-1.5 pt-0.5">
-            <ThemeToggle />
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-2.5">
             <button className="mobile-avatar" aria-label="Account menu">SS</button>
+            <div className="min-w-0">
+              <p className="mobile-app-kicker">Good morning</p>
+              <h1 className="truncate text-[1.05rem] font-semibold not-italic leading-tight tracking-tight text-foreground">
+                {name}
+              </h1>
+            </div>
           </div>
+          <button className="mobile-icon-btn relative" aria-label="Notifications">
+            <Bell className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.7} />
+            <span className="mobile-icon-dot" />
+          </button>
         </div>
       </header>
     );
@@ -39,10 +42,10 @@ export function MobileAppHeader({
         <h1 className="min-w-0 truncate text-[1.15rem] font-semibold not-italic leading-tight tracking-tight text-foreground">
           {pageLabel}
         </h1>
-        <div className="flex shrink-0 items-center gap-1.5">
-          <ThemeToggle />
-          <button className="mobile-avatar" aria-label="Account menu">SS</button>
-        </div>
+        <button className="mobile-icon-btn relative" aria-label="Notifications">
+          <Bell className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.7} />
+          <span className="mobile-icon-dot" />
+        </button>
       </div>
     </header>
   );
