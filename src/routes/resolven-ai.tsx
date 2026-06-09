@@ -171,7 +171,11 @@ function AIPage() {
               onClick={() => setMobileSidebarOpen(false)}
             />
             <aside className="fixed inset-y-0 left-0 z-50 flex w-[82%] max-w-[320px] flex-col border-r border-border/60 bg-background/95 backdrop-blur-xl shadow-elev md:hidden animate-in slide-in-from-left duration-300">
-              <div className="flex h-14 items-center justify-end px-3 border-b border-border/40">
+              <div className="flex items-center justify-between px-4 pb-3 border-b border-border/40" style={{ paddingTop: "calc(env(safe-area-inset-top) + 0.85rem)" }}>
+                <div className="flex items-center gap-2.5">
+                  <img src={aiLogo} alt="Resolven AI" className="h-7 w-7 object-contain" />
+                  <span className="text-[0.95rem] font-semibold tracking-tight text-foreground">Resolven AI</span>
+                </div>
                 <button
                   onClick={() => setMobileSidebarOpen(false)}
                   aria-label="Close menu"
@@ -180,7 +184,9 @@ function AIPage() {
                   <X className="h-4 w-4" />
                 </button>
               </div>
-              <ExpandedList openMenu={openMenu} setOpenMenu={setOpenMenu} />
+              <div className="px-1.5 pt-2 flex-1 overflow-y-auto">
+                <ExpandedList openMenu={openMenu} setOpenMenu={setOpenMenu} />
+              </div>
             </aside>
           </>
         )}
