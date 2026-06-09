@@ -82,27 +82,28 @@ export function BottomNav() {
 
         <ul className="mobile-nav-grid">
           {LEFT.map(renderItem)}
-          <li className="flex justify-center">
-            <Link
-              to="/resolven-ai"
-              aria-label="Resolven AI"
-              className="mobile-nav-fab-link group flex flex-col items-center justify-center gap-0.5 py-1.5 px-2"
-            >
-              <span className={["mobile-nav-fab", aiActive ? "is-active" : ""].join(" ")}>
-                <img src={aiLogo} alt="" className="h-[1.15rem] w-[1.15rem] object-contain" />
-              </span>
-              <span
-                className={[
-                  "text-[10px] font-medium tracking-wide transition-colors",
-                  aiActive ? "text-primary" : "text-muted-foreground",
-                ].join(" ")}
-              >
-                AI
-              </span>
-            </Link>
-          </li>
           {RIGHT.map(renderItem)}
         </ul>
+
+        {/* Floating AI button — absolutely centered to the nav wrap so it
+            always aligns with the SVG notch regardless of grid math */}
+        <Link
+          to="/resolven-ai"
+          aria-label="Resolven AI"
+          className="mobile-nav-fab-link group flex flex-col items-center justify-end gap-0.5 py-1.5"
+        >
+          <span className={["mobile-nav-fab", aiActive ? "is-active" : ""].join(" ")}>
+            <img src={aiLogo} alt="" className="h-[1.15rem] w-[1.15rem] object-contain" />
+          </span>
+          <span
+            className={[
+              "text-[10px] font-medium tracking-wide transition-colors",
+              aiActive ? "text-primary" : "text-muted-foreground",
+            ].join(" ")}
+          >
+            AI
+          </span>
+        </Link>
       </div>
     </nav>
   );
