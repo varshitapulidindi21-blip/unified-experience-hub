@@ -23,7 +23,6 @@ const RIGHT: NavItem[] = [
 export function BottomNav() {
   const location = useRouterState({ select: (s) => s.location });
   const pathname = location.pathname;
-  const currentHash = location.hash;
 
   const renderItem = ({ to, label, icon: Icon }: NavItem) => {
     const active = pathname === to;
