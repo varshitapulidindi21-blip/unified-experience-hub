@@ -878,7 +878,7 @@
     .mobile-nav-fab-link {
       position: absolute;
       left: 50%;
-      bottom: 0;
+      bottom: 0.4rem; /* matches the grid's padding-bottom so AI label baselines with Home/Tasks/Dashboard/Profile */
       transform: translateX(-50%);
       z-index: 3;
     }
@@ -888,7 +888,7 @@
       width: 2.55rem; height: 2.55rem; border-radius: 9999px;
       /* lift only the circle so it sits in the notch while the
          "AI" label stays aligned with Home/Tasks/Dashboard/Profile */
-      margin-top: -2.35rem;
+      margin-top: -2.85rem;
       margin-bottom: 0.15rem;
       background: linear-gradient(140deg,
         color-mix(in oklab, var(--brand-lavender) 92%, white),
