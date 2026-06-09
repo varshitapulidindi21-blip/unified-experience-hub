@@ -871,10 +871,10 @@
     }
     .mobile-nav-grid {
       position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
-      column-gap: 4.4rem; /* reserves a clear center slot for the floating AI button */
+      display: grid; grid-template-columns: repeat(5, 1fr);
       height: 100%; align-items: end; padding-bottom: 0.4rem;
     }
+    .mobile-nav-spacer { /* keeps the 3rd column reserved for the floating FAB */ }
     .mobile-nav-fab-link {
       position: absolute;
       left: 50%;
