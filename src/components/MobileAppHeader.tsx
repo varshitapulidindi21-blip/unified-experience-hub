@@ -6,11 +6,13 @@ export function MobileAppHeader({
   name = "Samarth Sachdeva",
   pageLabel,
   variant,
+  hideNotifications,
 }: {
   name?: string;
   pageLabel?: string;
   searchPlaceholder?: string;
   variant?: Variant;
+  hideNotifications?: boolean;
 }) {
   const v: Variant = variant ?? (pageLabel ? "page" : "home");
 
@@ -27,10 +29,12 @@ export function MobileAppHeader({
               </h1>
             </div>
           </div>
-          <button className="mobile-icon-btn relative" aria-label="Notifications">
-            <Bell className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.7} />
-            <span className="mobile-icon-dot" />
-          </button>
+          {!hideNotifications && (
+            <button className="mobile-icon-btn relative" aria-label="Notifications">
+              <Bell className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.7} />
+              <span className="mobile-icon-dot" />
+            </button>
+          )}
         </div>
       </header>
     );
@@ -42,10 +46,12 @@ export function MobileAppHeader({
         <h1 className="min-w-0 truncate text-[1.15rem] font-semibold not-italic leading-tight tracking-tight text-foreground">
           {pageLabel}
         </h1>
-        <button className="mobile-icon-btn relative" aria-label="Notifications">
-          <Bell className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.7} />
-          <span className="mobile-icon-dot" />
-        </button>
+        {!hideNotifications && (
+          <button className="mobile-icon-btn relative" aria-label="Notifications">
+            <Bell className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.7} />
+            <span className="mobile-icon-dot" />
+          </button>
+        )}
       </div>
     </header>
   );

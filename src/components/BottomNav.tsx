@@ -24,21 +24,27 @@ export function BottomNav() {
   const location = useRouterState({ select: (s) => s.location });
   const pathname = location.pathname;
 
+  const hasNewTasks = true; // TODO: wire to real state
+
   const renderItem = ({ to, label, icon: Icon }: NavItem) => {
     const active = pathname === to;
+    const showBadge = to === "/tasks" && hasNewTasks;
     return (
       <li key={`${to}-${label}`} className="flex justify-center">
         <Link
           to={to}
           className="group flex flex-col items-center justify-center gap-0.5 py-1.5 px-2"
         >
-          <Icon
-            className={[
-              "h-[1.15rem] w-[1.15rem] transition-colors",
-              active ? "text-primary" : "text-muted-foreground",
-            ].join(" ")}
-            strokeWidth={active ? 2.2 : 1.8}
-          />
+          <span className="relative inline-flex">
+            <Icon
+              className={[
+                "h-[1.15rem] w-[1.15rem] transition-colors",
+                active ? "text-primary" : "text-muted-foreground",
+              ].join(" ")}
+              strokeWidth={active ? 2.2 : 1.8}
+            />
+            {showBadge && <span className="mobile-nav-badge" aria-label="New tasks" />}
+          </span>
           <span
             className={[
               "text-[10px] font-medium tracking-wide transition-colors",
