@@ -5,11 +5,13 @@ type Variant = "home" | "page";
 export function MobileAppHeader({
   name = "Samarth Sachdeva",
   pageLabel,
+  pageSubtitle,
   variant,
   hideNotifications,
 }: {
   name?: string;
   pageLabel?: string;
+  pageSubtitle?: string;
   searchPlaceholder?: string;
   variant?: Variant;
   hideNotifications?: boolean;
@@ -40,12 +42,28 @@ export function MobileAppHeader({
     );
   }
 
+  const trimmed = (pageLabel ?? "").trim();
+  const spaceIdx = trimmed.indexOf(" ");
+  const firstWord = spaceIdx === -1 ? trimmed : trimmed.slice(0, spaceIdx);
+  const restWords = spaceIdx === -1 ? "" : trimmed.slice(spaceIdx + 1);
+
   return (
     <header className="mobile-app-header mobile-app-header--page md:hidden">
-      <div className="flex items-center justify-between gap-3">
-        <h1 className="min-w-0 truncate text-[1.15rem] font-semibold not-italic leading-tight tracking-tight text-foreground">
-          {pageLabel}
-        </h1>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="font-display italic font-extrabold tracking-tight text-[1.85rem] leading-[1.05]">
+            <span style={{ color: "var(--brand-purple-deep, var(--brand-purple))" }}>{firstWord}</span>
+            {restWords && (
+              <>
+                {" "}
+                <span style={{ color: "var(--brand-green)" }}>{restWords}</span>
+              </>
+            )}
+          </h1>
+          {pageSubtitle && (
+            <p className="mt-1 text-[0.78rem] text-muted-foreground">{pageSubtitle}</p>
+          )}
+        </div>
         {!hideNotifications && (
           <button className="mobile-icon-btn relative" aria-label="Notifications">
             <Bell className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.7} />
@@ -56,3 +74,4 @@ export function MobileAppHeader({
     </header>
   );
 }
+

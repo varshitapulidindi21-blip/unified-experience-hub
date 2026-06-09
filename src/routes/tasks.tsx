@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Clock, ChevronRight } from "lucide-react";
+import { Clock, ChevronRight, Check } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
 import { MobileAppHeader } from "@/components/MobileAppHeader";
 
@@ -44,13 +44,27 @@ const TASKS: Task[] = [
 const DONE_THIS_WEEK = 5;
 const TOTAL_THIS_WEEK = 12;
 
-function TaskCard({ t }: { t: Task }) {
+function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () => void }) {
   return (
     <article className="task-card-v2">
-      <button className="task-checkbox" aria-label="Mark complete" />
+      <button
+        type="button"
+        onClick={onToggle}
+        className="task-checkbox"
+        data-checked={done}
+        aria-label={done ? "Mark incomplete" : "Mark complete"}
+        aria-pressed={done}
+      >
+        {done && <Check strokeWidth={3} />}
+      </button>
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="task-card-v2__title">{t.title}</h3>
+          <h3
+            className="task-card-v2__title"
+            style={done ? { textDecoration: "line-through", opacity: 0.55 } : undefined}
+          >
+            {t.title}
+          </h3>
           <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/70" />
         </div>
         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
@@ -74,6 +88,7 @@ function TaskCard({ t }: { t: Task }) {
   );
 }
 
+
 function SectionLabel({ label, count }: { label: string; count: number }) {
   return (
     <div className="mt-4 mb-1.5 flex items-center justify-between px-1">
@@ -87,6 +102,9 @@ function SectionLabel({ label, count }: { label: string; count: number }) {
 
 function TasksPage() {
   const [tab, setTab] = useState<TabKey>("all");
+  const [doneMap, setDoneMap] = useState<Record<string, boolean>>({});
+  const toggle = (id: string) =>
+    setDoneMap((m) => ({ ...m, [id]: !m[id] }));
   const pct = (DONE_THIS_WEEK / TOTAL_THIS_WEEK) * 100;
   const r = 22;
   const c = 2 * Math.PI * r;
@@ -94,12 +112,19 @@ function TasksPage() {
   const filtered = tab === "all" ? TASKS : TASKS.filter((t) => t.cat === tab);
   const approvals = filtered.filter((t) => t.section === "approvals");
   const inProgress = filtered.filter((t) => t.section === "in_progress");
+  const activeCount = TASKS.length - Object.values(doneMap).filter(Boolean).length;
+  const dueThisWeek = TASKS.filter((t) => ["Today", "Tomorrow", "Wed", "Fri"].includes(t.due)).length;
 
   return (
     <div className="min-h-screen">
       <div className="hidden md:block"><TopBar /></div>
       <main className="mx-auto w-full max-w-[1400px] space-y-3 px-4 pt-2 pb-28 sm:space-y-6 sm:px-6 sm:py-8">
-        <MobileAppHeader pageLabel="My Tasks" hideNotifications />
+        <MobileAppHeader
+          pageLabel="My tasks"
+          pageSubtitle={`${activeCount} active · ${dueThisWeek} due this week`}
+          hideNotifications
+        />
+
 
         {/* Underline tabs */}
         <nav className="md:hidden tasks-tabs" role="tablist" aria-label="Task category">
@@ -166,7 +191,7 @@ function TasksPage() {
           <section className="md:hidden">
             <SectionLabel label="APPROVALS" count={approvals.length} />
             <div className="space-y-2">
-              {approvals.map((t) => <TaskCard key={t.title} t={t} />)}
+              {approvals.map((t) => <TaskCard key={t.title} t={t} done={!!doneMap[t.title]} onToggle={() => toggle(t.title)} />)}
             </div>
           </section>
         )}
@@ -175,7 +200,7 @@ function TasksPage() {
           <section className="md:hidden">
             <SectionLabel label="IN PROGRESS" count={inProgress.length} />
             <div className="space-y-2">
-              {inProgress.map((t) => <TaskCard key={t.title} t={t} />)}
+              {inProgress.map((t) => <TaskCard key={t.title} t={t} done={!!doneMap[t.title]} onToggle={() => toggle(t.title)} />)}
             </div>
           </section>
         )}
