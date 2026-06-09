@@ -82,11 +82,12 @@ export function BottomNav() {
 
         <ul className="mobile-nav-grid">
           {LEFT.map(renderItem)}
+          {/* Empty placeholder so side items keep their even 5-col rhythm */}
+          <li aria-hidden className="mobile-nav-spacer" />
           {RIGHT.map(renderItem)}
         </ul>
 
-        {/* Floating AI button — absolutely centered to the nav wrap so it
-            always aligns with the SVG notch regardless of grid math */}
+        {/* Floating AI button — absolutely centered on top of the placeholder */}
         <Link
           to="/resolven-ai"
           aria-label="Resolven AI"
