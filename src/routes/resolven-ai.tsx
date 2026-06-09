@@ -5,7 +5,7 @@ import {
   Search, MoreHorizontal, Edit3, Trash2, Pin, Share2, Menu, X, Clock,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { MobileAppHeader } from "@/components/MobileAppHeader";
+
 import aiLogo from "@/assets/resolven-ai-logo.png";
 
 export const Route = createFileRoute("/resolven-ai")({
