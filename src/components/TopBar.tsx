@@ -54,7 +54,7 @@ export function TopBar({ showSearch = true }: { showSearch?: boolean }) {
                 className="ml-1 sm:ml-2 flex items-center gap-1 sm:gap-1.5 rounded-xl bg-primary/95 p-1 pr-1.5 sm:pr-2 text-primary-foreground shadow-soft transition-all duration-300 hover:bg-primary hover:shadow-elev focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 aria-label="Account menu"
               >
-                <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-lg bg-secondary text-[10px] sm:text-xs font-medium text-secondary-foreground">
+                <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-secondary text-[10px] sm:text-xs font-medium text-secondary-foreground">
                   SS
                 </span>
                 <ChevronDown className="h-3.5 w-3.5 sm:h-4 sm:w-4 opacity-80" />
