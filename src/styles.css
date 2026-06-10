@@ -1093,9 +1093,9 @@
       border: 1px solid color-mix(in oklab, var(--color-border) 38%, transparent);
     }
     .task-card-v2 {
-      display: flex; gap: 0.55rem;
-      padding: 0.55rem 0.7rem;
-      border-radius: 0.75rem;
+      display: flex; gap: 0.45rem;
+      padding: 0.42rem 0.58rem;
+      border-radius: 0.7rem;
       background: var(--color-card);
       border: 1px solid color-mix(in oklab, var(--color-border) 32%, transparent);
     }
