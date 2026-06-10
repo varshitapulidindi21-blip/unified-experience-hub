@@ -55,7 +55,10 @@ export function MobileAppHeader({
             className="italic font-bold tracking-tight text-[1.45rem] leading-[1.1]"
             style={{ fontFamily: "Montserrat, system-ui, sans-serif", color: "var(--brand-purple-deep, var(--brand-purple))" }}
           >
-            {trimmed}
+            {firstWord}
+            {restWords && (
+              <span style={{ color: "var(--brand-green)" }}>{" "}{restWords}</span>
+            )}
           </h1>
           {pageSubtitle && (
             <p
