@@ -96,7 +96,7 @@ function SectionLabel({ label, count }: { label: string; count: number }) {
   return (
     <div className="mt-3 mb-1.5 flex items-baseline justify-between px-0.5">
       <h2
-        className="text-[0.82rem] font-medium text-foreground/80"
+        className="text-[0.82rem] font-medium not-italic text-foreground/80"
         style={{ fontFamily: "Montserrat, system-ui, sans-serif", letterSpacing: 0 }}
       >
         {label}
