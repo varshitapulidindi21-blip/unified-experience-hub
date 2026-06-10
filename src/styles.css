@@ -1109,32 +1109,34 @@
     }
     .tasks-tabs {
       display: flex;
-      gap: 0.25rem;
+      gap: 0.3rem;
       overflow-x: auto;
-      padding: 0.4rem 0 0;
+      padding: 0.5rem 0.4rem 0;
       scrollbar-width: none;
+      background: color-mix(in oklab, var(--brand-lavender) 35%, var(--color-card));
+      border-radius: 0.5rem 0.5rem 0 0;
     }
     .tasks-tabs::-webkit-scrollbar { display: none; }
     .tasks-tab {
       flex-shrink: 0;
-      padding: 0.55rem 1.1rem 0.7rem;
-      font-size: 0.85rem;
+      padding: 0.75rem 1.15rem 0.85rem;
+      font-size: 0.9rem;
       font-weight: 500;
       font-family: var(--font-sans);
-      color: color-mix(in oklab, var(--brand-purple) 75%, var(--color-foreground) 25%);
-      background: color-mix(in oklab, var(--brand-lavender) 30%, var(--color-card));
+      color: color-mix(in oklab, var(--brand-purple-deep, var(--brand-purple)) 70%, var(--color-foreground) 30%);
+      background: color-mix(in oklab, var(--brand-lavender) 55%, var(--color-card));
       border: 0;
-      border-top-left-radius: 1.1rem;
-      border-top-right-radius: 1.1rem;
-      border-bottom-left-radius: 0.35rem;
-      border-bottom-right-radius: 0.35rem;
+      border-top-left-radius: 1.6rem;
+      border-top-right-radius: 1.6rem;
+      border-bottom-left-radius: 0.3rem;
+      border-bottom-right-radius: 0.3rem;
       white-space: nowrap;
       transition: background 0.15s, color 0.15s, font-weight 0.15s;
     }
     .tasks-tab.is-active {
       color: var(--brand-purple-deep, var(--brand-purple));
       font-weight: 700;
-      background: color-mix(in oklab, var(--brand-lavender) 75%, var(--color-card));
+      background: color-mix(in oklab, var(--brand-lavender) 95%, var(--color-card));
     }
     .task-checkbox {
       flex-shrink: 0;
