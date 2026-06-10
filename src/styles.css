@@ -1108,53 +1108,65 @@
       font-family: var(--font-sans);
     }
 
-    /* Swiggy-style segmented curved tabs */
+    /* Connected curved tab strip (Swiggy-style) — active tab sinks into content below */
     .tasks-tabs {
       position: relative;
       display: flex;
       gap: 0;
       overflow-x: auto;
-      padding: 0.28rem;
+      padding: 0 0.25rem;
       scrollbar-width: none;
-      background: color-mix(in oklab, var(--brand-lavender) 40%, var(--color-card));
-      border: 1px solid color-mix(in oklab, var(--brand-purple) 8%, var(--color-border));
-      border-radius: 1.15rem;
-      box-shadow: inset 0 1px 2px oklch(0.30 0.10 295 / 0.055), inset 0 -1px 0 oklch(1 0 0 / 0.72);
+      background: color-mix(in oklab, var(--brand-lavender) 55%, var(--color-card));
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
     }
     .tasks-tabs::-webkit-scrollbar { display: none; }
     .tasks-tab {
       position: relative;
-      flex-shrink: 0;
-      padding: 0.44rem 0.74rem;
-      font-size: 0.72rem;
+      flex: 1 1 0;
+      min-width: max-content;
+      padding: 0.7rem 0.85rem 0.7rem;
+      font-size: 0.78rem;
       font-weight: 500;
       font-family: var(--font-sans);
-      color: color-mix(in oklab, var(--brand-purple-deep, var(--brand-purple)) 58%, var(--color-foreground) 42%);
+      color: color-mix(in oklab, var(--brand-purple-deep, var(--brand-purple)) 62%, var(--color-foreground) 38%);
       background: transparent;
       border: 0;
-      border-radius: 0.95rem;
       white-space: nowrap;
       cursor: pointer;
-      transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
-      z-index: 1;
+      transition: color 0.18s ease;
+      text-align: center;
     }
-    .tasks-tab + .tasks-tab::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 28%;
-      bottom: 28%;
-      width: 1px;
-      background: color-mix(in oklab, var(--brand-purple) 12%, transparent);
-      transition: opacity 0.18s ease;
-    }
-    .tasks-tab.is-active::before,
-    .tasks-tab.is-active + .tasks-tab::before { opacity: 0; }
     .tasks-tab.is-active {
       color: var(--brand-purple-deep, var(--brand-purple));
       font-weight: 600;
-      background: color-mix(in oklab, var(--color-card) 94%, var(--brand-lavender) 6%);
-      box-shadow: 0 1px 0 oklch(1 0 0 / 0.85), 0 6px 14px -10px color-mix(in oklab, var(--brand-purple) 34%, transparent);
+      background: var(--color-background);
+      border-top-left-radius: 0.9rem;
+      border-top-right-radius: 0.9rem;
+    }
+    /* Reverse-curve shoulders: outer-rounded corners on neighbours that fold into the active pill */
+    .tasks-tab.is-active::before,
+    .tasks-tab.is-active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 0.9rem;
+      height: 0.9rem;
+      background: var(--color-background);
+      pointer-events: none;
+    }
+    .tasks-tab.is-active::before {
+      left: -0.9rem;
+      border-bottom-right-radius: 0.9rem;
+      box-shadow: 0 0.45rem 0 0 color-mix(in oklab, var(--brand-lavender) 55%, var(--color-card));
+      clip-path: inset(50% 0 0 0);
+    }
+    .tasks-tab.is-active::after {
+      right: -0.9rem;
+      border-bottom-left-radius: 0.9rem;
+      box-shadow: 0 0.45rem 0 0 color-mix(in oklab, var(--brand-lavender) 55%, var(--color-card));
+      clip-path: inset(50% 0 0 0);
     }
 
     .task-checkbox {
