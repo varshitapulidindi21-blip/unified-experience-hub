@@ -29,12 +29,12 @@ function ProfilePage() {
         <section className="mobile-profile-hero md:hidden">
           <div className="mobile-profile-hero__bg" aria-hidden />
           <div className="relative flex flex-col items-center gap-2 pt-6 pb-5 px-5 text-center">
-            <div className="mobile-profile-avatar">AD</div>
+            <div className="mobile-profile-avatar">SS</div>
             <h2 className="mt-2 text-[1.25rem] font-extrabold italic tracking-tight text-white">
-              Aarav Desai
+              Samarth Sachdeva
             </h2>
             <p className="text-[0.78rem] text-white/85">Senior Operations Lead · Resolven Energy</p>
-            <p className="text-[0.72rem] text-white/70">3y 4m tenure · Bengaluru HQ</p>
+            <p className="text-[0.72rem] text-white/70">3y 4m tenure </p>
             <button className="mobile-profile-edit mt-3">
               <Pencil className="h-3.5 w-3.5" strokeWidth={2.2} /> Edit profile
             </button>
