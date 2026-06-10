@@ -95,11 +95,11 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
 function SectionLabel({ label, count }: { label: string; count: number }) {
   const formatted = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase();
   return (
-    <div className="mt-5 mb-2 flex items-center justify-between px-1">
-      <h2 className="text-[0.95rem] font-normal text-foreground/80" style={{ fontFamily: "var(--font-sans)" }}>
+    <div className="mt-4 mb-1.5 flex items-center justify-between px-0.5">
+      <h2 className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground" style={{ fontFamily: "var(--font-sans)" }}>
         {formatted}
       </h2>
-      <span className="text-[0.85rem] font-normal text-muted-foreground/70">{count}</span>
+      <span className="text-[0.7rem] font-medium text-muted-foreground/60">{count}</span>
     </div>
   );
 }
