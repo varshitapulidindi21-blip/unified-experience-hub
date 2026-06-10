@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Users, Bell, Award, Mail, ShieldCheck, Smartphone,
-  Palette, LifeBuoy, LogOut, Pencil, Sun,
+  Palette, LifeBuoy, LogOut, Pencil, Sun, Moon,
 } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
+import { useTheme } from "@/hooks/useTheme";
+
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
