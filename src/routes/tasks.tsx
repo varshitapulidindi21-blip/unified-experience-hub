@@ -96,7 +96,7 @@ function SectionLabel({ label, count }: { label: string; count: number }) {
   return (
     <div className="mt-3 mb-1.5 flex items-baseline justify-between px-0.5">
       <h2
-        className="text-[0.82rem] font-medium text-foreground/80"
+        className="text-[0.82rem] font-medium not-italic text-foreground/80"
         style={{ fontFamily: "Montserrat, system-ui, sans-serif", letterSpacing: 0 }}
       >
         {label}
@@ -176,7 +176,7 @@ function TasksPage() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[0.58rem] font-medium tracking-[0.04em] text-muted-foreground">This week</p>
-              <p className="text-[0.94rem] font-semibold italic text-foreground leading-tight">
+              <p className="text-[0.94rem] font-semibold text-foreground leading-tight">
                 {DONE_THIS_WEEK} of {TOTAL_THIS_WEEK} done
               </p>
               <div className="mt-1.5 flex items-center gap-1">

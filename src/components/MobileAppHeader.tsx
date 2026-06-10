@@ -59,7 +59,7 @@ export function MobileAppHeader({
           </h1>
           {pageSubtitle && (
             <p
-              className="mt-1 text-[0.72rem] font-normal text-muted-foreground/85"
+              className="mt-1 text-[0.72rem] font-normal italic text-muted-foreground/85"
               style={{ fontFamily: "Montserrat, system-ui, sans-serif" }}
             >
               {pageSubtitle}
