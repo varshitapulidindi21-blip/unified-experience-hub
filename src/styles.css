@@ -1115,18 +1115,23 @@
       --tab-active-bg: var(--color-background);
       position: relative;
       display: flex;
+      flex-wrap: nowrap;
       align-items: flex-end;
-      gap: 0;
+      gap: 0.25rem;
       padding: 0;
       margin: 0.25rem 0 0;
       border-bottom: 1px solid var(--tab-line);
-      overflow: visible;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    .tasks-tabs::-webkit-scrollbar { display: none; }
     .tasks-tab {
       position: relative;
-      flex: 1 1 0;
-      min-width: 0;
+      flex: 0 0 auto;
       height: 2.35rem;
+      padding: 0 0.75rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1148,31 +1153,7 @@
       font-weight: 600;
       background: var(--tab-active-bg);
       border: 1px solid var(--tab-line);
-      border-bottom-color: var(--tab-active-bg);
       border-radius: 0.7rem 0.7rem 0 0;
-      margin-bottom: -1px;
-    }
-    /* Inverted curved shoulders connecting active tab to strip */
-    .tasks-tab.is-active::before,
-    .tasks-tab.is-active::after {
-      content: "";
-      position: absolute;
-      bottom: -1px;
-      width: 0.55rem;
-      height: 0.55rem;
-      background: transparent;
-      box-shadow: 0 0.275rem 0 0 var(--tab-active-bg);
-      pointer-events: none;
-    }
-    .tasks-tab.is-active::before {
-      left: -0.55rem;
-      border-bottom-right-radius: 0.55rem;
-      border-right: 1px solid var(--tab-line);
-    }
-    .tasks-tab.is-active::after {
-      right: -0.55rem;
-      border-bottom-left-radius: 0.55rem;
-      border-left: 1px solid var(--tab-line);
     }
 
     .task-checkbox {
