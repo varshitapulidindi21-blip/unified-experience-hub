@@ -1087,110 +1087,99 @@
 
     /* ============ Tasks page v2 ============ */
     .weekly-progress-card {
-      padding: 0.7rem 0.82rem;
-      border-radius: 0.9rem;
-      background: color-mix(in oklab, var(--color-card) 96%, var(--brand-lavender) 4%);
-      border: 1px solid color-mix(in oklab, var(--color-border) 34%, transparent);
-      box-shadow: 0 4px 14px -16px oklch(0.30 0.10 295 / 0.20);
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.85rem;
+      background: var(--color-card);
+      border: 1px solid color-mix(in oklab, var(--color-border) 38%, transparent);
     }
     .task-card-v2 {
-      display: flex; gap: 0.58rem;
-      padding: 0.62rem 0.68rem;
-      border-radius: 0.78rem;
-      background: color-mix(in oklab, var(--color-card) 98%, var(--brand-lavender) 2%);
-      border: 1px solid color-mix(in oklab, var(--color-border) 30%, transparent);
-      box-shadow: 0 3px 12px -15px oklch(0.30 0.10 295 / 0.18);
+      display: flex; gap: 0.55rem;
+      padding: 0.55rem 0.7rem;
+      border-radius: 0.75rem;
+      background: var(--color-card);
+      border: 1px solid color-mix(in oklab, var(--color-border) 32%, transparent);
     }
     .task-card-v2__title {
-      font-size: 0.78rem; font-weight: 500;
-      line-height: 1.22; letter-spacing: 0;
-      color: var(--color-foreground);
       font-family: var(--font-sans);
+      font-size: 0.785rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.005em;
+      color: var(--color-foreground);
     }
 
+    /* ===== Segmented folder tabs (Swiggy-style) ===== */
     .tasks-tabs {
-      --tab-strip-bg: color-mix(in oklab, var(--brand-lavender) 64%, var(--color-card));
-      --tab-active-bg: color-mix(in oklab, var(--color-card) 86%, var(--brand-lavender) 14%);
-      --tab-line: color-mix(in oklab, var(--brand-purple) 30%, transparent);
+      --tab-line: color-mix(in oklab, var(--brand-purple) 28%, transparent);
+      --tab-active-bg: var(--color-background);
       position: relative;
       display: flex;
-      align-items: stretch;
+      align-items: flex-end;
       gap: 0;
-      min-height: 3.2rem;
-      margin-inline: -1rem;
-      padding: 0 0.7rem;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scrollbar-width: none;
-      background: var(--tab-strip-bg);
+      padding: 0;
+      margin: 0.25rem 0 0;
       border-bottom: 1px solid var(--tab-line);
-      box-shadow: inset 0 -1px 0 color-mix(in oklab, var(--color-card) 40%, transparent);
+      overflow: visible;
     }
-    .tasks-tabs::-webkit-scrollbar { display: none; }
     .tasks-tab {
       position: relative;
-      z-index: 1;
-      flex: 0 0 auto;
-      min-width: 5.25rem;
-      height: 3.2rem;
-      padding: 0 1.05rem;
+      flex: 1 1 0;
+      min-width: 0;
+      height: 2.35rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border: 0;
       background: transparent;
-      color: color-mix(in oklab, var(--brand-purple-deep, var(--brand-purple)) 78%, var(--color-foreground) 22%);
+      color: color-mix(in oklab, var(--color-foreground) 55%, transparent);
       font-family: var(--font-sans);
-      font-size: 0.82rem;
-      font-weight: 400;
+      font-size: 0.74rem;
+      font-weight: 500;
       line-height: 1;
       letter-spacing: 0;
       white-space: nowrap;
       cursor: pointer;
-    }
-    .tasks-tab::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 1px;
-      height: 1.95rem;
-      background: color-mix(in oklab, var(--brand-purple) 11%, transparent);
-      opacity: 0.7;
-    }
-    .tasks-tab:last-child::after,
-    .tasks-tab.is-active::after {
-      display: none;
+      transition: color 0.18s ease;
     }
     .tasks-tab.is-active {
-      z-index: 3;
-      min-width: 4.5rem;
+      z-index: 2;
       color: var(--brand-purple-deep, var(--brand-purple));
       font-weight: 600;
       background: var(--tab-active-bg);
       border: 1px solid var(--tab-line);
-      border-bottom-color: transparent;
-      border-radius: 1.05rem 1.05rem 0 0;
-      box-shadow: inset 0 1px 0 color-mix(in oklab, var(--color-card) 78%, transparent);
+      border-bottom-color: var(--tab-active-bg);
+      border-radius: 0.7rem 0.7rem 0 0;
+      margin-bottom: -1px;
     }
-    .tasks-tab.is-active::before {
+    /* Inverted curved shoulders connecting active tab to strip */
+    .tasks-tab.is-active::before,
+    .tasks-tab.is-active::after {
       content: "";
       position: absolute;
-      inset: auto -0.92rem -1px -0.92rem;
-      height: 1.05rem;
+      bottom: -1px;
+      width: 0.55rem;
+      height: 0.55rem;
+      background: transparent;
+      box-shadow: 0 0.275rem 0 0 var(--tab-active-bg);
       pointer-events: none;
-      background:
-        radial-gradient(circle at 0 0, transparent 1.03rem, var(--tab-line) 1.06rem, var(--tab-line) 1.12rem, transparent 1.15rem) left bottom / 1.05rem 1.05rem no-repeat,
-        radial-gradient(circle at 100% 0, transparent 1.03rem, var(--tab-line) 1.06rem, var(--tab-line) 1.12rem, transparent 1.15rem) right bottom / 1.05rem 1.05rem no-repeat,
-        linear-gradient(var(--tab-active-bg), var(--tab-active-bg)) center bottom / calc(100% - 1.84rem) 1px no-repeat;
+    }
+    .tasks-tab.is-active::before {
+      left: -0.55rem;
+      border-bottom-right-radius: 0.55rem;
+      border-right: 1px solid var(--tab-line);
+    }
+    .tasks-tab.is-active::after {
+      right: -0.55rem;
+      border-bottom-left-radius: 0.55rem;
+      border-left: 1px solid var(--tab-line);
     }
 
     .task-checkbox {
       flex-shrink: 0;
-      width: 0.92rem; height: 0.92rem;
-      margin-top: 0.12rem;
+      width: 0.95rem; height: 0.95rem;
+      margin-top: 0.1rem;
       border-radius: 9999px;
-      border: 1px solid color-mix(in oklab, var(--color-foreground) 22%, transparent);
+      border: 1px solid color-mix(in oklab, var(--color-foreground) 28%, transparent);
       background: transparent;
       display: grid;
       place-items: center;
@@ -1206,26 +1195,27 @@
     .task-checkbox svg { width: 0.55rem; height: 0.55rem; }
 
     .task-tag {
-      font-size: 0.54rem;
-      font-weight: 500;
       font-family: var(--font-sans);
+      font-size: 0.56rem;
+      font-weight: 500;
       letter-spacing: 0;
-      padding: 0.14rem 0.38rem;
-      border-radius: 0.32rem;
+      padding: 0.12rem 0.4rem;
+      border-radius: 9999px;
       line-height: 1;
+      border: 1px solid transparent;
     }
-    .task-tag.tag-purple { background: color-mix(in oklab, var(--brand-purple) 14%, transparent); color: var(--brand-purple); }
-    .task-tag.tag-green  { background: color-mix(in oklab, var(--brand-green) 18%, transparent); color: color-mix(in oklab, var(--brand-green) 70%, black); }
-    .task-tag.tag-amber  { background: oklch(0.92 0.12 80 / 0.55); color: oklch(0.40 0.14 60); }
-    .task-tag.tag-red    { background: oklch(0.92 0.10 25 / 0.65); color: oklch(0.50 0.20 25); }
+    .task-tag.tag-purple { background: transparent; border-color: color-mix(in oklab, var(--brand-purple) 30%, transparent); color: var(--brand-purple); }
+    .task-tag.tag-green  { background: transparent; border-color: color-mix(in oklab, var(--brand-green) 38%, transparent); color: color-mix(in oklab, var(--brand-green) 70%, black); }
+    .task-tag.tag-amber  { background: transparent; border-color: oklch(0.78 0.14 75 / 0.55); color: oklch(0.45 0.14 60); }
+    .task-tag.tag-red    { background: transparent; border-color: oklch(0.72 0.16 25 / 0.55); color: oklch(0.50 0.20 25); }
     .task-progress {
-      height: 3px; border-radius: 9999px;
+      height: 2px; border-radius: 9999px;
       background: color-mix(in oklab, var(--color-border) 55%, transparent);
       overflow: hidden;
     }
     .task-progress__fill {
       height: 100%; border-radius: 9999px;
-      background: linear-gradient(90deg, var(--brand-green), color-mix(in oklab, var(--brand-green) 70%, var(--brand-purple)));
+      background: var(--brand-purple);
     }
 
     /* ============ Bottom nav badge ============ */
