@@ -1103,6 +1103,7 @@
       font-family: var(--font-sans);
       font-size: 0.785rem;
       font-weight: 700;
+      font-style: normal;
       line-height: 1.2;
       letter-spacing: -0.005em;
       color: var(--color-foreground);

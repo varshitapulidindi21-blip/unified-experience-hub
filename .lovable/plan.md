@@ -1,0 +1,3 @@
+The task card titles in the My Tasks list are currently italic because they use `h3` elements, and the global CSS rule `h1, h2, h3, h4 { font-style: italic; }` applies to them.
+
+To fix this, add `font-style: normal;` to the `.task-card-v2__title` CSS rule in `src/styles.css`. This will make the task titles (e.g., "Approve Wind Farm 12 Maintenance PO", "Sign Off Q2 ESG Disclosure", etc.) render without italic styling while preserving the existing typography.
