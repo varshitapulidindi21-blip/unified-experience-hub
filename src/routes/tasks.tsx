@@ -94,15 +94,15 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
 
 function SectionLabel({ label, count }: { label: string; count: number }) {
   return (
-    <div className="mt-3 mb-1.5 flex items-baseline justify-between px-0.5">
+    <div className="mt-2.5 mb-1 flex items-baseline justify-between px-0.5">
       <h2
-        className="text-[0.82rem] font-medium not-italic text-foreground/80"
+        className="text-[0.76rem] font-medium not-italic text-foreground/80"
         style={{ fontFamily: "Montserrat, system-ui, sans-serif", letterSpacing: 0 }}
       >
         {label}
       </h2>
       <span
-        className="text-[0.72rem] font-normal text-muted-foreground/60"
+        className="text-[0.68rem] font-normal text-muted-foreground/60"
         style={{ fontFamily: "Montserrat, system-ui, sans-serif" }}
       >
         {count}
@@ -201,7 +201,7 @@ function TasksPage() {
         {approvals.length > 0 && (
           <section className="md:hidden">
             <SectionLabel label="Approvals" count={approvals.length} />
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               {approvals.map((t) => <TaskCard key={t.title} t={t} done={!!doneMap[t.title]} onToggle={() => toggle(t.title)} />)}
             </div>
           </section>
@@ -210,7 +210,7 @@ function TasksPage() {
         {inProgress.length > 0 && (
           <section className="md:hidden">
             <SectionLabel label="In Progress" count={inProgress.length} />
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               {inProgress.map((t) => <TaskCard key={t.title} t={t} done={!!doneMap[t.title]} onToggle={() => toggle(t.title)} />)}
             </div>
           </section>
