@@ -168,8 +168,8 @@ function TasksPage() {
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[0.6rem] font-bold tracking-[0.18em] text-muted-foreground">THIS WEEK</p>
-              <p className="text-[1.05rem] font-extrabold italic tracking-tight text-foreground leading-tight">
+              <p className="text-[0.58rem] font-medium tracking-[0.04em] text-muted-foreground">This week</p>
+              <p className="text-[0.94rem] font-semibold italic text-foreground leading-tight">
                 {DONE_THIS_WEEK} of {TOTAL_THIS_WEEK} done
               </p>
               <div className="mt-1.5 flex items-center gap-1">
