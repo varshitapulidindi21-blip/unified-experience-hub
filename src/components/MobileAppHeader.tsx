@@ -52,10 +52,10 @@ export function MobileAppHeader({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <h1
-            className="italic font-bold tracking-tight text-[1.45rem] leading-[1.1]"
-            style={{ fontFamily: "Montserrat, system-ui, sans-serif", color: "var(--brand-purple-deep, var(--brand-purple))" }}
+            className="font-bold tracking-tight text-[1.45rem] leading-[1.1]"
+            style={{ fontFamily: "Montserrat, system-ui, sans-serif", fontStyle: "italic" }}
           >
-            {firstWord}
+            <span className="text-[var(--brand-purple-deep,var(--brand-purple))] dark:text-white">{firstWord}</span>
             {restWords && (
               <span style={{ color: "var(--brand-green)" }}>{" "}{restWords}</span>
             )}
