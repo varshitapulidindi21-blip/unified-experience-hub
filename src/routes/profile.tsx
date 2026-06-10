@@ -64,15 +64,18 @@ function ProfilePage() {
         {/* Preferences */}
         <ListSection title="Preferences">
           <ListRow
-            icon={Palette}
+            icon={isDark ? Moon : Palette}
             label="Appearance"
+            onClick={toggleTheme}
             trailing={
               <span className="mobile-profile-pill">
-                <Sun className="h-3 w-3" /> Light
+                {isDark ? <Moon className="h-3 w-3" /> : <Sun className="h-3 w-3" />}
+                {isDark ? "Dark" : "Light"}
               </span>
             }
             noChevron
           />
+
           <ListRow icon={LifeBuoy} label="Support" />
         </ListSection>
 
