@@ -107,14 +107,17 @@ function ListRow({
   label,
   trailing,
   noChevron,
+  onClick,
 }: {
   icon: React.ComponentType<{ className?: string; strokeWidth?: number | string }>;
   label: string;
   trailing?: React.ReactNode;
   noChevron?: boolean;
+  onClick?: () => void;
 }) {
   return (
-    <button className="mobile-profile-row">
+    <button type="button" onClick={onClick} className="mobile-profile-row">
+
       <span className="mobile-profile-row__icon">
         <Icon className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.8} />
       </span>
