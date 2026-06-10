@@ -1149,7 +1149,7 @@
       transition: opacity 0.18s ease;
     }
     .tasks-tab.is-active::before,
-    .tasks-tab:has(+ .tasks-tab.is-active)::before { opacity: 0; }
+    .tasks-tab.is-active + .tasks-tab::before { opacity: 0; }
     .tasks-tab.is-active {
       color: var(--brand-purple-deep, var(--brand-purple));
       font-weight: 600;
