@@ -16,9 +16,9 @@ export const Route = createFileRoute("/tasks")({
 
 const TABS = [
   { key: "all", label: "All" },
-  { key: "hoto", label: "HOTO" },
+  { key: "hoto", label: "Hoto" },
   { key: "legal", label: "Legal Hub" },
-  { key: "hse", label: "HSE" },
+  { key: "hse", label: "Hse" },
   { key: "expense", label: "Expense Claims" },
 ] as const;
 type TabKey = typeof TABS[number]["key"];
@@ -67,7 +67,7 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
           </h3>
           <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/70" />
         </div>
-        <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+        <div className="task-card-v2__meta mt-1 flex flex-wrap items-center gap-1">
           {t.tags.map((tag) => {
             const label = tag.label.charAt(0).toUpperCase() + tag.label.slice(1).toLowerCase();
             return (
@@ -76,13 +76,13 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
               </span>
             );
           })}
-          <span className="inline-flex items-center gap-1 text-[0.62rem] text-muted-foreground">
-            <Clock className="h-2.5 w-2.5" strokeWidth={1.8} />
+          <span className="inline-flex items-center gap-0.5 text-[0.58rem] leading-none text-muted-foreground/75">
+            <Clock className="h-2 w-2" strokeWidth={1.7} />
             {t.due}
           </span>
         </div>
         {typeof t.progress === "number" && (
-          <div className="task-progress mt-2">
+          <div className="task-progress mt-1.5">
             <div className="task-progress__fill" style={{ width: `${t.progress}%` }} />
           </div>
         )}
@@ -95,11 +95,11 @@ function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () 
 function SectionLabel({ label, count }: { label: string; count: number }) {
   const formatted = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase();
   return (
-    <div className="mt-4 mb-1.5 flex items-center justify-between px-0.5">
-      <h2 className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground" style={{ fontFamily: "var(--font-sans)" }}>
+    <div className="mt-3 mb-1 flex items-center justify-between px-0.5">
+      <h2 className="text-[0.72rem] font-medium tracking-[0.01em] text-muted-foreground" style={{ fontFamily: "var(--font-sans)" }}>
         {formatted}
       </h2>
-      <span className="text-[0.7rem] font-medium text-muted-foreground/60">{count}</span>
+      <span className="text-[0.66rem] font-medium text-muted-foreground/55">{count}</span>
     </div>
   );
 }
@@ -122,7 +122,7 @@ function TasksPage() {
   return (
     <div className="min-h-screen">
       <div className="hidden md:block"><TopBar /></div>
-      <main className="mx-auto w-full max-w-[1400px] space-y-3 px-4 pt-2 pb-28 sm:space-y-6 sm:px-6 sm:py-8">
+      <main className="mx-auto w-full max-w-[1400px] space-y-2.5 px-4 pt-2 pb-28 sm:space-y-6 sm:px-6 sm:py-8">
         <MobileAppHeader
           pageLabel="My tasks"
           pageSubtitle={`${activeCount} active · ${dueThisWeek} due this week`}
@@ -194,7 +194,7 @@ function TasksPage() {
         {approvals.length > 0 && (
           <section className="md:hidden">
             <SectionLabel label="APPROVALS" count={approvals.length} />
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {approvals.map((t) => <TaskCard key={t.title} t={t} done={!!doneMap[t.title]} onToggle={() => toggle(t.title)} />)}
             </div>
           </section>
@@ -203,7 +203,7 @@ function TasksPage() {
         {inProgress.length > 0 && (
           <section className="md:hidden">
             <SectionLabel label="IN PROGRESS" count={inProgress.length} />
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {inProgress.map((t) => <TaskCard key={t.title} t={t} done={!!doneMap[t.title]} onToggle={() => toggle(t.title)} />)}
             </div>
           </section>
