@@ -176,7 +176,7 @@ function TasksPage() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[0.58rem] font-medium tracking-[0.04em] text-muted-foreground">This week</p>
-              <p className="text-[0.94rem] font-semibold italic text-foreground leading-tight">
+              <p className="text-[0.94rem] font-semibold text-foreground leading-tight">
                 {DONE_THIS_WEEK} of {TOTAL_THIS_WEEK} done
               </p>
               <div className="mt-1.5 flex items-center gap-1">
