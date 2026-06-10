@@ -21,7 +21,9 @@ function ProfilePage() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
 
+  return (
     <div className="min-h-screen">
+
       <div className="hidden md:block"><TopBar /></div>
       <main className="mx-auto w-full max-w-[1400px] space-y-5 px-4 pt-4 pb-28 sm:px-6 sm:py-10">
         {/* Mobile page heading */}
