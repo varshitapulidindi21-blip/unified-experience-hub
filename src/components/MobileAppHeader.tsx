@@ -51,17 +51,19 @@ export function MobileAppHeader({
     <header className="mobile-app-header mobile-app-header--page md:hidden">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h1 className="font-display italic font-bold tracking-tight text-[1.5rem] leading-[1.1]">
-            <span style={{ color: "var(--brand-purple-deep, var(--brand-purple))" }}>{firstWord}</span>
-            {restWords && (
-              <>
-                {" "}
-                <span style={{ color: "var(--brand-green)" }}>{restWords}</span>
-              </>
-            )}
+          <h1
+            className="italic font-bold tracking-tight text-[1.45rem] leading-[1.1]"
+            style={{ fontFamily: "Montserrat, system-ui, sans-serif", color: "var(--brand-purple-deep, var(--brand-purple))" }}
+          >
+            {trimmed}
           </h1>
           {pageSubtitle && (
-            <p className="mt-0.5 text-[0.72rem] text-muted-foreground/80">{pageSubtitle}</p>
+            <p
+              className="mt-1 text-[0.72rem] font-normal text-muted-foreground/85"
+              style={{ fontFamily: "Montserrat, system-ui, sans-serif" }}
+            >
+              {pageSubtitle}
+            </p>
           )}
         </div>
         {!hideNotifications && (
