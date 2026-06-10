@@ -131,7 +131,7 @@ function TasksPage() {
       <div className="hidden md:block"><TopBar /></div>
       <main className="mx-auto w-full max-w-[1400px] space-y-2.5 px-4 pt-2 pb-28 sm:space-y-6 sm:px-6 sm:py-8">
         <MobileAppHeader
-          pageLabel="My tasks"
+          pageLabel="My Tasks"
           pageSubtitle={`${activeCount} active · ${dueThisWeek} due this week`}
           hideNotifications
         />
