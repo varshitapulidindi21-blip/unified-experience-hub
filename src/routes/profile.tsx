@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Users, Bell, Award, Mail, ShieldCheck, Smartphone,
-  Palette, LifeBuoy, LogOut, Pencil, Sun,
+  Palette, LifeBuoy, LogOut, Pencil, Sun, Moon,
 } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
+import { useTheme } from "@/hooks/useTheme";
+
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -16,8 +18,12 @@ export const Route = createFileRoute("/profile")({
 });
 
 function ProfilePage() {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <div className="min-h-screen">
+
       <div className="hidden md:block"><TopBar /></div>
       <main className="mx-auto w-full max-w-[1400px] space-y-5 px-4 pt-4 pb-28 sm:px-6 sm:py-10">
         {/* Mobile page heading */}
@@ -58,15 +64,18 @@ function ProfilePage() {
         {/* Preferences */}
         <ListSection title="Preferences">
           <ListRow
-            icon={Palette}
+            icon={isDark ? Moon : Palette}
             label="Appearance"
+            onClick={toggleTheme}
             trailing={
               <span className="mobile-profile-pill">
-                <Sun className="h-3 w-3" /> Light
+                {isDark ? <Moon className="h-3 w-3" /> : <Sun className="h-3 w-3" />}
+                {isDark ? "Dark" : "Light"}
               </span>
             }
             noChevron
           />
+
           <ListRow icon={LifeBuoy} label="Support" />
         </ListSection>
 
@@ -98,14 +107,17 @@ function ListRow({
   label,
   trailing,
   noChevron,
+  onClick,
 }: {
   icon: React.ComponentType<{ className?: string; strokeWidth?: number | string }>;
   label: string;
   trailing?: React.ReactNode;
   noChevron?: boolean;
+  onClick?: () => void;
 }) {
   return (
-    <button className="mobile-profile-row">
+    <button type="button" onClick={onClick} className="mobile-profile-row">
+
       <span className="mobile-profile-row__icon">
         <Icon className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.8} />
       </span>
