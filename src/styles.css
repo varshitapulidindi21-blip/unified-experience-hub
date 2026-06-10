@@ -1119,7 +1119,7 @@
       align-items: flex-end;
       gap: 0.25rem;
       padding: 0;
-      margin: 0.25rem 0 0;
+      margin: 0.25rem 0 0.75rem;
       border-bottom: 1px solid var(--tab-line);
       overflow-x: auto;
       overflow-y: hidden;
