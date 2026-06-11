@@ -761,7 +761,7 @@
     /* Icon button (notifications etc.) */
     .mobile-icon-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 2.15rem; height: 2.15rem; border-radius: 9999px;
+      width: 1.85rem; height: 1.85rem; border-radius: 9999px;
       background: linear-gradient(140deg, var(--brand-purple-deep), var(--brand-purple));
       border: 0;
       color: white;
@@ -769,9 +769,10 @@
         inset 0 1px 0 oklch(1 0 0 / 0.18),
         0 8px 18px -10px color-mix(in oklab, var(--brand-purple-deep) 70%, transparent);
     }
+    .mobile-icon-btn svg { width: 0.95rem; height: 0.95rem; }
     .mobile-icon-dot {
-      position: absolute; top: 0.32rem; right: 0.36rem;
-      width: 0.42rem; height: 0.42rem; border-radius: 9999px;
+      position: absolute; top: 0.22rem; right: 0.26rem;
+      width: 0.36rem; height: 0.36rem; border-radius: 9999px;
       background: var(--brand-green);
       box-shadow: 0 0 0 2px oklch(1 0 0 / 0.95);
     }
