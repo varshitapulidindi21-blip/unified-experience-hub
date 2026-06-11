@@ -450,7 +450,7 @@
     .mobile-app-header--home { padding-top: calc(env(safe-area-inset-top) + 0.85rem); padding-bottom: 0.6rem; }
     .mobile-app-header h1 { font-style: normal; letter-spacing: -0.01em; }
     .mobile-app-kicker {
-      font-size: 0.72rem;
+      font-size: 0.64rem;
       font-weight: 500;
       color: var(--color-muted-foreground);
       line-height: 1.1;
