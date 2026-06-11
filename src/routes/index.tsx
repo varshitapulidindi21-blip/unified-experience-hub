@@ -154,14 +154,14 @@ function HomePage() {
         <section className="mobile-native-section md:hidden">
           <div className="mb-2 flex items-end justify-between px-1">
             <div>
-              <div className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              <div className="text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                 My department
               </div>
-              <h2 className="mt-0.5 text-[1rem] not-italic font-semibold tracking-tight text-foreground">
+              <h2 className="mt-0.5 text-[0.9rem] not-italic font-semibold tracking-tight text-foreground">
                 Your workspace folder
               </h2>
             </div>
-            <button className="text-[0.72rem] font-semibold text-primary">Open</button>
+            <button className="text-[0.65rem] font-semibold text-primary">Open</button>
           </div>
           <MyDepartmentCard department={departments[0]} />
         </section>
