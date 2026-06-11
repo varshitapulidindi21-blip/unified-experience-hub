@@ -256,9 +256,9 @@ function MobileModuleTile({
   const content = (
     <>
       <span className={brand ? "mobile-brand-icon" : `mobile-app-icon ${toneBg[tone]}`}>
-        <Icon className="h-5 w-5" strokeWidth={1.8} />
+        <Icon className="h-4 w-4" strokeWidth={1.8} />
       </span>
-      <span className="line-clamp-2 text-center text-[0.72rem] font-medium leading-tight text-foreground">
+      <span className="line-clamp-2 text-center text-[0.64rem] font-medium leading-tight text-foreground">
         {title.replace(" Request", "").replace(" Claims", "")}
       </span>
     </>
