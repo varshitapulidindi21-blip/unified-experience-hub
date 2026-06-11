@@ -450,7 +450,7 @@
     .mobile-app-header--home { padding-top: calc(env(safe-area-inset-top) + 0.85rem); padding-bottom: 0.6rem; }
     .mobile-app-header h1 { font-style: normal; letter-spacing: -0.01em; }
     .mobile-app-kicker {
-      font-size: 0.72rem;
+      font-size: 0.64rem;
       font-weight: 500;
       color: var(--color-muted-foreground);
       line-height: 1.1;
@@ -458,14 +458,14 @@
     }
     .mobile-avatar {
       display: inline-flex;
-      height: 2.15rem;
-      width: 2.15rem;
+      height: 1.85rem;
+      width: 1.85rem;
       align-items: center;
       justify-content: center;
       border-radius: 9999px;
       background: linear-gradient(140deg, var(--brand-purple-deep), var(--brand-purple));
       color: white;
-      font-size: 0.7rem;
+      font-size: 0.62rem;
       font-weight: 700;
       letter-spacing: 0.02em;
       box-shadow:
@@ -573,8 +573,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.45rem;
-      border-radius: 1.05rem;
+      gap: 0.35rem;
+      border-radius: 0.95rem;
       background: color-mix(in oklab, var(--color-card) 88%, transparent);
       border: 1px solid color-mix(in oklab, var(--color-border) 44%, transparent);
       box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.55), 0 10px 24px -20px oklch(0.30 0.10 295 / 0.22);
@@ -586,11 +586,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 2.3rem;
-      height: 2.3rem;
-      border-radius: 0.85rem;
+      width: 1.9rem;
+      height: 1.9rem;
+      border-radius: 0.72rem;
       color: white;
     }
+    .mobile-app-icon svg, .mobile-brand-icon svg { width: 1rem; height: 1rem; }
     .mobile-brand-icon { background: white; color: var(--brand-purple); border: 1px solid var(--color-border); }
 
     .mobile-folder-rail {
@@ -761,7 +762,7 @@
     /* Icon button (notifications etc.) */
     .mobile-icon-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 2.15rem; height: 2.15rem; border-radius: 9999px;
+      width: 1.85rem; height: 1.85rem; border-radius: 9999px;
       background: linear-gradient(140deg, var(--brand-purple-deep), var(--brand-purple));
       border: 0;
       color: white;
@@ -769,9 +770,10 @@
         inset 0 1px 0 oklch(1 0 0 / 0.18),
         0 8px 18px -10px color-mix(in oklab, var(--brand-purple-deep) 70%, transparent);
     }
+    .mobile-icon-btn svg { width: 0.95rem; height: 0.95rem; }
     .mobile-icon-dot {
-      position: absolute; top: 0.32rem; right: 0.36rem;
-      width: 0.42rem; height: 0.42rem; border-radius: 9999px;
+      position: absolute; top: 0.22rem; right: 0.26rem;
+      width: 0.36rem; height: 0.36rem; border-radius: 9999px;
       background: var(--brand-green);
       box-shadow: 0 0 0 2px oklch(1 0 0 / 0.95);
     }
@@ -779,7 +781,7 @@
     /* Operational insights hero banner */
     .mobile-insights-banner { display: block; border-radius: 1.15rem; overflow: hidden; }
     .mobile-insights-banner__inner {
-      position: relative; padding: 0.95rem 1rem 0.85rem;
+      position: relative; padding: 0.8rem 0.9rem 0.75rem;
       background:
         radial-gradient(120% 120% at 0% 0%, color-mix(in oklab, var(--brand-green) 30%, transparent), transparent 55%),
         linear-gradient(135deg, var(--brand-purple-deep), var(--brand-purple) 55%, color-mix(in oklab, var(--brand-green) 65%, var(--brand-purple)));
@@ -787,24 +789,24 @@
       color: white;
     }
     .mobile-insights-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.3rem;
-      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
       color: color-mix(in oklab, white 85%, transparent);
     }
     .mobile-insights-arrow {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 1.85rem; height: 1.85rem; border-radius: 9999px;
+      width: 1.55rem; height: 1.55rem; border-radius: 9999px;
       background: oklch(1 0 0 / 0.16); color: white;
       backdrop-filter: blur(6px); flex-shrink: 0;
     }
     .mobile-insights-stats {
-      margin-top: 0.85rem; padding-top: 0.7rem;
+      margin-top: 0.7rem; padding-top: 0.6rem;
       border-top: 1px solid oklch(1 0 0 / 0.16);
       display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .mobile-insights-stats > div { display: flex; flex-direction: column; gap: 0.1rem; }
-    .mobile-insights-stats span { font-size: 0.92rem; font-weight: 700; color: white; }
-    .mobile-insights-stats label { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(1 0 0 / 0.7); }
+    .mobile-insights-stats span { font-size: 0.8rem; font-weight: 700; color: white; }
+    .mobile-insights-stats label { font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(1 0 0 / 0.7); }
 
     /* Swiggy-inspired chip toggle */
     .mobile-chips {
@@ -815,9 +817,9 @@
     .mobile-chips::-webkit-scrollbar { display: none; }
     .mobile-chip {
       flex: 0 0 auto; white-space: nowrap;
-      padding: 0.55rem 0.95rem; min-height: 2.25rem;
+      padding: 0.42rem 0.8rem; min-height: 1.95rem;
       border-radius: 9999px;
-      font-size: 0.76rem; font-weight: 600; letter-spacing: -0.005em;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: -0.005em;
       color: var(--color-foreground);
       background: color-mix(in oklab, var(--color-card) 92%, transparent);
       border: 1px solid color-mix(in oklab, var(--color-border) 55%, transparent);
@@ -835,19 +837,20 @@
     /* My Department single card */
     .mobile-mydept-card {
       width: 100%;
-      display: flex; align-items: center; gap: 0.85rem;
-      padding: 0.95rem 1rem;
-      border-radius: 1.15rem;
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 1rem;
       background: color-mix(in oklab, var(--color-card) 94%, transparent);
       border: 1px solid color-mix(in oklab, var(--color-border) 50%, transparent);
       box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.55), 0 12px 28px -22px oklch(0.30 0.10 295 / 0.25);
     }
     .mobile-mydept-icon {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 2.65rem; height: 2.65rem; border-radius: 0.95rem; color: white; flex-shrink: 0;
+      width: 2.2rem; height: 2.2rem; border-radius: 0.8rem; color: white; flex-shrink: 0;
     }
+    .mobile-mydept-icon svg { width: 1.1rem; height: 1.1rem; }
     .mobile-mydept-chev {
-      font-size: 1.6rem; color: var(--color-muted-foreground); line-height: 1;
+      font-size: 1.35rem; color: var(--color-muted-foreground); line-height: 1;
     }
 
     /* ---- Curved bottom nav with floating AI ---- */
