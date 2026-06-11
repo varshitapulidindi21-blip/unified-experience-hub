@@ -968,19 +968,19 @@
 
     /* ============ Task cards ============ */
     .mobile-task-card {
-      padding: 0.85rem 0.95rem;
-      border-radius: 1.05rem;
+      padding: 0.7rem 0.8rem;
+      border-radius: 0.9rem;
       background: color-mix(in oklab, var(--color-card) 94%, transparent);
       border: 1px solid color-mix(in oklab, var(--color-border) 50%, transparent);
       box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.55), 0 10px 22px -20px oklch(0.30 0.10 295 / 0.22);
     }
     .mobile-task-status {
       flex-shrink: 0;
-      font-size: 0.62rem;
+      font-size: 0.55rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      padding: 0.28rem 0.55rem;
+      padding: 0.22rem 0.45rem;
       border-radius: 9999px;
     }
     .mobile-task-status.status-pending { background: color-mix(in oklab, var(--brand-purple) 14%, transparent); color: var(--brand-purple); }
