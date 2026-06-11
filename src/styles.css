@@ -781,7 +781,7 @@
     /* Operational insights hero banner */
     .mobile-insights-banner { display: block; border-radius: 1.15rem; overflow: hidden; }
     .mobile-insights-banner__inner {
-      position: relative; padding: 0.95rem 1rem 0.85rem;
+      position: relative; padding: 0.8rem 0.9rem 0.75rem;
       background:
         radial-gradient(120% 120% at 0% 0%, color-mix(in oklab, var(--brand-green) 30%, transparent), transparent 55%),
         linear-gradient(135deg, var(--brand-purple-deep), var(--brand-purple) 55%, color-mix(in oklab, var(--brand-green) 65%, var(--brand-purple)));
@@ -789,24 +789,24 @@
       color: white;
     }
     .mobile-insights-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.3rem;
-      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
       color: color-mix(in oklab, white 85%, transparent);
     }
     .mobile-insights-arrow {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 1.85rem; height: 1.85rem; border-radius: 9999px;
+      width: 1.55rem; height: 1.55rem; border-radius: 9999px;
       background: oklch(1 0 0 / 0.16); color: white;
       backdrop-filter: blur(6px); flex-shrink: 0;
     }
     .mobile-insights-stats {
-      margin-top: 0.85rem; padding-top: 0.7rem;
+      margin-top: 0.7rem; padding-top: 0.6rem;
       border-top: 1px solid oklch(1 0 0 / 0.16);
       display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .mobile-insights-stats > div { display: flex; flex-direction: column; gap: 0.1rem; }
-    .mobile-insights-stats span { font-size: 0.92rem; font-weight: 700; color: white; }
-    .mobile-insights-stats label { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(1 0 0 / 0.7); }
+    .mobile-insights-stats span { font-size: 0.8rem; font-weight: 700; color: white; }
+    .mobile-insights-stats label { font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(1 0 0 / 0.7); }
 
     /* Swiggy-inspired chip toggle */
     .mobile-chips {
