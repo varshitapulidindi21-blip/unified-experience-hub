@@ -624,10 +624,10 @@
     .module-card:hover .mc-sub { color: var(--color-muted-foreground); }
     .tile, .brand-tile { border-radius: 0.9rem; transform: none; }
 
-    h1 { font-size: 1.35rem !important; letter-spacing: 0; }
-    h2 { font-size: 1.08rem !important; letter-spacing: 0; }
-    h3 { font-size: 0.98rem !important; letter-spacing: 0; }
-    h4 { font-size: 0.9rem !important; letter-spacing: 0; }
+      h1 { font-size: 1.2rem !important; letter-spacing: 0; }
+      h2 { font-size: 0.98rem !important; letter-spacing: 0; }
+      h3 { font-size: 0.88rem !important; letter-spacing: 0; }
+      h4 { font-size: 0.8rem !important; letter-spacing: 0; }
 
     .mobile-tab-rail {
       margin-inline: -0.15rem;
