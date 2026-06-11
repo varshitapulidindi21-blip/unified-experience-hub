@@ -277,11 +277,11 @@ function MyDepartmentCard({
   return (
     <button className="mobile-mydept-card">
       <span className={`mobile-mydept-icon ${toneBg[tone]}`}>
-        <Icon className="h-[1.4rem] w-[1.4rem]" strokeWidth={1.7} />
+        <Icon className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.7} />
       </span>
       <div className="flex-1 text-left">
-        <div className="text-[0.92rem] font-semibold leading-tight text-foreground">{label}</div>
-        <div className="mt-0.5 text-[0.72rem] text-muted-foreground">12 files · 4 shared · updated today</div>
+        <div className="text-[0.8rem] font-semibold leading-tight text-foreground">{label}</div>
+        <div className="mt-0.5 text-[0.62rem] text-muted-foreground">12 files · 4 shared · updated today</div>
       </div>
       <span className="mobile-mydept-chev" aria-hidden>›</span>
     </button>
