@@ -817,9 +817,9 @@
     .mobile-chips::-webkit-scrollbar { display: none; }
     .mobile-chip {
       flex: 0 0 auto; white-space: nowrap;
-      padding: 0.55rem 0.95rem; min-height: 2.25rem;
+      padding: 0.42rem 0.8rem; min-height: 1.95rem;
       border-radius: 9999px;
-      font-size: 0.76rem; font-weight: 600; letter-spacing: -0.005em;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: -0.005em;
       color: var(--color-foreground);
       background: color-mix(in oklab, var(--color-card) 92%, transparent);
       border: 1px solid color-mix(in oklab, var(--color-border) 55%, transparent);
