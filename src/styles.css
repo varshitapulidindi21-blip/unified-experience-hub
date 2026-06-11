@@ -573,8 +573,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.45rem;
-      border-radius: 1.05rem;
+      gap: 0.35rem;
+      border-radius: 0.95rem;
       background: color-mix(in oklab, var(--color-card) 88%, transparent);
       border: 1px solid color-mix(in oklab, var(--color-border) 44%, transparent);
       box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.55), 0 10px 24px -20px oklch(0.30 0.10 295 / 0.22);
