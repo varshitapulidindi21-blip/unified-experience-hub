@@ -93,17 +93,17 @@ function HomePage() {
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="mobile-insights-eyebrow">
-                  <Zap className="h-3 w-3" strokeWidth={2.2} /> Today · Live Insight
+                  <Zap className="h-2.5 w-2.5" strokeWidth={2.2} /> Today · Live Insight
                 </div>
-                <h2 className="mt-1.5 text-[1.1rem] not-italic font-semibold leading-tight tracking-tight text-white">
+                <h2 className="mt-1 text-[0.95rem] not-italic font-semibold leading-tight tracking-tight text-white">
                   Solar yield trending +12% today
                 </h2>
-                <p className="mt-1 text-[0.78rem] leading-snug text-white/75">
+                <p className="mt-0.5 text-[0.68rem] leading-snug text-white/75">
                   3 sites exceeding forecast · 2 maintenance windows planned
                 </p>
               </div>
               <span className="mobile-insights-arrow">
-                <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+                <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
               </span>
             </div>
             <div className="mobile-insights-stats">
