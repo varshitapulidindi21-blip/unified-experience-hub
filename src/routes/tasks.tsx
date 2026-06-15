@@ -156,47 +156,49 @@ function TasksPage() {
         </nav>
 
         {/* Weekly progress hero */}
-        <section className="md:hidden weekly-progress-card">
-          <div className="flex items-center gap-3.5">
-            <div className="relative shrink-0">
-              <svg width="56" height="56" viewBox="0 0 56 56" className="-rotate-90">
-                <circle cx="28" cy="28" r={r} fill="none" stroke="color-mix(in oklab, var(--brand-purple) 15%, transparent)" strokeWidth="5" />
-                <circle
-                  cx="28"
-                  cy="28"
-                  r={r}
-                  fill="none"
-                  stroke="var(--brand-purple)"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  strokeDasharray={c}
-                  strokeDashoffset={c - (c * pct) / 100}
-                />
-              </svg>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[0.58rem] font-medium tracking-[0.04em] text-muted-foreground">This week</p>
-              <p className="text-[0.94rem] font-semibold text-foreground leading-tight">
-                {DONE_THIS_WEEK} of {TOTAL_THIS_WEEK} done
-              </p>
-              <div className="mt-1.5 flex items-center gap-1">
-                {Array.from({ length: 6 }).map((_, i) => {
-                  const filled = i < Math.round((DONE_THIS_WEEK / TOTAL_THIS_WEEK) * 6);
-                  const color = i < 2 ? "var(--brand-green)" : "var(--brand-purple)";
-                  return (
-                    <span
-                      key={i}
-                      className="h-1 flex-1 rounded-full"
-                      style={{
-                        background: filled ? color : "color-mix(in oklab, var(--color-border) 70%, transparent)",
-                      }}
-                    />
-                  );
-                })}
+        {tab === "all" && (
+          <section className="md:hidden weekly-progress-card">
+            <div className="flex items-center gap-3.5">
+              <div className="relative shrink-0">
+                <svg width="56" height="56" viewBox="0 0 56 56" className="-rotate-90">
+                  <circle cx="28" cy="28" r={r} fill="none" stroke="color-mix(in oklab, var(--brand-purple) 15%, transparent)" strokeWidth="5" />
+                  <circle
+                    cx="28"
+                    cy="28"
+                    r={r}
+                    fill="none"
+                    stroke="var(--brand-purple)"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                    strokeDasharray={c}
+                    strokeDashoffset={c - (c * pct) / 100}
+                  />
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[0.58rem] font-medium tracking-[0.04em] text-muted-foreground">This week</p>
+                <p className="text-[0.94rem] font-semibold text-foreground leading-tight">
+                  {DONE_THIS_WEEK} of {TOTAL_THIS_WEEK} done
+                </p>
+                <div className="mt-1.5 flex items-center gap-1">
+                  {Array.from({ length: 6 }).map((_, i) => {
+                    const filled = i < Math.round((DONE_THIS_WEEK / TOTAL_THIS_WEEK) * 6);
+                    const color = i < 2 ? "var(--brand-green)" : "var(--brand-purple)";
+                    return (
+                      <span
+                        key={i}
+                        className="h-1 flex-1 rounded-full"
+                        style={{
+                          background: filled ? color : "color-mix(in oklab, var(--color-border) 70%, transparent)",
+                        }}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {approvals.length > 0 && (
           <section className="md:hidden">
