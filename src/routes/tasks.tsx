@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Clock, ChevronRight, Check } from "lucide-react";
+import { Clock, ChevronRight } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
 import { MobileAppHeader } from "@/components/MobileAppHeader";
 
