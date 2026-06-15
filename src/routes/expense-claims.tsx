@@ -654,11 +654,10 @@ function CategoriesTab() {
         </div>
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-4">
-            {["Requires receipt", "Requires HSN", "Taxable", "Active"].map((l, i) => (
-              <label key={l} className="inline-flex items-center gap-2 text-[12.5px] font-light text-muted-foreground">
-                <input type="checkbox" defaultChecked={i === 3} className="h-4 w-4 accent-primary" />
+            {["Requires receipt", "Requires HSN", "Taxable", "Active"].map((l) => (
+              <span key={l} className="inline-flex items-center gap-2 text-[12.5px] font-light text-muted-foreground">
                 {l}
-              </label>
+              </span>
             ))}
           </div>
           <button className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-[12.5px] font-medium text-primary-foreground shadow-soft transition hover:shadow-elev">
