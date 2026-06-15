@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Clock, ChevronRight, Check } from "lucide-react";
+import { Clock, ChevronRight } from "lucide-react";
 import { TopBar } from "@/components/TopBar";
 import { MobileAppHeader } from "@/components/MobileAppHeader";
 
@@ -46,17 +46,7 @@ const TOTAL_THIS_WEEK = 12;
 
 function TaskCard({ t, done, onToggle }: { t: Task; done: boolean; onToggle: () => void }) {
   return (
-    <article className="task-card-v2">
-      <button
-        type="button"
-        onClick={onToggle}
-        className="task-checkbox"
-        data-checked={done}
-        aria-label={done ? "Mark incomplete" : "Mark complete"}
-        aria-pressed={done}
-      >
-        {done && <Check strokeWidth={3} />}
-      </button>
+    <article className="task-card-v2" onClick={onToggle}>
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
           <h3
