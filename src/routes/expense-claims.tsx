@@ -427,10 +427,13 @@ function NewClaimTab({ onCancel }: { onCancel: () => void }) {
                     <input type="number" className={inputClass} value={it.amount} onChange={(e) => updateItem(it.id, { amount: e.target.value })} placeholder="0" />
                   </Field>
                   <Field label="Receipt">
-                    <label className="flex h-[42px] cursor-pointer items-center gap-2 rounded-xl border border-border/70 bg-card/60 px-3.5 text-sm font-light text-muted-foreground shadow-soft backdrop-blur transition hover:border-primary/40">
-                      <input type="checkbox" className="h-4 w-4 accent-primary" checked={it.hasReceipt} onChange={(e) => updateItem(it.id, { hasReceipt: e.target.checked })} />
-                      Attached
-                    </label>
+                    <button
+                      type="button"
+                      onClick={() => updateItem(it.id, { hasReceipt: !it.hasReceipt })}
+                      className="flex h-[42px] w-full items-center gap-2 rounded-xl border border-border/70 bg-card/60 px-3.5 text-sm font-light text-muted-foreground shadow-soft backdrop-blur transition hover:border-primary/40"
+                    >
+                      {it.hasReceipt ? "Attached" : "Not attached"}
+                    </button>
                   </Field>
                 </div>
                 <div className="mt-3">
