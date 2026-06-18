@@ -40,6 +40,7 @@ const workspaces = [
   { icon: FileSignature, title: "DocuSign", subtitle: "e-Signature for contracts + approvals", tone: "purple" as const },
   { icon: Cog, title: "HOTO", subtitle: "Handover, takeover and maintenance operations", tone: "grey" as const },
   { icon: Shield, title: "Permit System", subtitle: "Permit to Work — S1, S2, S3 workflow management", tone: "green" as const },
+  { icon: Newspaper, title: "Newsletter", subtitle: "Monthly editions, stories + archive", tone: "lavender" as const, to: "/newsletter" },
   { icon: Megaphone, title: "Announcements", subtitle: "Corporate updates and visibility windows", tone: "lavender" as const },
   { icon: Brain, title: "Resolven AI", subtitle: "Contextual insights and copilot actions", tone: "green" as const, pinned: true },
   { icon: Handshake, title: "Admin Hub", subtitle: "Global masters, RBAC, module config and platform admin", tone: "purple" as const },
