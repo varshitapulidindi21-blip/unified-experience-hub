@@ -13,6 +13,7 @@ import { Route as TravelRequestRouteImport } from './routes/travel-request'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as ResolvenAiRouteImport } from './routes/resolven-ai'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as ModulesRouteImport } from './routes/modules'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ExpenseClaimsRouteImport } from './routes/expense-claims'
@@ -37,6 +38,11 @@ const ResolvenAiRoute = ResolvenAiRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsletterRoute = NewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ModulesRoute = ModulesRouteImport.update({
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/expense-claims': typeof ExpenseClaimsRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
+  '/newsletter': typeof NewsletterRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/expense-claims': typeof ExpenseClaimsRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
+  '/newsletter': typeof NewsletterRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/expense-claims': typeof ExpenseClaimsRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
+  '/newsletter': typeof NewsletterRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/expense-claims'
     | '/login'
     | '/modules'
+    | '/newsletter'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/expense-claims'
     | '/login'
     | '/modules'
+    | '/newsletter'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/expense-claims'
     | '/login'
     | '/modules'
+    | '/newsletter'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   ExpenseClaimsRoute: typeof ExpenseClaimsRoute
   LoginRoute: typeof LoginRoute
   ModulesRoute: typeof ModulesRoute
+  NewsletterRoute: typeof NewsletterRoute
   ProfileRoute: typeof ProfileRoute
   ResolvenAiRoute: typeof ResolvenAiRoute
   TasksRoute: typeof TasksRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newsletter': {
+      id: '/newsletter'
+      path: '/newsletter'
+      fullPath: '/newsletter'
+      preLoaderRoute: typeof NewsletterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/modules': {
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExpenseClaimsRoute: ExpenseClaimsRoute,
   LoginRoute: LoginRoute,
   ModulesRoute: ModulesRoute,
+  NewsletterRoute: NewsletterRoute,
   ProfileRoute: ProfileRoute,
   ResolvenAiRoute: ResolvenAiRoute,
   TasksRoute: TasksRoute,

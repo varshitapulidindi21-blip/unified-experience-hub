@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type ComponentType, type SVGProps } from "react";
 import {
   CheckSquare, Settings2, FilePlus, FileText, HeartPulse, Plane, Receipt, Sparkles,
-  Sheet, Users, FileSignature, Shield, Megaphone, Brain, Cog, Handshake,
+  Sheet, Users, FileSignature, Shield, Megaphone, Brain, Cog, Handshake, Newspaper,
   Briefcase, DraftingCompass, Atom, Calculator, ClipboardList, TrendingUp,
   Scale, Cpu, BadgeCheck, HardHat, Truck, BarChart3, Building2, Headphones, GraduationCap,
   Zap, ArrowUpRight,
@@ -45,6 +45,7 @@ const business = [
   { icon: FileSignature, title: "DocuSign", subtitle: "e-Signature for contracts + approvals", tone: "purple" as const },
   { icon: Cog, title: "HOTO", subtitle: "Handover, takeover and maintenance operations", tone: "grey" as const },
   { icon: Shield, title: "Permit System", subtitle: "Permit to Work — S1, S2, S3 workflow", tone: "green" as const },
+  { icon: Newspaper, title: "Newsletter", subtitle: "Monthly editions, stories + archive", tone: "lavender" as const, to: "/newsletter" },
   { icon: Megaphone, title: "Announcements", subtitle: "Corporate updates and visibility windows", tone: "lavender" as const },
   { icon: Brain, title: "Resolven AI", subtitle: "Contextual insights and copilot actions", tone: "green" as const, pinned: true },
   { icon: Handshake, title: "Admin Hub", subtitle: "Global masters, RBAC, module config", tone: "purple" as const },
