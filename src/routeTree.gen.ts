@@ -19,6 +19,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ExpenseClaimsRouteImport } from './routes/expense-claims'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewsletterIdRouteImport } from './routes/newsletter.$id'
 
 const TravelRequestRoute = TravelRequestRouteImport.update({
   id: '/travel-request',
@@ -70,6 +71,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsletterIdRoute = NewsletterIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => NewsletterRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -77,11 +83,12 @@ export interface FileRoutesByFullPath {
   '/expense-claims': typeof ExpenseClaimsRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
-  '/newsletter': typeof NewsletterRoute
+  '/newsletter': typeof NewsletterRouteWithChildren
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
   '/travel-request': typeof TravelRequestRoute
+  '/newsletter/$id': typeof NewsletterIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,11 +96,12 @@ export interface FileRoutesByTo {
   '/expense-claims': typeof ExpenseClaimsRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
-  '/newsletter': typeof NewsletterRoute
+  '/newsletter': typeof NewsletterRouteWithChildren
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
   '/travel-request': typeof TravelRequestRoute
+  '/newsletter/$id': typeof NewsletterIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -102,11 +110,12 @@ export interface FileRoutesById {
   '/expense-claims': typeof ExpenseClaimsRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
-  '/newsletter': typeof NewsletterRoute
+  '/newsletter': typeof NewsletterRouteWithChildren
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
   '/travel-request': typeof TravelRequestRoute
+  '/newsletter/$id': typeof NewsletterIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/resolven-ai'
     | '/tasks'
     | '/travel-request'
+    | '/newsletter/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/resolven-ai'
     | '/tasks'
     | '/travel-request'
+    | '/newsletter/$id'
   id:
     | '__root__'
     | '/'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/resolven-ai'
     | '/tasks'
     | '/travel-request'
+    | '/newsletter/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -153,7 +165,7 @@ export interface RootRouteChildren {
   ExpenseClaimsRoute: typeof ExpenseClaimsRoute
   LoginRoute: typeof LoginRoute
   ModulesRoute: typeof ModulesRoute
-  NewsletterRoute: typeof NewsletterRoute
+  NewsletterRoute: typeof NewsletterRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   ResolvenAiRoute: typeof ResolvenAiRoute
   TasksRoute: typeof TasksRoute
@@ -232,8 +244,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/newsletter/$id': {
+      id: '/newsletter/$id'
+      path: '/$id'
+      fullPath: '/newsletter/$id'
+      preLoaderRoute: typeof NewsletterIdRouteImport
+      parentRoute: typeof NewsletterRoute
+    }
   }
 }
+
+interface NewsletterRouteChildren {
+  NewsletterIdRoute: typeof NewsletterIdRoute
+}
+
+const NewsletterRouteChildren: NewsletterRouteChildren = {
+  NewsletterIdRoute: NewsletterIdRoute,
+}
+
+const NewsletterRouteWithChildren = NewsletterRoute._addFileChildren(
+  NewsletterRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -241,7 +272,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExpenseClaimsRoute: ExpenseClaimsRoute,
   LoginRoute: LoginRoute,
   ModulesRoute: ModulesRoute,
-  NewsletterRoute: NewsletterRoute,
+  NewsletterRoute: NewsletterRouteWithChildren,
   ProfileRoute: ProfileRoute,
   ResolvenAiRoute: ResolvenAiRoute,
   TasksRoute: TasksRoute,
