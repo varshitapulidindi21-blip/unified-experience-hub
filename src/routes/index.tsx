@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type ComponentType, type SVGProps } from "react";
 import {
   CheckSquare, Settings2, FilePlus, FileText, HeartPulse, Plane, Receipt, Sparkles,
-  Sheet, Users, FileSignature, Shield, Megaphone, Brain, Cog, Handshake,
+  Sheet, Users, FileSignature, Shield, Megaphone, Brain, Cog, Handshake, Newspaper,
   Briefcase, DraftingCompass, Atom, Calculator, ClipboardList, TrendingUp,
   Scale, Cpu, BadgeCheck, HardHat, Truck, BarChart3, Building2, Headphones, GraduationCap,
   Zap, ArrowUpRight,
