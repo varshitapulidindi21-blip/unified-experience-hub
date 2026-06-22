@@ -192,7 +192,7 @@ function NewsletterFeed() {
                   const count = EDITIONS.filter((e) => e.category === t.label).length;
                   return (
                     <li key={t.label}>
-                      <Link to="/newsletter/archive" search={{ topic: t.label } as any}
+                      <Link to="/newsletter/archive"
                         className="flex w-full items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-muted/50 transition">
                         <span className={cn("tile h-7 w-7 rounded-lg", t.tone)}>
                           <t.icon className="h-3.5 w-3.5" strokeWidth={1.9} />
