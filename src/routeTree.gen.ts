@@ -19,6 +19,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ExpenseClaimsRouteImport } from './routes/expense-claims'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewsletterArchiveRouteImport } from './routes/newsletter.archive'
 import { Route as NewsletterIdRouteImport } from './routes/newsletter.$id'
 
 const TravelRequestRoute = TravelRequestRouteImport.update({
@@ -71,6 +72,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsletterArchiveRoute = NewsletterArchiveRouteImport.update({
+  id: '/archive',
+  path: '/archive',
+  getParentRoute: () => NewsletterRoute,
+} as any)
 const NewsletterIdRoute = NewsletterIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/tasks': typeof TasksRoute
   '/travel-request': typeof TravelRequestRoute
   '/newsletter/$id': typeof NewsletterIdRoute
+  '/newsletter/archive': typeof NewsletterArchiveRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/tasks': typeof TasksRoute
   '/travel-request': typeof TravelRequestRoute
   '/newsletter/$id': typeof NewsletterIdRoute
+  '/newsletter/archive': typeof NewsletterArchiveRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/tasks': typeof TasksRoute
   '/travel-request': typeof TravelRequestRoute
   '/newsletter/$id': typeof NewsletterIdRoute
+  '/newsletter/archive': typeof NewsletterArchiveRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/travel-request'
     | '/newsletter/$id'
+    | '/newsletter/archive'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/travel-request'
     | '/newsletter/$id'
+    | '/newsletter/archive'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/tasks'
     | '/travel-request'
     | '/newsletter/$id'
+    | '/newsletter/archive'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -244,6 +256,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/newsletter/archive': {
+      id: '/newsletter/archive'
+      path: '/archive'
+      fullPath: '/newsletter/archive'
+      preLoaderRoute: typeof NewsletterArchiveRouteImport
+      parentRoute: typeof NewsletterRoute
+    }
     '/newsletter/$id': {
       id: '/newsletter/$id'
       path: '/$id'
@@ -256,10 +275,12 @@ declare module '@tanstack/react-router' {
 
 interface NewsletterRouteChildren {
   NewsletterIdRoute: typeof NewsletterIdRoute
+  NewsletterArchiveRoute: typeof NewsletterArchiveRoute
 }
 
 const NewsletterRouteChildren: NewsletterRouteChildren = {
   NewsletterIdRoute: NewsletterIdRoute,
+  NewsletterArchiveRoute: NewsletterArchiveRoute,
 }
 
 const NewsletterRouteWithChildren = NewsletterRoute._addFileChildren(
