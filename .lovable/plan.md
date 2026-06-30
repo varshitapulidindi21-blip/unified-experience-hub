@@ -1,6 +1,27 @@
 # Newsletter Module — UX & Structure Plan
 
-A planning document only. No code changes will be made until this is approved. Layout, hierarchy and interactions are locked to the reference images; only colors (Resolven brand), typography (Montserrat) and component styling (existing Resolven design system: card radii, shadows, button styles, spacing scale) will differ.
+A planning document only. No code changes will be made until this is approved.
+
+## 0. Visual Design Directive (HARD OVERRIDE)
+
+For the Newsletter module ONLY, the attached reference images are the single source of truth for visual design. The existing Resolven UI is explicitly disregarded for this module.
+
+Do NOT reuse or be influenced by the existing Resolven product's: layouts, card designs, spacing, padding, margins, border radius, shadows, widget designs, navigation styling, typography hierarchy, component styling, page composition, visual patterns, section layouts, or overall aesthetic.
+
+The ONLY things that carry over from Resolven:
+- Brand color palette (`--brand-purple`, `--brand-green`, neutrals).
+- Montserrat font family.
+- Resolven logo.
+- Functional integration: routing, navigation wiring, auth, data, app shell mounting points.
+
+Implementation rules:
+- Replicate the references — do not reinterpret or "modernize" them. Match layout, spacing, proportions, alignment, component hierarchy, white space, visual rhythm, interaction patterns, and overall UX as faithfully as possible.
+- Build new components for the Newsletter module from scratch (cards, widgets, reader chrome, archive grid, etc.). Do not reach for existing Resolven `module-card`, shadows, radii, button styles, chip styles, or section layouts.
+- If anything in sections §1–§13 below conflicts with the reference images, the reference images win.
+- The finished module should be instantly recognizable as the reference design, with only colors (Resolven brand), logo, and typography (Montserrat) visibly different.
+
+---
+
 
 ---
 
