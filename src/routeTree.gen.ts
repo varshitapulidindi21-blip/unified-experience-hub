@@ -17,6 +17,7 @@ import { Route as PermitSystemRouteImport } from './routes/permit-system'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as ModulesRouteImport } from './routes/modules'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LegalHubRouteImport } from './routes/legal-hub'
 import { Route as ExpenseClaimsRouteImport } from './routes/expense-claims'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
@@ -63,6 +64,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalHubRoute = LegalHubRouteImport.update({
+  id: '/legal-hub',
+  path: '/legal-hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExpenseClaimsRoute = ExpenseClaimsRouteImport.update({
   id: '/expense-claims',
   path: '/expense-claims',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/expense-claims': typeof ExpenseClaimsRoute
+  '/legal-hub': typeof LegalHubRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/expense-claims': typeof ExpenseClaimsRoute
+  '/legal-hub': typeof LegalHubRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/expense-claims': typeof ExpenseClaimsRoute
+  '/legal-hub': typeof LegalHubRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/expense-claims'
+    | '/legal-hub'
     | '/login'
     | '/modules'
     | '/newsletter'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/expense-claims'
+    | '/legal-hub'
     | '/login'
     | '/modules'
     | '/newsletter'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/expense-claims'
+    | '/legal-hub'
     | '/login'
     | '/modules'
     | '/newsletter'
@@ -187,6 +199,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   ExpenseClaimsRoute: typeof ExpenseClaimsRoute
+  LegalHubRoute: typeof LegalHubRoute
   LoginRoute: typeof LoginRoute
   ModulesRoute: typeof ModulesRoute
   NewsletterRoute: typeof NewsletterRouteWithChildren
@@ -255,6 +268,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal-hub': {
+      id: '/legal-hub'
+      path: '/legal-hub'
+      fullPath: '/legal-hub'
+      preLoaderRoute: typeof LegalHubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/expense-claims': {
       id: '/expense-claims'
       path: '/expense-claims'
@@ -311,6 +331,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   ExpenseClaimsRoute: ExpenseClaimsRoute,
+  LegalHubRoute: LegalHubRoute,
   LoginRoute: LoginRoute,
   ModulesRoute: ModulesRoute,
   NewsletterRoute: NewsletterRouteWithChildren,
