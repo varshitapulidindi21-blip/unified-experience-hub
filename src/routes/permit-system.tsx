@@ -255,7 +255,7 @@ function KpiGrid({ items, columns = 6 }: { items: Kpi[]; columns?: 4 | 5 | 6 }) 
           >
             <div className="flex items-center justify-between gap-2">
               <span className="kpi-icon flex h-8 w-8 items-center justify-center rounded-lg ring-1 ring-inset ring-white/0">
-                <s.icon className="h-4 w-4" strokeWidth={1.8} />
+                <s.icon className="h-4 w-4" />
               </span>
               <div className="text-[1.65rem] sm:text-[1.85rem] font-display italic leading-none text-foreground">{s.value}</div>
             </div>
@@ -349,7 +349,7 @@ function RoleSection({ role, site }: { role: Exclude<RoleKey, "summary">; site: 
           >
             <div className="flex items-center justify-between gap-2">
               <span className="kpi-icon flex h-8 w-8 items-center justify-center rounded-lg">
-                <s.icon className="h-4 w-4" strokeWidth={1.8} />
+                <s.icon className="h-4 w-4" />
               </span>
               <div className="text-[1.65rem] font-display italic leading-none text-foreground">{s.value}</div>
             </div>

@@ -13,6 +13,7 @@ import { Route as TravelRequestRouteImport } from './routes/travel-request'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as ResolvenAiRouteImport } from './routes/resolven-ai'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PermitSystemRouteImport } from './routes/permit-system'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as ModulesRouteImport } from './routes/modules'
 import { Route as LoginRouteImport } from './routes/login'
@@ -40,6 +41,11 @@ const ResolvenAiRoute = ResolvenAiRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PermitSystemRoute = PermitSystemRouteImport.update({
+  id: '/permit-system',
+  path: '/permit-system',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsletterRoute = NewsletterRouteImport.update({
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
+  '/permit-system': typeof PermitSystemRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
+  '/permit-system': typeof PermitSystemRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
+  '/permit-system': typeof PermitSystemRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/modules'
     | '/newsletter'
+    | '/permit-system'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/modules'
     | '/newsletter'
+    | '/permit-system'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/modules'
     | '/newsletter'
+    | '/permit-system'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ModulesRoute: typeof ModulesRoute
   NewsletterRoute: typeof NewsletterRouteWithChildren
+  PermitSystemRoute: typeof PermitSystemRoute
   ProfileRoute: typeof ProfileRoute
   ResolvenAiRoute: typeof ResolvenAiRoute
   TasksRoute: typeof TasksRoute
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/permit-system': {
+      id: '/permit-system'
+      path: '/permit-system'
+      fullPath: '/permit-system'
+      preLoaderRoute: typeof PermitSystemRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/newsletter': {
@@ -294,6 +314,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ModulesRoute: ModulesRoute,
   NewsletterRoute: NewsletterRouteWithChildren,
+  PermitSystemRoute: PermitSystemRoute,
   ProfileRoute: ProfileRoute,
   ResolvenAiRoute: ResolvenAiRoute,
   TasksRoute: TasksRoute,
