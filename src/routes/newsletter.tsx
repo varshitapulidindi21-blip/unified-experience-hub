@@ -1,36 +1,40 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  Search, Heart, MessageCircle, Bookmark, Share2, ArrowRight, ArrowLeft,
-  Home, Moon, Sun, Quote, Sparkles, Leaf, Archive as ArchiveIcon,
-  Clock, Calendar, TrendingUp, Users as UsersIcon, Lightbulb,
+  ArrowLeft, ArrowRight, Bookmark, Calendar, ChevronRight, Clock, Flame,
+  Heart, Home, Lightbulb, MessageCircle, MoreHorizontal, Moon, PartyPopper,
+  Quote as QuoteIcon, Send, Share2, Smile, Sparkles, Sun, Trophy, User as UserIcon,
+  Leaf, ArrowUpRight, Plus, Megaphone, FileText,
 } from "lucide-react";
 import { MobileAppHeader } from "@/components/MobileAppHeader";
 import { SparkleFab } from "@/components/SparkleFab";
 import { cn } from "@/lib/utils";
 import {
   EDITIONS, COVER_BG, LEADERSHIP_QUOTE, IMPACT_STATS,
-  type Edition, type Category,
+  EMPLOYEE_SHOUTOUT, QUICK_POLL, MINI_QUIZ, UPCOMING_EVENTS, LATEST_IDEA, TODAY_AT_RESOLVEN,
+  type Edition, type Category, type EditionPage,
 } from "@/lib/newsletter-data";
 
 export const Route = createFileRoute("/newsletter")({
   head: () => ({
     meta: [
       { title: "Newsletter — Resolven" },
-      { name: "description", content: "Monthly stories, leadership voices and sustainability updates from across Resolven." },
+      { name: "description", content: "The latest edition of the Resolven newsletter — stories, leadership voices and sustainability updates." },
     ],
   }),
   component: NewsletterLayout,
 });
 
-/* Layout: index renders feed; child routes render through Outlet */
+/* Layout wrapper: index renders Home; child routes (/archive, /$id) use Outlet */
 function NewsletterLayout() {
   const matches = useMatches();
   const isLeaf = matches[matches.length - 1]?.routeId === "/newsletter";
-  return isLeaf ? <NewsletterFeed /> : <Outlet />;
+  return isLeaf ? <NewsletterHome /> : <Outlet />;
 }
 
-/* ---------- Branded hero ---------- */
+/* ============================================================
+   Branded hero (shared with archive + detail via re-export)
+   ============================================================ */
 function HeroThemeToggle() {
   const [dark, setDark] = useState(false);
   useEffect(() => { setDark(document.documentElement.classList.contains("dark")); }, []);
@@ -73,24 +77,13 @@ export function NewsletterHero({ title = "Newsletter", backTo = "/modules" }: { 
   );
 }
 
-/* ---------- Feed (landing) ---------- */
-function NewsletterFeed() {
-  const [q, setQ] = useState("");
-  const [saved, setSaved] = useState<Record<string, boolean>>({});
-  const [liked, setLiked] = useState<Record<string, boolean>>({});
-
-  const featured = EDITIONS.find((e) => e.featured) ?? EDITIONS[0];
-  const sustainability = EDITIONS.filter((e) => e.category === "Sustainability").slice(0, 3);
-  const recent = EDITIONS.filter((e) => e.id !== featured.id).slice(0, 6);
-
-  const toggleLike = (id: string) => setLiked((s) => ({ ...s, [id]: !s[id] }));
-  const toggleSave = (id: string) => setSaved((s) => ({ ...s, [id]: !s[id] }));
-
-  const filteredRecent = q.trim()
-    ? recent.filter((e) =>
-        e.title.toLowerCase().includes(q.toLowerCase()) ||
-        e.excerpt.toLowerCase().includes(q.toLowerCase()))
-    : recent;
+/* ============================================================
+   HOME — single latest edition (Instagram-style carousel post)
+   + reactions, comments, leadership quote, sustainability hub
+   + right rail of engagement widgets
+   ============================================================ */
+function NewsletterHome() {
+  const latest = EDITIONS.find((e) => e.featured) ?? EDITIONS[0];
 
   return (
     <div className="min-h-screen">
@@ -98,119 +91,39 @@ function NewsletterFeed() {
       <main className="mx-auto w-full max-w-[1400px] space-y-5 px-4 py-4 sm:space-y-7 sm:px-6 sm:py-8">
         <MobileAppHeader pageLabel="Newsletter" />
 
-        {/* Search + archive entry */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="relative flex-1 max-w-xl">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              value={q} onChange={(e) => setQ(e.target.value)}
-              placeholder="Search stories, topics, people…"
-              className="h-10 w-full rounded-full border border-border bg-card pl-10 pr-4 text-[13px] outline-none focus:border-primary/40 focus:ring-2 focus:ring-primary/15"
-            />
+        {/* Top utility row: archive entry */}
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+              Latest edition
+            </div>
+            <div className="mt-0.5 text-[12.5px] text-muted-foreground">
+              {latest.month} {latest.year} · {latest.readMin} min read
+            </div>
           </div>
           <Link to="/newsletter/archive"
-            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 h-10 text-[12.5px] font-medium text-foreground/80 hover:border-primary/40 hover:text-foreground transition">
-            <ArchiveIcon className="h-3.5 w-3.5" /> Full archive <ArrowRight className="h-3.5 w-3.5" />
+            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 h-9 text-[12px] font-medium text-foreground/80 hover:border-primary/40 hover:text-foreground transition">
+            View archive <ChevronRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-[1fr_320px]">
+        <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-[1fr_340px]">
+          {/* MAIN COLUMN */}
           <div className="space-y-5 sm:space-y-6">
-            {/* Featured */}
-            <FeaturedCard
-              edition={featured}
-              liked={!!liked[featured.id]} saved={!!saved[featured.id]}
-              onLike={() => toggleLike(featured.id)}
-              onSave={() => toggleSave(featured.id)}
-            />
-
-            {/* Leadership quote */}
-            <LeadershipQuoteBlock />
-
-            {/* Sustainability section */}
-            <SectionBlock
-              eyebrow="SUSTAINABILITY"
-              primary="Our Planet,"
-              accent="Our Promise"
-              icon={Leaf}
-              hint="Stories from across our ESG mission"
-            >
-              <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-3">
-                {sustainability.map((e) => (
-                  <FeedCard key={e.id} edition={e}
-                    liked={!!liked[e.id]} saved={!!saved[e.id]}
-                    onLike={() => toggleLike(e.id)} onSave={() => toggleSave(e.id)} />
-                ))}
-              </div>
-            </SectionBlock>
-
-            {/* Recent */}
-            <SectionBlock
-              eyebrow="LATEST"
-              primary="Recent"
-              accent="Editions"
-              icon={Sparkles}
-              hint="Fresh stories from the Resolven community"
-            >
-              <div className="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2">
-                {filteredRecent.map((e) => (
-                  <FeedRow key={e.id} edition={e}
-                    liked={!!liked[e.id]} saved={!!saved[e.id]}
-                    onLike={() => toggleLike(e.id)} onSave={() => toggleSave(e.id)} />
-                ))}
-                {filteredRecent.length === 0 && (
-                  <div className="surface col-span-full rounded-2xl p-6 text-center text-[12.5px] text-muted-foreground">
-                    No matches for "{q}". Try the full archive.
-                  </div>
-                )}
-              </div>
-            </SectionBlock>
+            <LatestEditionCard edition={latest} />
+            <LeadershipQuoteBanner />
+            <SustainabilityHubCard />
           </div>
 
-          {/* Sidebar */}
-          <aside className="hidden lg:block space-y-4">
-            <SidebarPanel title="This month at Resolven" subtle="Numbers that matter">
-              <div className="grid grid-cols-2 gap-2.5">
-                {IMPACT_STATS.map((s) => (
-                  <div key={s.l} className="rounded-xl border border-border/60 bg-card/60 p-3">
-                    <div className="text-base font-semibold text-primary">{s.v}</div>
-                    <div className="mt-0.5 text-[10.5px] text-muted-foreground">{s.l}</div>
-                  </div>
-                ))}
-              </div>
-            </SidebarPanel>
-
-            <SidebarPanel title="Categories">
-              <ul className="space-y-1.5">
-                {[
-                  { icon: Leaf,      label: "Sustainability",   tone: "tile-green" },
-                  { icon: Lightbulb, label: "Innovation",       tone: "tile-lavender" },
-                  { icon: UsersIcon, label: "People & Culture", tone: "tile-purple" },
-                  { icon: TrendingUp,label: "Operations",       tone: "tile-green-light" },
-                  { icon: Sparkles,  label: "Community",        tone: "tile-grey" },
-                ].map((t) => {
-                  const count = EDITIONS.filter((e) => e.category === t.label).length;
-                  return (
-                    <li key={t.label}>
-                      <Link to="/newsletter/archive"
-                        className="flex w-full items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-muted/50 transition">
-                        <span className={cn("tile h-7 w-7 rounded-lg", t.tone)}>
-                          <t.icon className="h-3.5 w-3.5" strokeWidth={1.9} />
-                        </span>
-                        <span className="flex-1 text-[12.5px] font-medium text-foreground">{t.label}</span>
-                        <span className="text-[11px] text-muted-foreground">{count}</span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </SidebarPanel>
-
-            <SidebarPanel title="Never miss an edition" subtle="Get every newsletter delivered to your inbox.">
-              <button className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-[13px] font-medium text-primary-foreground shadow-soft hover:opacity-95 transition">
-                Subscribe
-              </button>
-            </SidebarPanel>
+          {/* RIGHT RAIL */}
+          <aside className="space-y-4">
+            <EmployeeShoutoutWidget />
+            <QuickPollWidget />
+            <MiniQuizWidget />
+            <WhatsHappeningWidget />
+            <IdeasBoxWidget />
+            <CreatorsCanvasWidget />
+            <TodayAtResolvenWidget />
           </aside>
         </div>
       </main>
@@ -219,96 +132,362 @@ function NewsletterFeed() {
   );
 }
 
-/* ---------- Building blocks ---------- */
+/* ============================================================
+   Latest edition card — header, carousel, meta, reactions, comments
+   ============================================================ */
+function LatestEditionCard({ edition }: { edition: Edition }) {
+  const [saved, setSaved] = useState(false);
+  const pages: EditionPage[] = edition.pages ?? [
+    { kicker: `${edition.month} ${edition.year} EDITION`, title: edition.title, subtitle: edition.excerpt },
+  ];
 
-function SectionBlock({
-  eyebrow, primary, accent, icon: Icon, hint, children,
-}: {
-  eyebrow: string; primary: string; accent: string;
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  hint?: string; children: React.ReactNode;
-}) {
   return (
-    <section className="surface rounded-2xl sm:rounded-3xl p-4 sm:p-6 animate-rise">
-      <div className="mb-3 sm:mb-4 flex items-end justify-between gap-3">
+    <article className="surface overflow-hidden rounded-2xl sm:rounded-3xl animate-rise">
+      {/* Header */}
+      <div className="flex items-start justify-between gap-3 p-4 sm:p-5">
         <div className="min-w-0">
-          <div className="flex items-center gap-2 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
-            <Icon className="h-3.5 w-3.5" strokeWidth={1.9} /> {eyebrow}
+          <div className="text-[15px] sm:text-base font-semibold tracking-tight text-foreground">
+            Resolven Newsletter
           </div>
-          <h2 className="mt-1 font-display italic text-[1.15rem] sm:text-[1.4rem] font-bold tracking-tight leading-tight">
-            <span className="text-foreground">{primary}</span>{" "}
-            <span className="text-accent">{accent}</span>
-          </h2>
+          <div className="mt-0.5 text-[12px] font-medium text-primary">
+            {edition.month.charAt(0) + edition.month.slice(1).toLowerCase()} {edition.year} Edition
+          </div>
         </div>
-        {hint && <p className="hidden sm:block max-w-xs text-right text-[11px] font-light text-muted-foreground">{hint}</p>}
+        <div className="flex items-center gap-1">
+          <button onClick={() => setSaved((s) => !s)} aria-label="Bookmark edition"
+            className={cn("inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition",
+              saved && "text-primary")}>
+            <Bookmark className={cn("h-4 w-4", saved && "fill-current")} />
+          </button>
+          <button aria-label="More options"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition">
+            <MoreHorizontal className="h-4 w-4" />
+          </button>
+        </div>
       </div>
-      {children}
-    </section>
-  );
-}
 
-function FeaturedCard({
-  edition, liked, saved, onLike, onSave,
-}: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
-  return (
-    <article className="module-card overflow-hidden rounded-2xl sm:rounded-3xl p-0 animate-rise">
-      <Link to="/newsletter/$id" params={{ id: edition.id }} className="block group">
-        <div className={cn(
-          "relative aspect-[16/9] sm:aspect-[21/9] bg-gradient-to-br p-5 sm:p-8 md:p-10 text-white",
-          COVER_BG[edition.cover],
-        )}>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.18),transparent_60%)]" />
-          <div className="relative flex h-full flex-col justify-between max-w-2xl">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center rounded-full bg-white/15 backdrop-blur px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider">
-                Featured
-              </span>
-              <span className="inline-flex items-center rounded-full bg-white/10 backdrop-blur px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider">
-                {edition.category}
-              </span>
-            </div>
-            <div>
-              <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/75">
-                {edition.month} {edition.year} Edition
-              </div>
-              <h3 className="mt-1.5 font-display italic text-xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight">
-                {edition.title}
-              </h3>
-              <p className="mt-2 max-w-xl text-[12.5px] sm:text-sm text-white/85 font-light line-clamp-2">
-                {edition.excerpt}
-              </p>
-              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/80">
-                <span className="inline-flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> {edition.date}</span>
-                <span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {edition.readMin} min read</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <EngagementBar edition={edition} liked={liked} saved={saved} onLike={onLike} onSave={onSave} />
+      {/* Carousel */}
+      <EditionCarousel edition={edition} pages={pages} />
+
+      {/* Meta strip */}
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 px-4 sm:px-5 pt-3 text-[11.5px] text-muted-foreground">
+        <span className="inline-flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" /> {edition.date}</span>
+        <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {edition.readMin} min read</span>
+        <span className="inline-flex items-center gap-1.5"><UserIcon className="h-3.5 w-3.5" /> By {edition.author ?? "Brand Team"}</span>
+      </div>
+
+      {/* Reaction bar */}
+      <ReactionBar baseLikes={edition.likes} />
+
+      {/* Comments */}
+      <CommentsSection commentCount={edition.comments} />
     </article>
   );
 }
 
-function LeadershipQuoteBlock() {
+/* ---------- Edition carousel (drag / swipe / arrows / dots / keys) ---------- */
+function EditionCarousel({ edition, pages }: { edition: Edition; pages: EditionPage[] }) {
+  const [index, setIndex] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Resume where you left off (per-edition)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(`resolven:nl:${edition.id}:page`);
+      if (raw) {
+        const n = parseInt(raw, 10);
+        if (!Number.isNaN(n) && n >= 0 && n < pages.length) setIndex(n);
+      }
+    } catch { /* noop */ }
+  }, [edition.id, pages.length]);
+
+  useEffect(() => {
+    try { localStorage.setItem(`resolven:nl:${edition.id}:page`, String(index)); } catch { /* noop */ }
+  }, [edition.id, index]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLElement) {
+        const tag = e.target.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || e.target.isContentEditable) return;
+      }
+      if (e.key === "ArrowLeft") setIndex((i) => Math.max(0, i - 1));
+      if (e.key === "ArrowRight") setIndex((i) => Math.min(pages.length - 1, i + 1));
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [pages.length]);
+
+  const go = (n: number) => setIndex(Math.max(0, Math.min(pages.length - 1, n)));
+
+  // Pointer drag
+  const drag = useRef<{ startX: number; active: boolean }>({ startX: 0, active: false });
+  const onPointerDown = (e: React.PointerEvent) => {
+    drag.current = { startX: e.clientX, active: true };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (!drag.current.active) return;
+    const dx = e.clientX - drag.current.startX;
+    drag.current.active = false;
+    if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+  };
+
+  return (
+    <div className="px-4 sm:px-5">
+      <div className="relative overflow-hidden rounded-xl sm:rounded-2xl"
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => { drag.current.active = false; }}
+        ref={trackRef}>
+        <div
+          className="flex transition-transform duration-500 ease-[cubic-bezier(.2,.7,.2,1)]"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {pages.map((p, i) => (
+            <CarouselSlide key={i} cover={edition.cover} page={p} pageIndex={i} total={pages.length} />
+          ))}
+        </div>
+
+        {/* Arrows (desktop) */}
+        <button onClick={() => go(index - 1)} aria-label="Previous page"
+          disabled={index === 0}
+          className="hidden sm:inline-flex absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-white/90 text-foreground shadow-soft hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed">
+          <ArrowLeft className="h-4 w-4" strokeWidth={2} />
+        </button>
+        <button onClick={() => go(index + 1)} aria-label="Next page"
+          disabled={index === pages.length - 1}
+          className="hidden sm:inline-flex absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-white/90 text-foreground shadow-soft hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed">
+          <ArrowRight className="h-4 w-4" strokeWidth={2} />
+        </button>
+      </div>
+
+      {/* Progress + dots */}
+      <div className="mt-3 flex items-center justify-center gap-3">
+        <div className="hidden sm:block h-[3px] w-24 rounded-full bg-muted overflow-hidden">
+          <div className="h-full bg-primary transition-all duration-500"
+            style={{ width: `${((index + 1) / pages.length) * 100}%` }} />
+        </div>
+        <div className="flex items-center gap-1.5">
+          {pages.map((_, i) => (
+            <button key={i} aria-label={`Go to page ${i + 1}`} onClick={() => go(i)}
+              className={cn(
+                "h-1.5 rounded-full transition-all",
+                i === index ? "w-6 bg-primary" : "w-1.5 bg-muted hover:bg-muted-foreground/40",
+              )} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CarouselSlide({
+  cover, page, pageIndex, total,
+}: { cover: Edition["cover"]; page: EditionPage; pageIndex: number; total: number }) {
+  return (
+    <div className="w-full shrink-0 select-none">
+      <div className={cn(
+        "relative aspect-[16/9] sm:aspect-[16/8] bg-gradient-to-br p-5 sm:p-8 md:p-10 text-white",
+        COVER_BG[cover],
+      )}>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.20),transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+
+        {/* Page counter */}
+        <div className="relative inline-flex items-center rounded-full bg-black/45 backdrop-blur px-2.5 py-0.5 text-[10.5px] font-medium">
+          {pageIndex + 1} / {total}
+        </div>
+
+        {/* Slide content */}
+        <div className="relative mt-auto flex h-full flex-col justify-end max-w-2xl">
+          {page.kicker && (
+            <div className="text-[10.5px] sm:text-[11px] font-medium uppercase tracking-[0.22em] text-white/80">
+              {page.kicker}
+            </div>
+          )}
+          <h3 className="mt-1.5 font-display italic font-bold leading-[1.05] tracking-tight text-[1.4rem] sm:text-[2rem] md:text-[2.5rem] whitespace-pre-line">
+            {page.title}
+          </h3>
+          {page.subtitle && (
+            <p className="mt-2 max-w-xl text-[12.5px] sm:text-base text-white/85 font-light">
+              {page.subtitle}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Reaction bar ---------- */
+type ReactionKey = "like" | "celebrate" | "inspired" | "insightful";
+const REACTIONS: { key: ReactionKey; label: string; icon: React.ComponentType<{ className?: string }>; tint: string }[] = [
+  { key: "like",       label: "Like",       icon: Heart,       tint: "text-rose-500" },
+  { key: "celebrate",  label: "Celebrate",  icon: PartyPopper, tint: "text-amber-500" },
+  { key: "inspired",   label: "Inspired",   icon: Flame,       tint: "text-orange-500" },
+  { key: "insightful", label: "Insightful", icon: Lightbulb,   tint: "text-yellow-500" },
+];
+
+function ReactionBar({ baseLikes }: { baseLikes: number }) {
+  const [active, setActive] = useState<ReactionKey | null>(null);
+  const baseCounts: Record<ReactionKey, number> = {
+    like: baseLikes, celebrate: 84, inspired: 64, insightful: 42,
+  };
+  return (
+    <div className="border-t border-border/60 px-4 sm:px-5 pt-3">
+      <div className="mb-2 text-[11.5px] font-medium text-foreground/80">
+        How do you feel about this newsletter?
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+        {REACTIONS.map((r) => {
+          const isActive = active === r.key;
+          const count = baseCounts[r.key] + (isActive ? 1 : 0);
+          return (
+            <button key={r.key} onClick={() => setActive(isActive ? null : r.key)}
+              className={cn(
+                "inline-flex items-center justify-center gap-1.5 rounded-full border px-3 py-2 text-[12px] font-medium transition",
+                isActive
+                  ? "border-primary/40 bg-primary/8 text-foreground"
+                  : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-primary/30",
+              )}>
+              <r.icon className={cn("h-4 w-4", isActive ? r.tint : "")} />
+              <span>{r.label}</span>
+              <span className="ml-1 text-foreground/60">{count}</span>
+            </button>
+          );
+        })}
+        <button className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-[12px] font-medium text-muted-foreground hover:text-foreground hover:border-primary/30 transition">
+          <Share2 className="h-4 w-4" /> Share
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Comments ---------- */
+type Comment = { name: string; initials: string; ago: string; body: string; likes: number };
+const SEED_COMMENTS: Comment[] = [
+  { name: "Rohit Sharma", initials: "RS", ago: "2h ago", body: "Amazing progress! Proud to be part of this journey.", likes: 12 },
+  { name: "Neha Verma",   initials: "NV", ago: "3h ago", body: "The sustainability initiatives are truly inspiring!",  likes: 8 },
+];
+
+function CommentsSection({ commentCount }: { commentCount: number }) {
+  const [comments, setComments] = useState<Comment[]>(SEED_COMMENTS);
+  const [draft, setDraft] = useState("");
+  const [likedC, setLikedC] = useState<Record<number, boolean>>({});
+  const [showAll, setShowAll] = useState(false);
+
+  const visible = showAll ? comments : comments.slice(0, 2);
+
+  const submit = () => {
+    const body = draft.trim();
+    if (!body) return;
+    setComments((cs) => [{ name: "You", initials: "YO", ago: "now", body, likes: 0 }, ...cs]);
+    setDraft("");
+  };
+
+  return (
+    <div className="border-t border-border/60 mt-3 px-4 sm:px-5 py-4">
+      <div className="flex items-center justify-between">
+        <div className="text-[13px] font-semibold text-foreground">Comments ({commentCount})</div>
+        <button className="text-[11.5px] text-muted-foreground hover:text-foreground">Most recent</button>
+      </div>
+
+      {/* Composer */}
+      <div className="mt-3 flex items-start gap-2.5">
+        <Avatar initials="YO" />
+        <div className="flex-1 flex items-center gap-1 rounded-full border border-border bg-card pl-3 pr-1 py-1">
+          <input
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }}
+            placeholder="Write a comment…"
+            className="flex-1 bg-transparent text-[12.5px] outline-none placeholder:text-muted-foreground"
+          />
+          <button aria-label="Emoji" className="inline-flex h-8 w-8 items-center justify-center text-muted-foreground hover:text-foreground">
+            <Smile className="h-4 w-4" />
+          </button>
+          <button onClick={submit} aria-label="Send"
+            disabled={!draft.trim()}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-40">
+            <Send className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Thread */}
+      <ul className="mt-4 space-y-3.5">
+        {visible.map((c, i) => {
+          const liked = !!likedC[i];
+          const likes = c.likes + (liked ? 1 : 0);
+          return (
+            <li key={i} className="flex items-start gap-2.5">
+              <Avatar initials={c.initials} />
+              <div className="min-w-0 flex-1">
+                <div className="rounded-2xl bg-muted/50 px-3 py-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-[12.5px] font-semibold text-foreground">{c.name}</span>
+                    <span className="text-[10.5px] text-muted-foreground">{c.ago}</span>
+                  </div>
+                  <p className="mt-0.5 text-[12.5px] text-foreground/90">{c.body}</p>
+                </div>
+                <div className="mt-1 flex items-center gap-3 pl-3 text-[11px] text-muted-foreground">
+                  <button onClick={() => setLikedC((s) => ({ ...s, [i]: !s[i] }))}
+                    className={cn("hover:text-foreground", liked && "text-accent font-medium")}>
+                    Like
+                  </button>
+                  <button className="hover:text-foreground">Reply</button>
+                  <span className="inline-flex items-center gap-1">
+                    <Heart className={cn("h-3 w-3", liked && "fill-current text-accent")} /> {likes}
+                  </span>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      {comments.length > 2 && (
+        <button onClick={() => setShowAll((s) => !s)}
+          className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium text-primary hover:underline">
+          {showAll ? "Show fewer" : `View all comments`}
+          <ChevronRight className={cn("h-3.5 w-3.5 transition-transform", showAll && "rotate-90")} />
+        </button>
+      )}
+    </div>
+  );
+}
+
+function Avatar({ initials }: { initials: string }) {
+  return (
+    <div className="h-8 w-8 shrink-0 rounded-full bg-gradient-to-br from-primary to-[oklch(0.32_0.16_295)] text-white flex items-center justify-center text-[10.5px] font-semibold">
+      {initials}
+    </div>
+  );
+}
+
+/* ============================================================
+   Leadership quote banner (full-width)
+   ============================================================ */
+function LeadershipQuoteBanner() {
   return (
     <section
       className="relative overflow-hidden rounded-2xl sm:rounded-3xl p-5 sm:p-8 animate-rise"
-      style={{ background: "linear-gradient(135deg, oklch(0.42 0.18 295) 0%, oklch(0.28 0.14 295) 100%)" }}
+      style={{ background: "linear-gradient(135deg, oklch(0.42 0.18 295) 0%, oklch(0.26 0.14 295) 100%)" }}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(255,255,255,0.12),transparent_55%)]" />
-      <div className="relative grid grid-cols-[1fr_auto] gap-4 sm:gap-6 items-center text-white">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(255,255,255,0.14),transparent_55%)]" />
+      <div className="relative grid grid-cols-[1fr_auto] gap-5 sm:gap-7 items-center text-white">
         <div className="min-w-0">
-          <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] text-white/65">
-            <Quote className="h-3.5 w-3.5" /> Leadership Voice
-          </div>
-          <p className="mt-2 font-display italic text-[15px] sm:text-xl md:text-2xl leading-snug font-medium">
+          <QuoteIcon className="h-6 w-6 text-white/55" />
+          <p className="mt-2 font-display italic text-base sm:text-xl md:text-2xl leading-snug font-medium">
             "{LEADERSHIP_QUOTE.text}"
           </p>
           <div className="mt-3 text-[12px] sm:text-sm font-medium">— {LEADERSHIP_QUOTE.author}</div>
-          <div className="text-[11px] sm:text-xs text-white/70">{LEADERSHIP_QUOTE.role}</div>
+          <div className="text-[11px] sm:text-xs text-white/75">{LEADERSHIP_QUOTE.role}</div>
         </div>
-        <div className="hidden sm:flex h-16 w-16 md:h-20 md:w-20 shrink-0 items-center justify-center rounded-full bg-white/15 backdrop-blur ring-1 ring-white/20 font-display italic font-bold text-xl">
+        <div className="hidden sm:flex h-20 w-20 md:h-28 md:w-28 shrink-0 items-center justify-center rounded-full bg-white/15 backdrop-blur ring-1 ring-white/20 font-display italic font-bold text-2xl md:text-3xl">
           {LEADERSHIP_QUOTE.initials}
         </div>
       </div>
@@ -316,122 +495,294 @@ function LeadershipQuoteBlock() {
   );
 }
 
-function FeedCard({
-  edition, liked, saved, onLike, onSave,
-}: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
+/* ============================================================
+   Sustainability Hub card (content card on home, not a route)
+   ============================================================ */
+function SustainabilityHubCard() {
+  const [liked, setLiked] = useState(false);
+  const [saved, setSaved] = useState(false);
   return (
-    <article className="module-card overflow-hidden rounded-2xl p-0">
-      <Link to="/newsletter/$id" params={{ id: edition.id }} className="block">
-        <div className={cn("relative aspect-[5/3] bg-gradient-to-br p-3.5 text-white", COVER_BG[edition.cover])}>
-          <span className="inline-flex items-center rounded-full bg-white/15 backdrop-blur px-2 py-0.5 text-[9.5px] font-medium uppercase tracking-wider">
-            {edition.category}
+    <article className="surface overflow-hidden rounded-2xl sm:rounded-3xl animate-rise">
+      <div className="flex items-start justify-between gap-3 p-4 sm:p-5">
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="tile tile-green h-10 w-10 rounded-xl">
+            <Leaf className="h-4 w-4" strokeWidth={1.9} />
           </span>
-          <h3 className="mt-2 font-display text-[0.95rem] font-semibold leading-tight tracking-tight line-clamp-2">
-            {edition.title}
-          </h3>
-          <div className="absolute bottom-2.5 left-3.5 text-[9.5px] font-medium uppercase tracking-[0.18em] text-white/75">
-            {edition.month} {edition.year}
+          <div className="min-w-0">
+            <div className="text-[14px] font-semibold tracking-tight text-foreground">Sustainability Hub</div>
+            <div className="text-[11px] text-muted-foreground">Yesterday</div>
           </div>
         </div>
-      </Link>
-      <div className="p-3">
-        <p className="text-[11.5px] leading-snug text-muted-foreground line-clamp-2">{edition.excerpt}</p>
-        <EngagementMini edition={edition} liked={liked} saved={saved} onLike={onLike} onSave={onSave} />
-      </div>
-    </article>
-  );
-}
-
-function FeedRow({
-  edition, liked, saved, onLike, onSave,
-}: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
-  return (
-    <article className="module-card overflow-hidden rounded-2xl p-0">
-      <div className="flex">
-        <Link to="/newsletter/$id" params={{ id: edition.id }}
-          className={cn("relative h-auto w-24 sm:w-28 shrink-0 bg-gradient-to-br", COVER_BG[edition.cover])}>
-          <div className="absolute bottom-1.5 left-1.5 text-[8.5px] font-semibold uppercase tracking-wider text-white/85">
-            {edition.month}<br />{edition.year}
-          </div>
-        </Link>
-        <div className="min-w-0 flex-1 p-3 sm:p-3.5">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-[9.5px] font-medium uppercase tracking-wider text-primary">{edition.category}</span>
-            <span className="text-[10px] text-muted-foreground">{edition.readMin} min</span>
-          </div>
-          <Link to="/newsletter/$id" params={{ id: edition.id }}
-            className="mt-0.5 block text-[13px] font-semibold text-foreground hover:text-primary line-clamp-1">
-            {edition.title}
-          </Link>
-          <p className="mt-0.5 text-[11.5px] leading-snug text-muted-foreground line-clamp-2">{edition.excerpt}</p>
-          <EngagementMini edition={edition} liked={liked} saved={saved} onLike={onLike} onSave={onSave} />
-        </div>
-      </div>
-    </article>
-  );
-}
-
-export function EngagementBar({
-  edition, liked, saved, onLike, onSave,
-}: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
-  return (
-    <div className="flex items-center justify-between border-t border-border/60 px-4 py-3">
-      <div className="flex items-center gap-4 text-[12px] text-muted-foreground">
-        <button onClick={onLike}
-          className={cn("inline-flex items-center gap-1.5 hover:text-foreground transition", liked && "text-accent")}>
-          <Heart className={cn("h-4 w-4", liked && "fill-current")} /> {edition.likes + (liked ? 1 : 0)}
-        </button>
-        <span className="inline-flex items-center gap-1.5">
-          <MessageCircle className="h-4 w-4" /> {edition.comments}
-        </span>
-      </div>
-      <div className="flex items-center gap-1">
-        <button onClick={onSave} aria-label="Save"
-          className={cn(
-            "inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition",
-            saved && "text-primary",
-          )}>
-          <Bookmark className={cn("h-4 w-4", saved && "fill-current")} />
-        </button>
-        <button aria-label="Share"
+        <button aria-label="More options"
           className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition">
-          <Share2 className="h-4 w-4" />
+          <MoreHorizontal className="h-4 w-4" />
         </button>
       </div>
-    </div>
+
+      <div className="px-4 sm:px-5 pb-4">
+        <h3 className="font-display italic text-[1.15rem] sm:text-[1.4rem] font-bold tracking-tight leading-tight">
+          Our Impact <span className="text-accent">in Numbers</span>
+        </h3>
+        <p className="mt-1 text-[12.5px] text-muted-foreground">A look at the difference we're making together.</p>
+
+        <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+          {IMPACT_STATS.map((s, i) => (
+            <div key={s.l} className={cn(
+              "rounded-xl border border-border/60 p-3 sm:p-4 text-center",
+              i === 0 && "bg-[oklch(0.92_0.10_148_/_0.45)]",
+              i === 1 && "bg-[oklch(0.92_0.05_240_/_0.45)]",
+              i === 2 && "bg-[oklch(0.94_0.08_70_/_0.45)]",
+              i === 3 && "bg-[oklch(0.92_0.09_148_/_0.30)]",
+            )}>
+              <div className="text-base sm:text-xl font-semibold text-foreground">{s.v}</div>
+              <div className="mt-0.5 text-[10.5px] text-muted-foreground">{s.l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between border-t border-border/60 px-4 sm:px-5 py-3 text-[12px] text-muted-foreground">
+        <div className="flex items-center gap-4">
+          <button onClick={() => setLiked((s) => !s)}
+            className={cn("inline-flex items-center gap-1.5 hover:text-foreground", liked && "text-accent")}>
+            <Heart className={cn("h-4 w-4", liked && "fill-current")} /> {96 + (liked ? 1 : 0)}
+          </button>
+          <span className="inline-flex items-center gap-1.5"><MessageCircle className="h-4 w-4" /> 18</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <button onClick={() => setSaved((s) => !s)} aria-label="Save"
+            className={cn("inline-flex h-8 w-8 items-center justify-center rounded-full hover:text-foreground hover:bg-muted/60",
+              saved && "text-primary")}>
+            <Bookmark className={cn("h-4 w-4", saved && "fill-current")} />
+          </button>
+          <button aria-label="Share"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full hover:text-foreground hover:bg-muted/60">
+            <Share2 className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </article>
   );
 }
 
-function EngagementMini({
-  edition, liked, saved, onLike, onSave,
-}: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
+/* ============================================================
+   Right-rail widgets
+   ============================================================ */
+function RailCard({ title, action, children }: { title: string; action?: { label: string; onClick?: () => void }; children: React.ReactNode }) {
   return (
-    <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground">
-      <div className="flex items-center gap-3">
-        <button onClick={onLike}
-          className={cn("inline-flex items-center gap-1 hover:text-foreground", liked && "text-accent")}>
-          <Heart className={cn("h-3.5 w-3.5", liked && "fill-current")} /> {edition.likes + (liked ? 1 : 0)}
-        </button>
-        <span className="inline-flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" /> {edition.comments}</span>
+    <div className="surface rounded-2xl p-4 animate-rise">
+      <div className="flex items-center justify-between">
+        <div className="text-[13px] font-semibold tracking-tight text-foreground">{title}</div>
+        {action && (
+          <button onClick={action.onClick}
+            className="text-[11px] font-medium text-primary hover:underline">
+            {action.label}
+          </button>
+        )}
       </div>
-      <button onClick={onSave} aria-label="Save"
-        className={cn("hover:text-foreground", saved && "text-primary")}>
-        <Bookmark className={cn("h-3.5 w-3.5", saved && "fill-current")} />
-      </button>
-    </div>
-  );
-}
-
-function SidebarPanel({ title, subtle, children }: { title: string; subtle?: string; children: React.ReactNode }) {
-  return (
-    <div className="surface rounded-2xl p-4 sm:p-5 animate-rise">
-      <div className="text-[13px] font-semibold tracking-tight text-foreground">{title}</div>
-      {subtle && <p className="mt-0.5 text-[11px] font-light text-muted-foreground">{subtle}</p>}
       <div className="mt-3">{children}</div>
     </div>
   );
 }
 
-// Re-export shared tokens for legacy consumers (detail page)
+function EmployeeShoutoutWidget() {
+  return (
+    <RailCard title="Employee Shoutout" action={{ label: "View all" }}>
+      <div className="flex flex-col items-center text-center">
+        <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-[oklch(0.32_0.16_295)] text-white flex items-center justify-center text-base font-semibold ring-4 ring-primary/10">
+          {EMPLOYEE_SHOUTOUT.initials}
+        </div>
+        <div className="mt-2 text-[13px] font-semibold text-foreground">{EMPLOYEE_SHOUTOUT.name}</div>
+        <div className="text-[11px] text-muted-foreground">{EMPLOYEE_SHOUTOUT.role}</div>
+        <p className="mt-2 text-[11.5px] leading-snug text-foreground/80 max-w-[18rem]">
+          {EMPLOYEE_SHOUTOUT.message}
+        </p>
+        <button className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-primary/40 px-3 py-2 text-[12px] font-medium text-primary hover:bg-primary/8">
+          <Megaphone className="h-3.5 w-3.5" /> Give Shoutout
+        </button>
+      </div>
+    </RailCard>
+  );
+}
+
+function QuickPollWidget() {
+  const [pick, setPick] = useState<string | null>(null);
+  const [voted, setVoted] = useState(false);
+  // Mock distribution for results
+  const dist: Record<string, number> = { solar: 28, wind: 41, store: 18, ev: 13 };
+  return (
+    <RailCard title="Quick Poll" action={{ label: "View all" }}>
+      <div className="text-[12.5px] font-medium text-foreground/90">{QUICK_POLL.question}</div>
+      <ul className="mt-2.5 space-y-1.5">
+        {QUICK_POLL.options.map((o) => {
+          const selected = pick === o.id;
+          if (voted) {
+            const pct = dist[o.id] ?? 0;
+            return (
+              <li key={o.id} className={cn(
+                "relative overflow-hidden rounded-lg border px-2.5 py-1.5 text-[12px]",
+                selected ? "border-primary/40 bg-primary/8" : "border-border bg-card",
+              )}>
+                <div className="absolute inset-y-0 left-0 bg-primary/15" style={{ width: `${pct}%` }} />
+                <div className="relative flex items-center justify-between">
+                  <span className="text-foreground/90">{o.label}</span>
+                  <span className="text-foreground/70 font-medium">{pct}%</span>
+                </div>
+              </li>
+            );
+          }
+          return (
+            <li key={o.id}>
+              <button onClick={() => setPick(o.id)}
+                className={cn(
+                  "flex w-full items-center gap-2 rounded-lg border px-2.5 py-1.5 text-left text-[12px] transition",
+                  selected ? "border-primary/40 bg-primary/8 text-foreground"
+                           : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-primary/30",
+                )}>
+                <span className={cn(
+                  "h-3.5 w-3.5 rounded-full border flex items-center justify-center",
+                  selected ? "border-primary" : "border-border",
+                )}>
+                  {selected && <span className="h-1.5 w-1.5 rounded-full bg-primary" />}
+                </span>
+                <span className="flex-1">{o.label}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      <button
+        onClick={() => pick && setVoted(true)}
+        disabled={!pick || voted}
+        className="mt-3 w-full rounded-xl bg-primary px-3 py-2 text-[12.5px] font-medium text-primary-foreground disabled:opacity-50">
+        {voted ? "Thanks for voting" : "Vote Now"}
+      </button>
+      <div className="mt-2 text-center text-[10.5px] text-muted-foreground">{QUICK_POLL.totalVotes} votes</div>
+    </RailCard>
+  );
+}
+
+function MiniQuizWidget() {
+  const [pick, setPick] = useState<string | null>(null);
+  const [revealed, setRevealed] = useState(false);
+  return (
+    <RailCard title="Mini Quiz" action={{ label: "View all" }}>
+      <div className="text-[12.5px] font-medium text-foreground/90">{MINI_QUIZ.question}</div>
+      <ul className="mt-2.5 space-y-1.5">
+        {MINI_QUIZ.options.map((o) => {
+          const selected = pick === o.id;
+          const status =
+            revealed && selected && o.correct ? "ring-2 ring-accent/60 bg-accent/10 text-foreground"
+            : revealed && selected && !o.correct ? "ring-2 ring-destructive/50 bg-destructive/10 text-foreground"
+            : revealed && o.correct ? "ring-2 ring-accent/40 bg-accent/5 text-foreground"
+            : selected ? "border-primary/40 bg-primary/8 text-foreground"
+            : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-primary/30";
+          return (
+            <li key={o.id}>
+              <button onClick={() => !revealed && setPick(o.id)}
+                className={cn("flex w-full items-center gap-2 rounded-lg border px-2.5 py-1.5 text-left text-[12px] transition", status)}>
+                <span className={cn(
+                  "h-3.5 w-3.5 rounded-full border flex items-center justify-center",
+                  selected ? "border-primary" : "border-border",
+                )}>
+                  {selected && <span className="h-1.5 w-1.5 rounded-full bg-primary" />}
+                </span>
+                <span className="flex-1">{o.label}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      <button
+        onClick={() => pick && setRevealed(true)}
+        disabled={!pick || revealed}
+        className="mt-3 w-full rounded-xl border border-primary/40 px-3 py-2 text-[12.5px] font-medium text-primary hover:bg-primary/8 disabled:opacity-50">
+        {revealed ? "Answer revealed" : "Play Quiz"}
+      </button>
+      <div className="mt-2 text-center text-[10.5px] text-muted-foreground">{MINI_QUIZ.participants} participants</div>
+    </RailCard>
+  );
+}
+
+function WhatsHappeningWidget() {
+  const toneClass: Record<string, string> = {
+    purple: "tile-purple", green: "tile-green", lavender: "tile-lavender",
+  };
+  return (
+    <RailCard title="What's Happening" action={{ label: "View calendar" }}>
+      <ul className="space-y-2.5">
+        {UPCOMING_EVENTS.map((e) => (
+          <li key={e.id} className="flex items-center gap-2.5">
+            <span className={cn("tile h-9 w-9 rounded-lg", toneClass[e.tone])}>
+              <Calendar className="h-4 w-4" strokeWidth={1.9} />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="text-[12.5px] font-medium text-foreground truncate">{e.title}</div>
+              <div className="text-[10.5px] text-muted-foreground">{e.date} · {e.time}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </RailCard>
+  );
+}
+
+function IdeasBoxWidget() {
+  return (
+    <RailCard title="Ideas Box" action={{ label: "View all" }}>
+      <div className="rounded-xl border border-border bg-card p-3">
+        <div className="text-[12.5px] font-semibold text-foreground">{LATEST_IDEA.title}</div>
+        <div className="mt-1 flex items-center gap-3 text-[11px] text-muted-foreground">
+          <span className="inline-flex items-center gap-1"><ArrowUpRight className="h-3 w-3" /> {LATEST_IDEA.upvotes} upvotes</span>
+          <span className="inline-flex items-center gap-1"><MessageCircle className="h-3 w-3" /> {LATEST_IDEA.comments} comments</span>
+        </div>
+        <button className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-primary/40 px-3 py-1.5 text-[11.5px] font-medium text-primary hover:bg-primary/8">
+          <Plus className="h-3.5 w-3.5" /> View & Discuss
+        </button>
+      </div>
+    </RailCard>
+  );
+}
+
+function CreatorsCanvasWidget() {
+  const items = [
+    { icon: Sparkles, label: "Photos" },
+    { icon: FileText, label: "Writing" },
+    { icon: Lightbulb, label: "Sketches" },
+    { icon: Trophy, label: "Videos" },
+    { icon: QuoteIcon, label: "Poetry" },
+    { icon: FileText, label: "Articles" },
+  ];
+  return (
+    <RailCard title="Creator's Canvas" action={{ label: "View all" }}>
+      <div className="grid grid-cols-3 gap-2">
+        {items.map((it) => (
+          <button key={it.label}
+            className="flex flex-col items-center gap-1 rounded-xl border border-border bg-card py-2 text-muted-foreground hover:text-foreground hover:border-primary/30 transition">
+            <it.icon className="h-4 w-4" />
+            <span className="text-[10px] font-medium">{it.label}</span>
+          </button>
+        ))}
+      </div>
+    </RailCard>
+  );
+}
+
+function TodayAtResolvenWidget() {
+  return (
+    <RailCard title="Today at Resolven">
+      <ul className="text-[11.5px] text-muted-foreground space-y-1">
+        {TODAY_AT_RESOLVEN.map((row) => (
+          <li key={row.l} className="flex items-baseline gap-2">
+            <span className="text-foreground font-semibold">{row.v}</span>
+            <span>{row.l}</span>
+          </li>
+        ))}
+      </ul>
+    </RailCard>
+  );
+}
+
+/* Re-exports for archive + detail */
 export { EDITIONS, COVER_BG };
 export type { Edition, Category };
