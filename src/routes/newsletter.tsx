@@ -137,9 +137,10 @@ function NewsletterHome() {
         </div>
 
 
-        <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-[1fr_340px]">
+        <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
           {/* MAIN COLUMN */}
-          <div className="space-y-5 sm:space-y-6">
+          <div className="min-w-0 space-y-5 sm:space-y-6">
+
             <LatestEditionCard edition={latest} />
             <LeadershipQuoteBanner />
             <SustainabilityHubCard />
