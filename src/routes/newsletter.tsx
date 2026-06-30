@@ -841,4 +841,4 @@ function TodayAtResolvenWidget() {
 
 /* Re-exports for archive + detail */
 export { EDITIONS, COVER_BG };
-export type { Edition, Category };
+export type { Edition };
