@@ -89,7 +89,11 @@ export function NewsletterHero({ title = "Newsletter", backTo = "/modules" }: { 
    + right rail of engagement widgets
    ============================================================ */
 function NewsletterHome() {
-  const latest = EDITIONS.find((e) => e.featured) ?? EDITIONS[0];
+  const { edition: editionId } = Route.useSearch();
+  const selected = editionId ? EDITIONS.find((e) => e.id === editionId) : undefined;
+  const latest = selected ?? EDITIONS.find((e) => e.featured) ?? EDITIONS[0];
+  const isArchivedView = !!selected && !selected.featured;
+
 
   return (
     <div className="min-h-screen">
