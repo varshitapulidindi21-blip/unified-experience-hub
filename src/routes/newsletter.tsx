@@ -41,21 +41,6 @@ function NewsletterLayout() {
 /* ============================================================
    Branded hero (shared with archive + detail via re-export)
    ============================================================ */
-function HeroThemeToggle() {
-  const [dark, setDark] = useState(false);
-  useEffect(() => { setDark(document.documentElement.classList.contains("dark")); }, []);
-  const toggle = () => {
-    const next = !dark; setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    try { localStorage.setItem("resolven-theme", next ? "dark" : "light"); } catch { /* noop */ }
-  };
-  return (
-    <button onClick={toggle} aria-label="Toggle theme"
-      className="inline-flex h-9 w-9 items-center justify-center text-white/85 hover:text-white transition">
-      {dark ? <Sun className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.9} /> : <Moon className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.9} />}
-    </button>
-  );
-}
 
 export function NewsletterHero({ title = "Newsletter", backTo = "/modules" }: { title?: string; backTo?: string }) {
   return (
