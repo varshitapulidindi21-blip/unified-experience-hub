@@ -105,17 +105,25 @@ function NewsletterHome() {
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-              Latest edition
+              {isArchivedView ? "From the archive" : "Latest edition"}
             </div>
             <div className="mt-0.5 text-[12.5px] text-muted-foreground">
               {latest.month} {latest.year} · {latest.readMin} min read
             </div>
           </div>
-          <Link to="/newsletter/archive"
-            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 h-9 text-[12px] font-medium text-foreground/80 hover:border-primary/40 hover:text-foreground transition">
-            View archive <ChevronRight className="h-3.5 w-3.5" />
-          </Link>
+          {isArchivedView ? (
+            <Link to="/newsletter/archive"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 h-9 text-[12px] font-medium text-foreground/80 hover:border-primary/40 hover:text-foreground transition">
+              <ArrowLeft className="h-3.5 w-3.5" /> Back to archive
+            </Link>
+          ) : (
+            <Link to="/newsletter/archive"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 h-9 text-[12px] font-medium text-foreground/80 hover:border-primary/40 hover:text-foreground transition">
+              View archive <ChevronRight className="h-3.5 w-3.5" />
+            </Link>
+          )}
         </div>
+
 
         <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-[1fr_340px]">
           {/* MAIN COLUMN */}
