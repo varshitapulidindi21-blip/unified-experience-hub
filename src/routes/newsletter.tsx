@@ -107,9 +107,10 @@ function NewsletterHome() {
 
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-clip">
       <div className="hidden md:block"><NewsletterHero /></div>
-      <main className="mx-auto w-full max-w-[1400px] space-y-5 px-4 py-4 sm:space-y-7 sm:px-6 sm:py-8">
+      <main className="mx-auto w-full max-w-[1280px] min-w-0 space-y-5 px-4 py-4 sm:space-y-7 sm:px-6 lg:px-10 sm:py-8">
+
         <MobileAppHeader pageLabel="Newsletter" />
 
         {/* Top utility row: archive entry */}
