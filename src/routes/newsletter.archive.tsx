@@ -298,7 +298,7 @@ function EditionCard({
 }: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
   return (
     <article className="module-card overflow-hidden rounded-2xl p-0">
-      <Link to="/newsletter/$id" params={{ id: edition.id }} className="block">
+      <Link to="/newsletter" search={{ edition: edition.id }} className="block">
         <div className={cn("relative aspect-[4/3] bg-gradient-to-br p-4 text-white", COVER_BG[edition.cover])}>
           <span className="inline-flex items-center rounded-full bg-white/15 backdrop-blur px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider">
             {edition.category}
