@@ -13,9 +13,11 @@ import { Route as TravelRequestRouteImport } from './routes/travel-request'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as ResolvenAiRouteImport } from './routes/resolven-ai'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PermitSystemRouteImport } from './routes/permit-system'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as ModulesRouteImport } from './routes/modules'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LegalHubRouteImport } from './routes/legal-hub'
 import { Route as ExpenseClaimsRouteImport } from './routes/expense-claims'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
@@ -42,6 +44,11 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PermitSystemRoute = PermitSystemRouteImport.update({
+  id: '/permit-system',
+  path: '/permit-system',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsletterRoute = NewsletterRouteImport.update({
   id: '/newsletter',
   path: '/newsletter',
@@ -55,6 +62,11 @@ const ModulesRoute = ModulesRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalHubRoute = LegalHubRouteImport.update({
+  id: '/legal-hub',
+  path: '/legal-hub',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExpenseClaimsRoute = ExpenseClaimsRouteImport.update({
@@ -87,9 +99,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/expense-claims': typeof ExpenseClaimsRoute
+  '/legal-hub': typeof LegalHubRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
+  '/permit-system': typeof PermitSystemRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -101,9 +115,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/expense-claims': typeof ExpenseClaimsRoute
+  '/legal-hub': typeof LegalHubRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
+  '/permit-system': typeof PermitSystemRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -116,9 +132,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/expense-claims': typeof ExpenseClaimsRoute
+  '/legal-hub': typeof LegalHubRoute
   '/login': typeof LoginRoute
   '/modules': typeof ModulesRoute
   '/newsletter': typeof NewsletterRouteWithChildren
+  '/permit-system': typeof PermitSystemRoute
   '/profile': typeof ProfileRoute
   '/resolven-ai': typeof ResolvenAiRoute
   '/tasks': typeof TasksRoute
@@ -132,9 +150,11 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/expense-claims'
+    | '/legal-hub'
     | '/login'
     | '/modules'
     | '/newsletter'
+    | '/permit-system'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -146,9 +166,11 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/expense-claims'
+    | '/legal-hub'
     | '/login'
     | '/modules'
     | '/newsletter'
+    | '/permit-system'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -160,9 +182,11 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/expense-claims'
+    | '/legal-hub'
     | '/login'
     | '/modules'
     | '/newsletter'
+    | '/permit-system'
     | '/profile'
     | '/resolven-ai'
     | '/tasks'
@@ -175,9 +199,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   ExpenseClaimsRoute: typeof ExpenseClaimsRoute
+  LegalHubRoute: typeof LegalHubRoute
   LoginRoute: typeof LoginRoute
   ModulesRoute: typeof ModulesRoute
   NewsletterRoute: typeof NewsletterRouteWithChildren
+  PermitSystemRoute: typeof PermitSystemRoute
   ProfileRoute: typeof ProfileRoute
   ResolvenAiRoute: typeof ResolvenAiRoute
   TasksRoute: typeof TasksRoute
@@ -214,6 +240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/permit-system': {
+      id: '/permit-system'
+      path: '/permit-system'
+      fullPath: '/permit-system'
+      preLoaderRoute: typeof PermitSystemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/newsletter': {
       id: '/newsletter'
       path: '/newsletter'
@@ -233,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal-hub': {
+      id: '/legal-hub'
+      path: '/legal-hub'
+      fullPath: '/legal-hub'
+      preLoaderRoute: typeof LegalHubRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/expense-claims': {
@@ -291,9 +331,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   ExpenseClaimsRoute: ExpenseClaimsRoute,
+  LegalHubRoute: LegalHubRoute,
   LoginRoute: LoginRoute,
   ModulesRoute: ModulesRoute,
   NewsletterRoute: NewsletterRouteWithChildren,
+  PermitSystemRoute: PermitSystemRoute,
   ProfileRoute: ProfileRoute,
   ResolvenAiRoute: ResolvenAiRoute,
   TasksRoute: TasksRoute,

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { type ComponentType, type SVGProps, useState } from "react";
 import { ArrowLeft,
   CheckSquare, Settings2, FilePlus, FileText, HeartPulse, Plane, Receipt, Sparkles,
-  Sheet, Users, FileSignature, Cog, Shield, Megaphone, Brain, Handshake, Newspaper,
+  Sheet, Users, FileSignature, Cog, Shield, Megaphone, Brain, Handshake, Newspaper, Scale,
 } from "lucide-react";
 import { SharePointBrandIcon, SapBrandIcon } from "@/components/brand-icons";
 import { TopBar } from "@/components/TopBar";
@@ -39,7 +39,8 @@ const workspaces = [
   { icon: Users, title: "Taxcon HRMS", subtitle: "Payroll, attendance, HR letters (India)", tone: "green-light" as const, pinned: true },
   { icon: FileSignature, title: "DocuSign", subtitle: "e-Signature for contracts + approvals", tone: "purple" as const },
   { icon: Cog, title: "HOTO", subtitle: "Handover, takeover and maintenance operations", tone: "grey" as const },
-  { icon: Shield, title: "Permit System", subtitle: "Permit to Work — S1, S2, S3 workflow management", tone: "green" as const },
+  { icon: Shield, title: "Permit System", subtitle: "Permit to Work — S1, S2, S3 workflow management", tone: "green" as const, to: "/permit-system" },
+  { icon: Scale, title: "Legal Hub", subtitle: "Contracts, obligations, SPVs and compliance", tone: "purple" as const, to: "/legal-hub" },
   { icon: Newspaper, title: "Newsletter", subtitle: "Monthly editions, stories + archive", tone: "lavender" as const, to: "/newsletter" },
   { icon: Megaphone, title: "Announcements", subtitle: "Corporate updates and visibility windows", tone: "lavender" as const },
   { icon: Brain, title: "Resolven AI", subtitle: "Contextual insights and copilot actions", tone: "green" as const, pinned: true },
