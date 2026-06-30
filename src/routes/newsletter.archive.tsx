@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Search, SlidersHorizontal, Grid3x3, List, Heart, MessageCircle,
   Bookmark, Mail, Leaf, Lightbulb, Users as UsersIcon,
@@ -12,11 +12,19 @@ import { EDITIONS, COVER_BG, type Edition, type Category } from "@/lib/newslette
 import { NewsletterHero } from "./newsletter";
 
 type TabKey = "all" | "saved";
+type SortKey = "newest" | "oldest" | "liked";
+type ViewKey = "grid" | "list";
+
+const STORAGE_KEY = "resolven:nl:archive";
 
 export const Route = createFileRoute("/newsletter/archive")({
   validateSearch: (s: Record<string, unknown>) => ({
     topic: typeof s.topic === "string" ? s.topic : undefined,
     year:  typeof s.year  === "string" ? s.year  : undefined,
+    q:     typeof s.q     === "string" ? s.q     : undefined,
+    tab:   s.tab === "saved" ? "saved" as const : "all" as const,
+    view:  s.view === "list" ? "list" as const : "grid" as const,
+    sort:  s.sort === "oldest" || s.sort === "liked" ? (s.sort as SortKey) : "newest" as const,
   }),
   head: () => ({
     meta: [
@@ -37,14 +45,64 @@ const POPULAR_TOPICS: { icon: typeof Leaf; label: Category; tone: string }[] = [
 
 function ArchivePage() {
   const search = Route.useSearch();
-  const [tab, setTab] = useState<TabKey>("all");
-  const [view, setView] = useState<"grid" | "list">("grid");
-  const [q, setQ] = useState("");
+  const navigate = useNavigate({ from: "/newsletter/archive" });
+
+  const [tab, setTab] = useState<TabKey>(search.tab);
+  const [view, setView] = useState<ViewKey>(search.view);
+  const [sort, setSort] = useState<SortKey>(search.sort);
+  const [q, setQ] = useState(search.q ?? "");
   const [year, setYear] = useState<string>(search.year ?? "all");
   const [topic, setTopic] = useState<string>(search.topic ?? "all");
   const [saved, setSaved] = useState<Record<string, boolean>>({});
   const [liked, setLiked] = useState<Record<string, boolean>>({});
   const [filterOpen, setFilterOpen] = useState(false);
+
+  // Hydrate saved/liked + scroll position from localStorage (Notion/LinkedIn style).
+  const didHydrate = useRef(false);
+  useEffect(() => {
+    if (didHydrate.current) return;
+    didHydrate.current = true;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const s = JSON.parse(raw);
+        if (s.saved) setSaved(s.saved);
+        if (s.liked) setLiked(s.liked);
+        if (typeof s.scrollY === "number") {
+          requestAnimationFrame(() => window.scrollTo(0, s.scrollY));
+        }
+      }
+    } catch {}
+  }, []);
+
+  // Persist state to URL (search params) and localStorage on every change.
+  useEffect(() => {
+    navigate({
+      search: {
+        topic: topic === "all" ? undefined : topic,
+        year:  year  === "all" ? undefined : year,
+        q:     q || undefined,
+        tab,
+        view,
+        sort,
+      },
+      replace: true,
+    });
+  }, [topic, year, q, tab, view, sort, navigate]);
+
+  useEffect(() => {
+    const persist = () => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          saved, liked, scrollY: window.scrollY,
+        }));
+      } catch {}
+    };
+    const onScroll = () => persist();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    persist();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [saved, liked]);
 
   const editions = useMemo(() => {
     let base = tab === "saved" ? EDITIONS.filter((e) => saved[e.id]) : EDITIONS;
@@ -57,10 +115,14 @@ function ArchivePage() {
         e.excerpt.toLowerCase().includes(n) ||
         e.category.toLowerCase().includes(n));
     }
+    if (sort === "oldest") base = [...base].reverse();
+    if (sort === "liked")  base = [...base].sort((a, b) => b.likes - a.likes);
     return base;
-  }, [tab, q, saved, year, topic]);
+  }, [tab, q, saved, year, topic, sort]);
 
   const years = Array.from(new Set(EDITIONS.map((e) => e.year)));
+
+
 
   return (
     <div className="min-h-screen">
