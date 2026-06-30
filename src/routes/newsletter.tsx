@@ -11,11 +11,16 @@ import { SparkleFab } from "@/components/SparkleFab";
 import { cn } from "@/lib/utils";
 import {
   EDITIONS, COVER_BG, LEADERSHIP_QUOTE, IMPACT_STATS,
-  EMPLOYEE_SHOUTOUT, QUICK_POLL, MINI_QUIZ, UPCOMING_EVENTS, LATEST_IDEA, TODAY_AT_RESOLVEN,
-  type Edition, type Category, type EditionPage,
+  EMPLOYEE_SHOUTOUT, QUICK_POLL, MINI_QUIZ, EVENTS, LATEST_IDEA, TODAY_AT_RESOLVEN,
+  CREATOR_PREVIEWS,
+  type Edition, type EditionPage, type EventStatus, type CreatorKind,
 } from "@/lib/newsletter-data";
+import { Camera, PenLine, Video, Brush, BookOpen, FileText as FileText2 } from "lucide-react";
 
 export const Route = createFileRoute("/newsletter")({
+  validateSearch: (s: Record<string, unknown>) => ({
+    edition: typeof s.edition === "string" ? s.edition : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Newsletter — Resolven" },
@@ -31,6 +36,7 @@ function NewsletterLayout() {
   const isLeaf = matches[matches.length - 1]?.routeId === "/newsletter";
   return isLeaf ? <NewsletterHome /> : <Outlet />;
 }
+
 
 /* ============================================================
    Branded hero (shared with archive + detail via re-export)
