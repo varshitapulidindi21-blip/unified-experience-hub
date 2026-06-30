@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { type ComponentType, type SVGProps, useState } from "react";
 import { ArrowLeft,
   CheckSquare, Settings2, FilePlus, FileText, HeartPulse, Plane, Receipt, Sparkles,
-  Sheet, Users, FileSignature, Cog, Shield, Megaphone, Brain, Handshake, Newspaper,
+  Sheet, Users, FileSignature, Cog, Shield, Megaphone, Brain, Handshake, Newspaper, Scale,
 } from "lucide-react";
 import { SharePointBrandIcon, SapBrandIcon } from "@/components/brand-icons";
 import { TopBar } from "@/components/TopBar";
