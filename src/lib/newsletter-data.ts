@@ -96,6 +96,7 @@ export const EMPLOYEE_SHOUTOUT = {
   name: "Rahul Sharma",
   role: "Project Manager",
   initials: "RS",
+  badge: "Project Hero · Q2",
   message: "Amazing leadership and dedication during the WindPeak project! Truly inspiring the team every day.",
 };
 
@@ -121,17 +122,34 @@ export const MINI_QUIZ = {
   participants: 120,
 };
 
-export const UPCOMING_EVENTS = [
-  { id: "townhall", title: "Townhall Meeting",     date: "24 May", time: "11:00 AM", tone: "purple" as const },
-  { id: "weday",    title: "World Environment Day", date: "5 Jun",  time: "09:00 AM", tone: "green"  as const },
-  { id: "hack",     title: "Hackathon 2024",        date: "15 Jun", time: "09:00 AM", tone: "lavender" as const },
+export type EventStatus = "upcoming" | "ongoing" | "completed";
+export const EVENTS: { id: string; title: string; date: string; time: string; tone: "purple" | "green" | "lavender"; status: EventStatus }[] = [
+  { id: "townhall", title: "Townhall Meeting",      date: "24 Jul", time: "11:00 AM", tone: "purple",   status: "upcoming" },
+  { id: "weday",    title: "World Environment Day", date: "5 Jul",  time: "09:00 AM", tone: "green",    status: "ongoing"  },
+  { id: "hack",     title: "Hackathon 2024",        date: "15 Jul", time: "09:00 AM", tone: "lavender", status: "upcoming" },
+  { id: "safety",   title: "Safety Week Wrap-Up",   date: "18 Jun", time: "—",        tone: "purple",   status: "completed" },
+  { id: "esg",      title: "ESG Town Hall",         date: "12 Jun", time: "—",        tone: "green",    status: "completed" },
 ];
+// Back-compat
+export const UPCOMING_EVENTS = EVENTS.filter((e) => e.status === "upcoming").map(({ status: _s, ...e }) => e);
 
+export type IdeaStatus = "New" | "In Review" | "Adopted";
 export const LATEST_IDEA = {
   title: "Smart Energy Monitoring Dashboards",
   upvotes: 142,
   comments: 12,
+  status: "In Review" as IdeaStatus,
 };
+
+export type CreatorKind = "photo" | "writing" | "sketch" | "video" | "poetry" | "article";
+export const CREATOR_PREVIEWS: { id: string; kind: CreatorKind; title: string; author: string; cover: Edition["cover"] }[] = [
+  { id: "c1", kind: "photo",   title: "Dawn at WindPeak",      author: "Anika R.",   cover: "deep-purple" },
+  { id: "c2", kind: "sketch",  title: "Turbine Studies",       author: "Manav K.",   cover: "lavender"    },
+  { id: "c3", kind: "poetry",  title: "Of Light & Wind",       author: "Priya S.",   cover: "deep-green"  },
+  { id: "c4", kind: "video",   title: "A Day on Site",         author: "Field Team", cover: "green"       },
+  { id: "c5", kind: "article", title: "Why Storage Matters",   author: "Vikram M.",  cover: "purple"      },
+  { id: "c6", kind: "photo",   title: "Solar Sunrise",         author: "Rhea T.",    cover: "green-light" },
+];
 
 export const TODAY_AT_RESOLVEN = [
   { v: "18", l: "new updates" },
@@ -140,3 +158,4 @@ export const TODAY_AT_RESOLVEN = [
   { v: "4",  l: "new ideas" },
   { v: "2",  l: "events today" },
 ];
+

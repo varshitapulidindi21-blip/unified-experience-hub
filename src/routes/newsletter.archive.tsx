@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Search, SlidersHorizontal, Grid3x3, List, Heart, MessageCircle,
   Bookmark, Mail, Leaf, Lightbulb, Users as UsersIcon,
@@ -12,11 +12,19 @@ import { EDITIONS, COVER_BG, type Edition, type Category } from "@/lib/newslette
 import { NewsletterHero } from "./newsletter";
 
 type TabKey = "all" | "saved";
+type SortKey = "newest" | "oldest" | "liked";
+type ViewKey = "grid" | "list";
+
+const STORAGE_KEY = "resolven:nl:archive";
 
 export const Route = createFileRoute("/newsletter/archive")({
   validateSearch: (s: Record<string, unknown>) => ({
     topic: typeof s.topic === "string" ? s.topic : undefined,
     year:  typeof s.year  === "string" ? s.year  : undefined,
+    q:     typeof s.q     === "string" ? s.q     : undefined,
+    tab:   s.tab === "saved" ? "saved" as const : "all" as const,
+    view:  s.view === "list" ? "list" as const : "grid" as const,
+    sort:  s.sort === "oldest" || s.sort === "liked" ? (s.sort as SortKey) : "newest" as const,
   }),
   head: () => ({
     meta: [
@@ -37,14 +45,64 @@ const POPULAR_TOPICS: { icon: typeof Leaf; label: Category; tone: string }[] = [
 
 function ArchivePage() {
   const search = Route.useSearch();
-  const [tab, setTab] = useState<TabKey>("all");
-  const [view, setView] = useState<"grid" | "list">("grid");
-  const [q, setQ] = useState("");
+  const navigate = useNavigate({ from: "/newsletter/archive" });
+
+  const [tab, setTab] = useState<TabKey>(search.tab);
+  const [view, setView] = useState<ViewKey>(search.view);
+  const [sort, setSort] = useState<SortKey>(search.sort);
+  const [q, setQ] = useState(search.q ?? "");
   const [year, setYear] = useState<string>(search.year ?? "all");
   const [topic, setTopic] = useState<string>(search.topic ?? "all");
   const [saved, setSaved] = useState<Record<string, boolean>>({});
   const [liked, setLiked] = useState<Record<string, boolean>>({});
   const [filterOpen, setFilterOpen] = useState(false);
+
+  // Hydrate saved/liked + scroll position from localStorage (Notion/LinkedIn style).
+  const didHydrate = useRef(false);
+  useEffect(() => {
+    if (didHydrate.current) return;
+    didHydrate.current = true;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const s = JSON.parse(raw);
+        if (s.saved) setSaved(s.saved);
+        if (s.liked) setLiked(s.liked);
+        if (typeof s.scrollY === "number") {
+          requestAnimationFrame(() => window.scrollTo(0, s.scrollY));
+        }
+      }
+    } catch {}
+  }, []);
+
+  // Persist state to URL (search params) and localStorage on every change.
+  useEffect(() => {
+    navigate({
+      search: {
+        topic: topic === "all" ? undefined : topic,
+        year:  year  === "all" ? undefined : year,
+        q:     q || undefined,
+        tab,
+        view,
+        sort,
+      },
+      replace: true,
+    });
+  }, [topic, year, q, tab, view, sort, navigate]);
+
+  useEffect(() => {
+    const persist = () => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          saved, liked, scrollY: window.scrollY,
+        }));
+      } catch {}
+    };
+    const onScroll = () => persist();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    persist();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [saved, liked]);
 
   const editions = useMemo(() => {
     let base = tab === "saved" ? EDITIONS.filter((e) => saved[e.id]) : EDITIONS;
@@ -57,10 +115,14 @@ function ArchivePage() {
         e.excerpt.toLowerCase().includes(n) ||
         e.category.toLowerCase().includes(n));
     }
+    if (sort === "oldest") base = [...base].reverse();
+    if (sort === "liked")  base = [...base].sort((a, b) => b.likes - a.likes);
     return base;
-  }, [tab, q, saved, year, topic]);
+  }, [tab, q, saved, year, topic, sort]);
 
   const years = Array.from(new Set(EDITIONS.map((e) => e.year)));
+
+
 
   return (
     <div className="min-h-screen">
@@ -84,6 +146,12 @@ function ArchivePage() {
                 className="h-9 w-full sm:w-64 rounded-full border border-border bg-card pl-9 pr-3 text-[12.5px] outline-none focus:border-primary/40 focus:ring-2 focus:ring-primary/15"
               />
             </div>
+            <select value={sort} onChange={(e) => setSort(e.target.value as SortKey)}
+              className="h-9 rounded-full border border-border bg-card px-3 text-[12px] font-medium text-foreground/80 outline-none hover:border-primary/40 focus:border-primary/40">
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="liked">Most liked</option>
+            </select>
             <button onClick={() => setFilterOpen(true)}
               className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-[12px] font-medium text-foreground/80 hover:border-primary/40">
               <SlidersHorizontal className="h-3.5 w-3.5" /> Filter
@@ -92,15 +160,30 @@ function ArchivePage() {
           </div>
         </div>
 
+        {/* Active filter chips */}
+        {(year !== "all" || topic !== "all" || q.trim()) && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[10.5px] uppercase tracking-wider text-muted-foreground">Filters</span>
+            {q.trim() && (
+              <FilterChip onRemove={() => setQ("")}>"{q}"</FilterChip>
+            )}
+            {year !== "all" && (
+              <FilterChip onRemove={() => setYear("all")}>{year}</FilterChip>
+            )}
+            {topic !== "all" && (
+              <FilterChip onRemove={() => setTopic("all")}>{topic}</FilterChip>
+            )}
+            <button onClick={() => { setYear("all"); setTopic("all"); setQ(""); }}
+              className="text-[11px] text-primary hover:underline">Clear all</button>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-[1fr_320px]">
           <section className="animate-rise">
             <div className="mb-3 flex items-center justify-between text-[11px] text-muted-foreground">
               <span>Showing {editions.length} of {EDITIONS.length} editions</span>
-              {(year !== "all" || topic !== "all") && (
-                <button onClick={() => { setYear("all"); setTopic("all"); }}
-                  className="text-primary hover:underline">Clear filters</button>
-              )}
             </div>
+
 
             {editions.length === 0 ? (
               <div className="surface rounded-2xl p-6"><EmptyState /></div>
@@ -236,7 +319,7 @@ function EditionCard({
 }: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
   return (
     <article className="module-card overflow-hidden rounded-2xl p-0">
-      <Link to="/newsletter/$id" params={{ id: edition.id }} className="block">
+      <Link to="/newsletter" search={{ edition: edition.id }} className="block">
         <div className={cn("relative aspect-[4/3] bg-gradient-to-br p-4 text-white", COVER_BG[edition.cover])}>
           <span className="inline-flex items-center rounded-full bg-white/15 backdrop-blur px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider">
             {edition.category}
@@ -279,8 +362,9 @@ function EditionRow({
   edition, liked, saved, onLike, onSave,
 }: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
   return (
-    <Link to="/newsletter/$id" params={{ id: edition.id }}
+    <Link to="/newsletter" search={{ edition: edition.id }}
       className="module-card flex gap-3 items-center p-2.5 sm:p-3 rounded-xl">
+
       <div className={cn("relative h-16 w-20 sm:h-20 sm:w-28 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br", COVER_BG[edition.cover])}>
         <div className="absolute bottom-1 left-1.5 text-[8.5px] font-semibold uppercase tracking-wider text-white/85">
           {edition.month} {edition.year}
@@ -323,7 +407,19 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
+function FilterChip({ children, onRemove }: { children: React.ReactNode; onRemove: () => void }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/8 px-2.5 py-0.5 text-[11px] font-medium text-primary">
+      {children}
+      <button onClick={onRemove} aria-label="Remove filter" className="hover:text-foreground">
+        <X className="h-3 w-3" />
+      </button>
+    </span>
+  );
+}
+
 function EmptyState() {
+
   return (
     <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
       <span className="tile tile-lavender h-12 w-12 rounded-2xl">

@@ -11,11 +11,16 @@ import { SparkleFab } from "@/components/SparkleFab";
 import { cn } from "@/lib/utils";
 import {
   EDITIONS, COVER_BG, LEADERSHIP_QUOTE, IMPACT_STATS,
-  EMPLOYEE_SHOUTOUT, QUICK_POLL, MINI_QUIZ, UPCOMING_EVENTS, LATEST_IDEA, TODAY_AT_RESOLVEN,
-  type Edition, type Category, type EditionPage,
+  EMPLOYEE_SHOUTOUT, QUICK_POLL, MINI_QUIZ, EVENTS, LATEST_IDEA, TODAY_AT_RESOLVEN,
+  CREATOR_PREVIEWS,
+  type Edition, type EditionPage, type EventStatus, type CreatorKind,
 } from "@/lib/newsletter-data";
+import { Camera, PenLine, Video, Brush, BookOpen, FileText as FileText2 } from "lucide-react";
 
 export const Route = createFileRoute("/newsletter")({
+  validateSearch: (s: Record<string, unknown>) => ({
+    edition: typeof s.edition === "string" ? s.edition : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Newsletter — Resolven" },
@@ -31,6 +36,7 @@ function NewsletterLayout() {
   const isLeaf = matches[matches.length - 1]?.routeId === "/newsletter";
   return isLeaf ? <NewsletterHome /> : <Outlet />;
 }
+
 
 /* ============================================================
    Branded hero (shared with archive + detail via re-export)
@@ -83,7 +89,11 @@ export function NewsletterHero({ title = "Newsletter", backTo = "/modules" }: { 
    + right rail of engagement widgets
    ============================================================ */
 function NewsletterHome() {
-  const latest = EDITIONS.find((e) => e.featured) ?? EDITIONS[0];
+  const { edition: editionId } = Route.useSearch();
+  const selected = editionId ? EDITIONS.find((e) => e.id === editionId) : undefined;
+  const latest = selected ?? EDITIONS.find((e) => e.featured) ?? EDITIONS[0];
+  const isArchivedView = !!selected && !selected.featured;
+
 
   return (
     <div className="min-h-screen">
@@ -95,17 +105,25 @@ function NewsletterHome() {
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-              Latest edition
+              {isArchivedView ? "From the archive" : "Latest edition"}
             </div>
             <div className="mt-0.5 text-[12.5px] text-muted-foreground">
               {latest.month} {latest.year} · {latest.readMin} min read
             </div>
           </div>
-          <Link to="/newsletter/archive"
-            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 h-9 text-[12px] font-medium text-foreground/80 hover:border-primary/40 hover:text-foreground transition">
-            View archive <ChevronRight className="h-3.5 w-3.5" />
-          </Link>
+          {isArchivedView ? (
+            <Link to="/newsletter/archive"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 h-9 text-[12px] font-medium text-foreground/80 hover:border-primary/40 hover:text-foreground transition">
+              <ArrowLeft className="h-3.5 w-3.5" /> Back to archive
+            </Link>
+          ) : (
+            <Link to="/newsletter/archive"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card px-4 h-9 text-[12px] font-medium text-foreground/80 hover:border-primary/40 hover:text-foreground transition">
+              View archive <ChevronRight className="h-3.5 w-3.5" />
+            </Link>
+          )}
         </div>
+
 
         <div className="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-[1fr_340px]">
           {/* MAIN COLUMN */}
@@ -587,23 +605,47 @@ function RailCard({ title, action, children }: { title: string; action?: { label
 
 function EmployeeShoutoutWidget() {
   return (
-    <RailCard title="Employee Shoutout" action={{ label: "View all" }}>
-      <div className="flex flex-col items-center text-center">
-        <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-[oklch(0.32_0.16_295)] text-white flex items-center justify-center text-base font-semibold ring-4 ring-primary/10">
-          {EMPLOYEE_SHOUTOUT.initials}
+    <div className="relative overflow-hidden rounded-2xl animate-rise text-white shadow-soft"
+      style={{ background: "linear-gradient(140deg, oklch(0.46 0.18 295) 0%, oklch(0.32 0.16 295) 60%, oklch(0.42 0.16 148) 100%)" }}>
+      {/* Decorative motifs */}
+      <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/15 blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-12 -left-6 h-28 w-28 rounded-full bg-accent/30 blur-2xl" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.18),transparent_60%)]" />
+
+      <div className="relative p-4">
+        <div className="flex items-center justify-between">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/85">
+            Employee Shoutout
+          </div>
+          <button className="text-[10.5px] font-medium text-white/85 hover:text-white">View all</button>
         </div>
-        <div className="mt-2 text-[13px] font-semibold text-foreground">{EMPLOYEE_SHOUTOUT.name}</div>
-        <div className="text-[11px] text-muted-foreground">{EMPLOYEE_SHOUTOUT.role}</div>
-        <p className="mt-2 text-[11.5px] leading-snug text-foreground/80 max-w-[18rem]">
-          {EMPLOYEE_SHOUTOUT.message}
-        </p>
-        <button className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-primary/40 px-3 py-2 text-[12px] font-medium text-primary hover:bg-primary/8">
-          <Megaphone className="h-3.5 w-3.5" /> Give Shoutout
-        </button>
+
+        <div className="mt-3 flex flex-col items-center text-center">
+          <div className="relative">
+            <div className="h-20 w-20 rounded-full bg-gradient-to-br from-white/30 to-white/5 ring-2 ring-white/40 text-white flex items-center justify-center text-lg font-semibold backdrop-blur">
+              {EMPLOYEE_SHOUTOUT.initials}
+            </div>
+            <span className="absolute -bottom-1 -right-1 inline-flex h-7 w-7 items-center justify-center rounded-full bg-accent text-white shadow-soft ring-2 ring-white/30">
+              <Trophy className="h-3.5 w-3.5" />
+            </span>
+          </div>
+          <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-white/15 backdrop-blur px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider">
+            <Sparkles className="h-3 w-3" /> {EMPLOYEE_SHOUTOUT.badge}
+          </div>
+          <div className="mt-2 text-[14px] font-semibold">{EMPLOYEE_SHOUTOUT.name}</div>
+          <div className="text-[11px] text-white/80">{EMPLOYEE_SHOUTOUT.role}</div>
+          <p className="mt-2 font-display italic text-[12px] leading-snug text-white/90 max-w-[18rem]">
+            "{EMPLOYEE_SHOUTOUT.message}"
+          </p>
+          <button className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-white px-3 py-2 text-[12px] font-semibold text-primary hover:bg-white/95 shadow-soft transition">
+            <Megaphone className="h-3.5 w-3.5" /> Give Shoutout
+          </button>
+        </div>
       </div>
-    </RailCard>
+    </div>
   );
 }
+
 
 function QuickPollWidget() {
   const [pick, setPick] = useState<string | null>(null);
@@ -708,36 +750,78 @@ function WhatsHappeningWidget() {
   const toneClass: Record<string, string> = {
     purple: "tile-purple", green: "tile-green", lavender: "tile-lavender",
   };
+  const [seg, setSeg] = useState<EventStatus>("upcoming");
+  const segs: { key: EventStatus; label: string }[] = [
+    { key: "upcoming",  label: "Upcoming"  },
+    { key: "ongoing",   label: "Ongoing"   },
+    { key: "completed", label: "Completed" },
+  ];
+  const stateTag: Record<EventStatus, string> = {
+    upcoming:  "bg-primary/10 text-primary",
+    ongoing:   "bg-accent/15 text-accent",
+    completed: "bg-muted text-muted-foreground",
+  };
+  const items = EVENTS.filter((e) => e.status === seg);
   return (
     <RailCard title="What's Happening" action={{ label: "View calendar" }}>
-      <ul className="space-y-2.5">
-        {UPCOMING_EVENTS.map((e) => (
-          <li key={e.id} className="flex items-center gap-2.5">
-            <span className={cn("tile h-9 w-9 rounded-lg", toneClass[e.tone])}>
-              <Calendar className="h-4 w-4" strokeWidth={1.9} />
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="text-[12.5px] font-medium text-foreground truncate">{e.title}</div>
-              <div className="text-[10.5px] text-muted-foreground">{e.date} · {e.time}</div>
-            </div>
-          </li>
+      <div className="mb-2.5 inline-flex rounded-full border border-border bg-card p-0.5">
+        {segs.map((s) => (
+          <button key={s.key} onClick={() => setSeg(s.key)}
+            className={cn(
+              "rounded-full px-2.5 py-1 text-[10.5px] font-medium transition",
+              seg === s.key ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+            )}>
+            {s.label}
+          </button>
         ))}
-      </ul>
+      </div>
+      {items.length === 0 ? (
+        <div className="text-[11.5px] text-muted-foreground">Nothing to show right now.</div>
+      ) : (
+        <ul className="space-y-2.5">
+          {items.map((e) => (
+            <li key={e.id} className="flex items-center gap-2.5">
+              <span className={cn("tile h-9 w-9 rounded-lg", toneClass[e.tone])}>
+                <Calendar className="h-4 w-4" strokeWidth={1.9} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5">
+                  <div className="text-[12.5px] font-medium text-foreground truncate">{e.title}</div>
+                  <span className={cn("rounded-full px-1.5 py-px text-[9px] font-semibold uppercase tracking-wide", stateTag[e.status])}>
+                    {e.status === "upcoming" ? "Soon" : e.status === "ongoing" ? "Live" : "Done"}
+                  </span>
+                </div>
+                <div className="text-[10.5px] text-muted-foreground">{e.date}{e.time && e.time !== "—" ? ` · ${e.time}` : ""}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </RailCard>
   );
 }
 
 function IdeasBoxWidget() {
+  const statusTone: Record<string, string> = {
+    "New":       "bg-accent/15 text-accent",
+    "In Review": "bg-primary/10 text-primary",
+    "Adopted":   "bg-emerald-500/15 text-emerald-600",
+  };
   return (
     <RailCard title="Ideas Box" action={{ label: "View all" }}>
       <div className="rounded-xl border border-border bg-card p-3">
-        <div className="text-[12.5px] font-semibold text-foreground">{LATEST_IDEA.title}</div>
-        <div className="mt-1 flex items-center gap-3 text-[11px] text-muted-foreground">
+        <div className="flex items-start justify-between gap-2">
+          <div className="text-[12.5px] font-semibold text-foreground">{LATEST_IDEA.title}</div>
+          <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wide", statusTone[LATEST_IDEA.status])}>
+            {LATEST_IDEA.status}
+          </span>
+        </div>
+        <div className="mt-1.5 flex items-center gap-3 text-[11px] text-muted-foreground">
           <span className="inline-flex items-center gap-1"><ArrowUpRight className="h-3 w-3" /> {LATEST_IDEA.upvotes} upvotes</span>
           <span className="inline-flex items-center gap-1"><MessageCircle className="h-3 w-3" /> {LATEST_IDEA.comments} comments</span>
         </div>
         <button className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-primary/40 px-3 py-1.5 text-[11.5px] font-medium text-primary hover:bg-primary/8">
-          <Plus className="h-3.5 w-3.5" /> View & Discuss
+          View Discussion <ChevronRight className="h-3.5 w-3.5" />
         </button>
       </div>
     </RailCard>
@@ -745,28 +829,36 @@ function IdeasBoxWidget() {
 }
 
 function CreatorsCanvasWidget() {
-  const items = [
-    { icon: Sparkles, label: "Photos" },
-    { icon: FileText, label: "Writing" },
-    { icon: Lightbulb, label: "Sketches" },
-    { icon: Trophy, label: "Videos" },
-    { icon: QuoteIcon, label: "Poetry" },
-    { icon: FileText, label: "Articles" },
-  ];
+  const kindIcon: Record<CreatorKind, React.ComponentType<{ className?: string }>> = {
+    photo: Camera, writing: PenLine, sketch: Brush, video: Video, poetry: BookOpen, article: FileText2,
+  };
   return (
     <RailCard title="Creator's Canvas" action={{ label: "View all" }}>
       <div className="grid grid-cols-3 gap-2">
-        {items.map((it) => (
-          <button key={it.label}
-            className="flex flex-col items-center gap-1 rounded-xl border border-border bg-card py-2 text-muted-foreground hover:text-foreground hover:border-primary/30 transition">
-            <it.icon className="h-4 w-4" />
-            <span className="text-[10px] font-medium">{it.label}</span>
-          </button>
-        ))}
+        {CREATOR_PREVIEWS.slice(0, 6).map((c) => {
+          const Icon = kindIcon[c.kind];
+          return (
+            <button key={c.id}
+              className={cn(
+                "group relative overflow-hidden rounded-xl aspect-square text-left text-white bg-gradient-to-br",
+                COVER_BG[c.cover],
+              )}>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+              <span className="absolute top-1.5 left-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/40 backdrop-blur">
+                <Icon className="h-3 w-3" />
+              </span>
+              <div className="absolute bottom-1.5 left-1.5 right-1.5">
+                <div className="text-[9.5px] font-semibold leading-tight line-clamp-2">{c.title}</div>
+                <div className="text-[8.5px] text-white/75 truncate">{c.author}</div>
+              </div>
+            </button>
+          );
+        })}
       </div>
     </RailCard>
   );
 }
+
 
 function TodayAtResolvenWidget() {
   return (
@@ -785,4 +877,4 @@ function TodayAtResolvenWidget() {
 
 /* Re-exports for archive + detail */
 export { EDITIONS, COVER_BG };
-export type { Edition, Category };
+export type { Edition };
