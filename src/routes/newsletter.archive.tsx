@@ -127,7 +127,7 @@ function ArchivePage() {
   return (
     <div className="min-h-screen">
       <div className="hidden md:block"><NewsletterHero title="Newsletter Archive" backTo="/newsletter" /></div>
-      <main className="mx-auto w-full max-w-[1400px] space-y-4 px-4 py-4 sm:space-y-6 sm:px-6 sm:py-8">
+      <main className="mx-auto w-full max-w-[1280px] min-w-0 space-y-4 px-4 py-4 sm:space-y-6 sm:px-6 lg:px-10 sm:py-8">
         <MobileAppHeader pageLabel="Archive" />
 
         <Link to="/newsletter"
