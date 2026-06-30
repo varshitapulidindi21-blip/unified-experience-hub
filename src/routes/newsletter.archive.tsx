@@ -407,7 +407,19 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
+function FilterChip({ children, onRemove }: { children: React.ReactNode; onRemove: () => void }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/8 px-2.5 py-0.5 text-[11px] font-medium text-primary">
+      {children}
+      <button onClick={onRemove} aria-label="Remove filter" className="hover:text-foreground">
+        <X className="h-3 w-3" />
+      </button>
+    </span>
+  );
+}
+
 function EmptyState() {
+
   return (
     <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
       <span className="tile tile-lavender h-12 w-12 rounded-2xl">
