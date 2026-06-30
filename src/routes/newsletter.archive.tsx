@@ -341,8 +341,9 @@ function EditionRow({
   edition, liked, saved, onLike, onSave,
 }: { edition: Edition; liked: boolean; saved: boolean; onLike: () => void; onSave: () => void }) {
   return (
-    <Link to="/newsletter/$id" params={{ id: edition.id }}
+    <Link to="/newsletter" search={{ edition: edition.id }}
       className="module-card flex gap-3 items-center p-2.5 sm:p-3 rounded-xl">
+
       <div className={cn("relative h-16 w-20 sm:h-20 sm:w-28 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br", COVER_BG[edition.cover])}>
         <div className="absolute bottom-1 left-1.5 text-[8.5px] font-semibold uppercase tracking-wider text-white/85">
           {edition.month} {edition.year}
