@@ -146,6 +146,12 @@ function ArchivePage() {
                 className="h-9 w-full sm:w-64 rounded-full border border-border bg-card pl-9 pr-3 text-[12.5px] outline-none focus:border-primary/40 focus:ring-2 focus:ring-primary/15"
               />
             </div>
+            <select value={sort} onChange={(e) => setSort(e.target.value as SortKey)}
+              className="h-9 rounded-full border border-border bg-card px-3 text-[12px] font-medium text-foreground/80 outline-none hover:border-primary/40 focus:border-primary/40">
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="liked">Most liked</option>
+            </select>
             <button onClick={() => setFilterOpen(true)}
               className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-[12px] font-medium text-foreground/80 hover:border-primary/40">
               <SlidersHorizontal className="h-3.5 w-3.5" /> Filter
@@ -154,15 +160,30 @@ function ArchivePage() {
           </div>
         </div>
 
+        {/* Active filter chips */}
+        {(year !== "all" || topic !== "all" || q.trim()) && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[10.5px] uppercase tracking-wider text-muted-foreground">Filters</span>
+            {q.trim() && (
+              <FilterChip onRemove={() => setQ("")}>"{q}"</FilterChip>
+            )}
+            {year !== "all" && (
+              <FilterChip onRemove={() => setYear("all")}>{year}</FilterChip>
+            )}
+            {topic !== "all" && (
+              <FilterChip onRemove={() => setTopic("all")}>{topic}</FilterChip>
+            )}
+            <button onClick={() => { setYear("all"); setTopic("all"); setQ(""); }}
+              className="text-[11px] text-primary hover:underline">Clear all</button>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-[1fr_320px]">
           <section className="animate-rise">
             <div className="mb-3 flex items-center justify-between text-[11px] text-muted-foreground">
               <span>Showing {editions.length} of {EDITIONS.length} editions</span>
-              {(year !== "all" || topic !== "all") && (
-                <button onClick={() => { setYear("all"); setTopic("all"); }}
-                  className="text-primary hover:underline">Clear filters</button>
-              )}
             </div>
+
 
             {editions.length === 0 ? (
               <div className="surface rounded-2xl p-6"><EmptyState /></div>
