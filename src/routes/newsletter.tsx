@@ -59,27 +59,53 @@ function HeroThemeToggle() {
 
 export function NewsletterHero({ title = "Newsletter", backTo = "/modules" }: { title?: string; backTo?: string }) {
   return (
-    <header className="travel-hero relative w-full overflow-hidden border-b border-white/10 shadow-soft">
-      <div className="travel-hero-atmosphere pointer-events-none absolute inset-0 mix-blend-screen" />
-      <div className="relative mx-auto flex h-14 w-full max-w-[1400px] items-center justify-between gap-4 px-4 sm:h-16 sm:px-6">
-        <div className="flex items-center gap-2 min-w-0">
+    <header className="relative w-full border-b border-border/60 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+      <div className="relative mx-auto flex h-14 w-full max-w-[1280px] items-center justify-between gap-6 px-6 lg:px-10">
+        <div className="flex items-center gap-3 min-w-0">
           <Link to={backTo} aria-label="Back"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/85 hover:text-white hover:bg-white/10 transition">
-            <ArrowLeft className="h-[1.05rem] w-[1.05rem]" strokeWidth={2} />
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition">
+            <ArrowLeft className="h-4 w-4" strokeWidth={1.8} />
           </Link>
-          <h1 className="font-display italic font-bold tracking-tight text-white text-[1.1rem] sm:text-[1.35rem] md:text-[1.5rem] leading-none truncate">
-            {title}
-          </h1>
+          <div className="flex items-baseline gap-2 min-w-0">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">Resolven</span>
+            <span className="h-3 w-px bg-border" />
+            <h1 className="font-display italic font-bold tracking-tight text-foreground text-[1rem] sm:text-[1.15rem] leading-none truncate">
+              {title}
+            </h1>
+          </div>
         </div>
-        <div className="flex items-center gap-1 sm:gap-2">
-          <HeroThemeToggle />
+        <div className="flex items-center gap-1">
+          <Link to="/newsletter/archive"
+            className="hidden sm:inline-flex items-center gap-1 rounded-full px-3 h-8 text-[11.5px] font-medium text-muted-foreground hover:text-foreground transition">
+            Archive
+          </Link>
+          <span className="hidden sm:block h-4 w-px bg-border mx-1" />
+          <button aria-label="Theme"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition">
+            <HeroThemeIcon />
+          </button>
           <Link to="/" aria-label="Home"
-            className="inline-flex h-9 w-9 items-center justify-center text-white/85 hover:text-white transition">
-            <Home className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.9} />
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition">
+            <Home className="h-[0.95rem] w-[0.95rem]" strokeWidth={1.8} />
           </Link>
         </div>
       </div>
     </header>
+  );
+}
+
+function HeroThemeIcon() {
+  const [dark, setDark] = useState(false);
+  useEffect(() => { setDark(document.documentElement.classList.contains("dark")); }, []);
+  const toggle = () => {
+    const next = !dark; setDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    try { localStorage.setItem("resolven-theme", next ? "dark" : "light"); } catch { /* noop */ }
+  };
+  return (
+    <span onClick={toggle} role="button" className="inline-flex items-center justify-center">
+      {dark ? <Sun className="h-[0.95rem] w-[0.95rem]" strokeWidth={1.8} /> : <Moon className="h-[0.95rem] w-[0.95rem]" strokeWidth={1.8} />}
+    </span>
   );
 }
 
