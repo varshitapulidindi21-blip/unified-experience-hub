@@ -8,6 +8,15 @@ export type Category =
   | "Community"
   | "Leadership";
 
+export type EditionPage = {
+  /** Headline shown over the carousel slide */
+  title: string;
+  /** Optional supporting line */
+  subtitle?: string;
+  /** Optional kicker / eyebrow above title */
+  kicker?: string;
+};
+
 export type Edition = {
   id: string;
   title: string;
@@ -24,10 +33,27 @@ export type Edition = {
   author?: string;
   authorRole?: string;
   tags?: string[];
+  /** Carousel pages (Instagram-style). The featured edition uses these. */
+  pages?: EditionPage[];
 };
 
 export const EDITIONS: Edition[] = [
-  { id: "jun26", title: "Powering Progress, Shaping Tomorrow", month: "JUNE", year: "2026", date: "2 Jun 2026", readMin: 8, excerpt: "Inside the milestones, people, and projects defining a defining quarter for Resolven.", likes: 248, comments: 42, cover: "purple", category: "Leadership", featured: true, author: "Editorial Team", tags: ["Quarterly", "Growth"] },
+  {
+    id: "jun26",
+    title: "Powering Progress, Shaping Tomorrow",
+    month: "JUNE", year: "2026", date: "2 Jun 2026", readMin: 8,
+    excerpt: "Inside the milestones, people, and projects defining a defining quarter for Resolven.",
+    likes: 248, comments: 42, cover: "purple", category: "Leadership", featured: true,
+    author: "Brand Team", tags: ["Quarterly", "Growth"],
+    pages: [
+      { kicker: "JUNE 2026 EDITION", title: "Powering Progress,\nShaping Tomorrow", subtitle: "Building a sustainable future together." },
+      { kicker: "MILESTONE", title: "12.8M kWh of clean energy", subtitle: "Delivered across 14 sites this quarter." },
+      { kicker: "PEOPLE", title: "Meet the WindPeak crew", subtitle: "The engineers behind our newest wind farm." },
+      { kicker: "COMMUNITY", title: "1,200+ households powered", subtitle: "Local impact in Rajasthan and Tamil Nadu." },
+      { kicker: "INNOVATION", title: "Smart grid pilot goes live", subtitle: "Real-time monitoring across all major sites." },
+      { kicker: "WHAT'S NEXT", title: "On the horizon", subtitle: "Townhall · World Environment Day · Hackathon 2024." },
+    ],
+  },
   { id: "may26", title: "Our Planet, Our Promise",            month: "MAY",  year: "2026", date: "5 May 2026", readMin: 7, excerpt: "Highlights from our sustainability journey — clean energy, water and community impact.", likes: 192, comments: 28, cover: "green", category: "Sustainability", author: "ESG Council", tags: ["Renewables", "ESG"] },
   { id: "apr26", title: "Innovate. Collaborate. Accelerate.", month: "APR",  year: "2026", date: "6 Apr 2026", readMin: 6, excerpt: "How cross-functional teams shipped three breakthroughs in one quarter.", likes: 156, comments: 22, cover: "deep-purple", category: "Innovation", author: "R&D Team", tags: ["Tech", "Process"] },
   { id: "mar26", title: "People Powering Possibility",        month: "MAR",  year: "2026", date: "3 Mar 2026", readMin: 6, excerpt: "Spotlight on the engineers, technicians and partners moving us forward.", likes: 140, comments: 19, cover: "lavender", category: "People & Culture", author: "People Team" },
@@ -62,4 +88,55 @@ export const IMPACT_STATS = [
   { v: "8,452",  l: "tCO₂ Avoided" },
   { v: "2.3M",   l: "Litres Saved" },
   { v: "1,200+", l: "Communities" },
+];
+
+/* ---------- Engagement widgets (right rail) ---------- */
+
+export const EMPLOYEE_SHOUTOUT = {
+  name: "Rahul Sharma",
+  role: "Project Manager",
+  initials: "RS",
+  message: "Amazing leadership and dedication during the WindPeak project! Truly inspiring the team every day.",
+};
+
+export const QUICK_POLL = {
+  question: "Which initiative should we prioritise next?",
+  options: [
+    { id: "solar",  label: "Expanding Solar Projects" },
+    { id: "wind",   label: "Investing in Wind Energy" },
+    { id: "store",  label: "Energy Storage Solutions" },
+    { id: "ev",     label: "EV Charging Infrastructure" },
+  ],
+  totalVotes: 245,
+};
+
+export const MINI_QUIZ = {
+  question: "Which of the following is NOT a renewable energy source?",
+  options: [
+    { id: "solar", label: "Solar Energy",  correct: false },
+    { id: "wind",  label: "Wind Energy",   correct: false },
+    { id: "gas",   label: "Natural Gas",   correct: true  },
+    { id: "hydro", label: "Hydropower",    correct: false },
+  ],
+  participants: 120,
+};
+
+export const UPCOMING_EVENTS = [
+  { id: "townhall", title: "Townhall Meeting",     date: "24 May", time: "11:00 AM", tone: "purple" as const },
+  { id: "weday",    title: "World Environment Day", date: "5 Jun",  time: "09:00 AM", tone: "green"  as const },
+  { id: "hack",     title: "Hackathon 2024",        date: "15 Jun", time: "09:00 AM", tone: "lavender" as const },
+];
+
+export const LATEST_IDEA = {
+  title: "Smart Energy Monitoring Dashboards",
+  upvotes: 142,
+  comments: 12,
+};
+
+export const TODAY_AT_RESOLVEN = [
+  { v: "18", l: "new updates" },
+  { v: "5",  l: "polls" },
+  { v: "3",  l: "quizzes" },
+  { v: "4",  l: "new ideas" },
+  { v: "2",  l: "events today" },
 ];
