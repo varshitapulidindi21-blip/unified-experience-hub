@@ -605,23 +605,47 @@ function RailCard({ title, action, children }: { title: string; action?: { label
 
 function EmployeeShoutoutWidget() {
   return (
-    <RailCard title="Employee Shoutout" action={{ label: "View all" }}>
-      <div className="flex flex-col items-center text-center">
-        <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-[oklch(0.32_0.16_295)] text-white flex items-center justify-center text-base font-semibold ring-4 ring-primary/10">
-          {EMPLOYEE_SHOUTOUT.initials}
+    <div className="relative overflow-hidden rounded-2xl animate-rise text-white shadow-soft"
+      style={{ background: "linear-gradient(140deg, oklch(0.46 0.18 295) 0%, oklch(0.32 0.16 295) 60%, oklch(0.42 0.16 148) 100%)" }}>
+      {/* Decorative motifs */}
+      <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/15 blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-12 -left-6 h-28 w-28 rounded-full bg-accent/30 blur-2xl" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.18),transparent_60%)]" />
+
+      <div className="relative p-4">
+        <div className="flex items-center justify-between">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/85">
+            Employee Shoutout
+          </div>
+          <button className="text-[10.5px] font-medium text-white/85 hover:text-white">View all</button>
         </div>
-        <div className="mt-2 text-[13px] font-semibold text-foreground">{EMPLOYEE_SHOUTOUT.name}</div>
-        <div className="text-[11px] text-muted-foreground">{EMPLOYEE_SHOUTOUT.role}</div>
-        <p className="mt-2 text-[11.5px] leading-snug text-foreground/80 max-w-[18rem]">
-          {EMPLOYEE_SHOUTOUT.message}
-        </p>
-        <button className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-primary/40 px-3 py-2 text-[12px] font-medium text-primary hover:bg-primary/8">
-          <Megaphone className="h-3.5 w-3.5" /> Give Shoutout
-        </button>
+
+        <div className="mt-3 flex flex-col items-center text-center">
+          <div className="relative">
+            <div className="h-20 w-20 rounded-full bg-gradient-to-br from-white/30 to-white/5 ring-2 ring-white/40 text-white flex items-center justify-center text-lg font-semibold backdrop-blur">
+              {EMPLOYEE_SHOUTOUT.initials}
+            </div>
+            <span className="absolute -bottom-1 -right-1 inline-flex h-7 w-7 items-center justify-center rounded-full bg-accent text-white shadow-soft ring-2 ring-white/30">
+              <Trophy className="h-3.5 w-3.5" />
+            </span>
+          </div>
+          <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-white/15 backdrop-blur px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider">
+            <Sparkles className="h-3 w-3" /> {EMPLOYEE_SHOUTOUT.badge}
+          </div>
+          <div className="mt-2 text-[14px] font-semibold">{EMPLOYEE_SHOUTOUT.name}</div>
+          <div className="text-[11px] text-white/80">{EMPLOYEE_SHOUTOUT.role}</div>
+          <p className="mt-2 font-display italic text-[12px] leading-snug text-white/90 max-w-[18rem]">
+            "{EMPLOYEE_SHOUTOUT.message}"
+          </p>
+          <button className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-white px-3 py-2 text-[12px] font-semibold text-primary hover:bg-white/95 shadow-soft transition">
+            <Megaphone className="h-3.5 w-3.5" /> Give Shoutout
+          </button>
+        </div>
       </div>
-    </RailCard>
+    </div>
   );
 }
+
 
 function QuickPollWidget() {
   const [pick, setPick] = useState<string | null>(null);
